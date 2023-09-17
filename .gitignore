@@ -15,7 +15,7 @@
 # production
 /build
 
-# misc
+# misc / ide
 .DS_Store
 *.pem
 .idea
