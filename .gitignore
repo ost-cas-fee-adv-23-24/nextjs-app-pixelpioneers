@@ -37,3 +37,6 @@ next-env.d.ts
 
 # npm pack (System Design library)
 ost-cas-fee-adv-23-24-design-system-pixelpioneers-0.0.0-development.tgz
+/test-results/
+/playwright-report/
+/playwright/.cache/
