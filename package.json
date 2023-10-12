@@ -1,12 +1,28 @@
 {
   "name": "app",
   "version": "0.0.0-development",
-  "private": true,
+  "private": false,
+  "description": "Next.js App PixelPioneers",
   "keywords": [
     "Frontend Engineering Advanced 2023 / 2024",
     "Next.js",
+    "PixelPioneers",
     "Frontend",
     "TypeScript"
+  ],
+  "license": "MIT",
+  "author": "Fachhochschule OST - CAS Frontend Advanced - Team: PixelPioneers",
+  "contributors": [
+    {
+      "name": "André Ceres",
+      "email": "andre.ceres@ost.ch",
+      "url": "https://github.com/aceres"
+    },
+    {
+      "name": "Nico Lutz",
+      "email": "nico.lutz@ost.ch",
+      "url": "https://github.com/Nigothazine"
+    }
   ],
   "scripts": {
     "build": "next build",
