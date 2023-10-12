@@ -1,7 +1,13 @@
 {
   "name": "app",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "private": true,
+  "keywords": [
+    "Frontend Engineering Advanced 2023 / 2024",
+    "Next.js",
+    "Frontend",
+    "TypeScript"
+  ],
   "scripts": {
     "build": "next build",
     "dev": "next dev",
