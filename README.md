@@ -26,6 +26,7 @@
     <li><a href="#contact">Contact</a></li>
     <li>
       <a href="#available-scripts">Available Scripts</a>
+      <a href="#getting-started">Getting started</a>
       <ul>
         <li><a href="#more-about-next.js">More about Next.js</a></li>
         <li><a href="#pre-requisites">Pre-requisites</a></li>
@@ -99,9 +100,17 @@ are welcome!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Getting Started
+
+Next.js App PixelPioneers is a Next.js App based on with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). This is the second part of the CAS Frontend Engineering Advanced course.
+
 ### Pre-requisites
 
-...
+We need the [npm](https://www.npmjs.com/) package manager to install this library and setup this project.
+
+```sh
+npm install npm@latest -g
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -142,6 +151,16 @@ load Inter, a custom Google Font.
 
 ### Technology Stack
 
+#### husky / Git hooks
+
+You can use it to lint your commit messages, run tests, lint code and many more when you commit or push. See here [husky - github](https://typicode.github.io/husky/) or [husky npm](https://www.npmjs.com/package/husky).
+
+#### prettier
+
+`npm install --save-dev --save-exact prettier`
+<br/>
+[Link](https://prettier.io/docs/en/install)
+
 #### lint-staged
 
 Run linters against staged git files and don't let 💩 slip into your code base! Linting makes more sense when run before committing your code. By doing so you can ensure no errors go into the repository and enforce code style. Check there [lint-staged - github](https://github.com/okonet/lint-staged) or [lint-staged - npm](https://www.npmjs.com/package/lint-staged).
@@ -152,7 +171,7 @@ ESLint is a tool for identifying and reporting on patterns found in ECMAScript/J
 
 #### commitlint
 
-commitlint checks if your commit messages meet the [conventional commit format](commitlint checks if your commit messages meet the conventional commit format). See also [commitlint - github](https://github.com/conventional-changelog/commitlint) or [commitlint](https://commitlint.js.org/#/).
+commitlint checks if your commit messages meet the [conventional commit format](commitlint checks if your commit messages meet the conventional commit format). Or in other words: Get high commit message quality and short feedback cycles by linting commit messages right when they are authored. See also [commitlint - github](https://github.com/conventional-changelog/commitlint) or [commitlint](https://commitlint.js.org/#/).
 
 ...
 
@@ -183,7 +202,7 @@ Don't forget to give the project a star! ⭐️ Thanks! 🙏
 
 ## Roadmap
 
-- [ ] Check all neede scripts
+- [ ] Check all needed scripts
 - [ ] Add LightHouse in YAML config
 - [ ] Try with ACT
 - [ ] Visualize process flow in picture
