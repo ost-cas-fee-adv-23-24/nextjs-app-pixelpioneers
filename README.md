@@ -58,6 +58,9 @@ In the project directory, you can run:
 `npm run dev` runs the development server [http://localhost:3000](http://localhost:3000).
 <br/>
 Open your browser to see the result.
+
+> The page will reload if you make edits. You will also see any lint errors in the console.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and
@@ -75,7 +78,9 @@ load Inter, a custom Google Font.
 
 `npm run start` ...
 
-`npm run test` ...
+`npm run test` launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
+information.
 
 `npm run test:jest` ...
 
@@ -85,33 +90,12 @@ load Inter, a custom Google Font.
 
 `npm run test:pw:headed` ...
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### More about Next.js
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions
 are welcome!
-
-`npm run build` builds a cjs and esm module for production to the `lib` folder.
-
-`npm run build:cjs` builds the cjs module to the `lib/cjs` folder.
-
-`npm run build:esm` builds the esm module to the `lib/esm` folder.
-
-`npm run build:cjs:tailwind` bundles the `index.css` in the `lib/cjs` folder.
-
-`npm run build:esm:tailwind` bundles the `index.css` in the `lib/esm` folder.
-
-`npm run clean` removes the `lib` folder.
-
-`npm pack` creates a tarball from a package.
-
-`npm start` runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-> The page will reload if you make edits. You will also see any lint errors in the console.
-
-`npm test` launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
-information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -158,6 +142,18 @@ load Inter, a custom Google Font.
 
 ### Technology Stack
 
+#### lint-staged
+
+Run linters against staged git files and don't let 💩 slip into your code base! Linting makes more sense when run before committing your code. By doing so you can ensure no errors go into the repository and enforce code style. Check there [lint-staged - github](https://github.com/okonet/lint-staged) or [lint-staged - npm](https://www.npmjs.com/package/lint-staged).
+
+#### ESLint
+
+ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, see also [ESLint - npm](https://www.npmjs.com/package/eslint) or [Getting Started with ESLint](https://eslint.org/docs/latest/use/getting-started).
+
+#### commitlint
+
+commitlint checks if your commit messages meet the [conventional commit format](commitlint checks if your commit messages meet the conventional commit format). See also [commitlint - github](https://github.com/conventional-changelog/commitlint) or [commitlint](https://commitlint.js.org/#/).
+
 ...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -191,6 +187,7 @@ Don't forget to give the project a star! ⭐️ Thanks! 🙏
 - [ ] Add LightHouse in YAML config
 - [ ] Try with ACT
 - [ ] Visualize process flow in picture
+- [ ] Check TODOs
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
