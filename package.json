@@ -1,15 +1,37 @@
 {
   "name": "app",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.0-development",
+  "private": false,
+  "description": "Next.js App PixelPioneers",
+  "keywords": [
+    "Frontend Engineering Advanced 2023 / 2024",
+    "Next.js",
+    "PixelPioneers",
+    "Frontend",
+    "TypeScript"
+  ],
+  "license": "MIT",
+  "author": "Fachhochschule OST - CAS Frontend Advanced - Team: PixelPioneers",
+  "contributors": [
+    {
+      "name": "André Ceres",
+      "email": "andre.ceres@ost.ch",
+      "url": "https://github.com/aceres"
+    },
+    {
+      "name": "Nico Lutz",
+      "email": "nico.lutz@ost.ch",
+      "url": "https://github.com/Nigothazine"
+    }
+  ],
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
-    "prettier": "prettier --log-level warn --write \"*.{js,jsx,ts,tsx,css,md,json}\"",
-    "prettier:check": "prettier --log-level warn --check \"*.{js,jsx,ts,tsx,css,md,json}\"",
+    "prettier": "prettier --log-level warn --write \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "prettier:check": "prettier --log-level warn --check \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
     "start": "next start",
     "test": "npm run test:jest && npm run test:pw",
     "test:jest": "jest",
@@ -38,6 +60,8 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
     "@playwright/test": "^1.38.1",
     "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/react": "^14.0.0",
