@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const nextJest = require('next/jest');
+import nextJest from 'next/jest';
 
 const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
@@ -15,10 +15,14 @@ const customJestConfig = {
     testMatch: ['**/tests/unit/**/*.ts?(x)', '**/tests/snapshot/**/*.ts?(x)'],
     verbose: true,
     preset: 'ts-jest',
+    transform: {
+        '^.+\\.ts?$': 'ts-jest',
+    },
+    transformIgnorePatterns: ['<rootDir>/node_modules/'],
     // Jest Runner Lint
     runner: 'jest-runner-eslint',
     displayName: 'lint',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig);
+export default createJestConfig(customJestConfig);
