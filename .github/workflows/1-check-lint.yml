@@ -1,4 +1,4 @@
-name:  Lint Tests
+name: Check Lint
 on:
   push:
     branches: [main]
@@ -15,5 +15,5 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm ci
-      - name: Run Lint tests
+      - name: Run Lint
         run: npm run lint
