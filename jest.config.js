@@ -15,6 +15,9 @@ const customJestConfig = {
     testMatch: ['**/tests/unit/**/*.ts?(x)', '**/tests/snapshot/**/*.ts?(x)'],
     verbose: true,
     preset: 'ts-jest',
+    // Jest Runner Lint
+    runner: 'jest-runner-eslint',
+    displayName: 'lint',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

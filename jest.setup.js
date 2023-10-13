@@ -3,4 +3,7 @@
 
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
+
+/* eslint-disable */
 import '@testing-library/jest-dom';
+/* eslint-enable */
