@@ -2,8 +2,8 @@
 
 ## Next.js App - PixelPioneers 🐥
 
-![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/1-test-jest.yml?label=test%20jest)
-![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/2-test-playwright.yml?label=test%20e2e)
+![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/2-test-jest.yml?label=test%20jest)
+![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/3-test-playwright.yml?label=test%20e2e)
 ![](https://img.shields.io/github/license/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers)
 ![](https://img.shields.io/github/contributors/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers)
 
