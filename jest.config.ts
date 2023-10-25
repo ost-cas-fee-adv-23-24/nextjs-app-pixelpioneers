@@ -8,12 +8,9 @@ const createJestConfig = nextJest({
 
 const jestConfig: typeof Config = {
     preset: 'ts-jest',
-    //moduleFileExtensions: ['js', 'ts', 'tsx'],
-    //moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
-    testEnvironment: 'jest-environment-jsdom',
     testMatch: ['**/tests/unit/**/*.ts?(x)', '**/tests/snapshot/**/*.ts?(x)'],
     verbose: true,
-    //transformIgnorePatterns: ['./node_modules/'],
+    transformIgnorePatterns: ['./node_modules/'],
     projects: ['./jest-eslint.config.ts', './jest-test.config.ts'],
 };
 
