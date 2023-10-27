@@ -1,0 +1,11 @@
+# ignore artifacts
+build
+coverage
+
+# yaml config
+**/*.yaml
+
+# ignore build
+node_modules/
+storybook-static/
+lib/
