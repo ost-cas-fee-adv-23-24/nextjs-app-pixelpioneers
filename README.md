@@ -171,7 +171,7 @@ ESLint is a tool for identifying and reporting on patterns found in ECMAScript/J
 
 #### ESLint Plugin Jest
 
-ESLint Plugin for Jest. The files are checking test-related. [ESLint Plugin Jest](https://www.npmjs.com/package/eslint-plugin-jest)
+ESLint Plugin for Jest. The files are checking test-related. [ESLint Plugin Jest - npm](https://www.npmjs.com/package/eslint-plugin-jest) or [Jest Runner ESLint - github](https://github.com/jest-community/jest-runner-eslint)
 
 #### commitlint
 
