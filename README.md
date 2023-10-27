@@ -87,7 +87,7 @@ information.
 
 `npm run test:pw` runs Playwright tests.
 
-`npm run test:pw:debug` debugs all tests run the Playwright testc command followed by `--debug` flag.
+`npm run test:pw:debug` debugs all tests run the Playwright test command followed by `--debug` flag.
 
 `npm run test:pw:headed` will give you the ability to visually see, how Playwright interacts with the website.
 
