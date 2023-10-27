@@ -2,8 +2,8 @@
 
 ## Next.js App - PixelPioneers 🐥
 
-![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/2-test-jest.yml?label=test%20jest)
-![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/3-test-playwright.yml?label=test%20e2e)
+![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/3-test-jest.yml?label=test%20jest)
+![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/4-test-playwright.yml?label=test%20e2e)
 ![](https://img.shields.io/github/license/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers)
 ![](https://img.shields.io/github/contributors/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers)
 
@@ -75,21 +75,21 @@ load Inter, a custom Google Font.
 
 `npm run prettier:check` check code-format with prettier and print out warnings if available.
 
-`npm run build` ...
+`npm run build` creates you a `build` directory.
 
-`npm run start` ...
+`npm run start` starts the Next.js web application.
 
 `npm run test` launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
 information.
 
-`npm run test:jest` ...
+`npm run test:jest` runs Jest tests.
 
-`npm run test:pw` ...
+`npm run test:pw` runs Playwright tests.
 
-`npm run test:pw:debug` ...
+`npm run test:pw:debug` debugs all tests run the Playwright testc command followed by `--debug` flag.
 
-`npm run test:pw:headed` ...
+`npm run test:pw:headed` will give you the ability to visually see, how Playwright interacts with the website.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -145,7 +145,7 @@ load Inter, a custom Google Font.
 
 ### Usage
 
-...
+... (TODO)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -169,11 +169,13 @@ Run linters against staged git files and don't let 💩 slip into your code base
 
 ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, see also [ESLint - npm](https://www.npmjs.com/package/eslint) or [Getting Started with ESLint](https://eslint.org/docs/latest/use/getting-started).
 
+#### ESLint Plugin Jest
+
+ESLint Plugin for Jest. The files are checking test-related. [ESLint Plugin Jest](https://www.npmjs.com/package/eslint-plugin-jest)
+
 #### commitlint
 
 commitlint checks if your commit messages meet the [conventional commit format](commitlint checks if your commit messages meet the conventional commit format). Or in other words: Get high commit message quality and short feedback cycles by linting commit messages right when they are authored. See also [commitlint - github](https://github.com/conventional-changelog/commitlint) or [commitlint](https://commitlint.js.org/#/).
-
-...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -202,7 +204,7 @@ Don't forget to give the project a star! ⭐️ Thanks! 🙏
 
 ## Roadmap
 
-- [ ] Check all needed scripts
+- [x] Check all needed scripts
 - [ ] Add LightHouse in YAML config
 - [ ] Try with ACT
 - [ ] Visualize process flow in picture
