@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+    presets: [require('@ost-cas-fee-adv-23-24/design-system-pixelpioneers/tailwind.config.js')],
     content: [
         './pages/**/*.{js,ts,jsx,tsx,mdx}',
         './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,13 +9,7 @@ const config: Config = {
         './node_modules/@ost-cas-fee-adv-23-24/design-system-pixelpioneers/lib/esm/components/**/*.js',
     ],
     theme: {
-        extend: {
-            backgroundImage: {
-                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-            },
-        },
+        extend: {},
     },
     plugins: [],
 };
