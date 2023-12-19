@@ -21,8 +21,13 @@ import {
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { auth } from '@/app/api/auth/[...nextauth]';
 
-export default function Home() {
+/** TODO: don't use disable next line */
+// eslint-disable-next-line @next/next/no-async-client-component
+export default async function Home() {
+    const session = await auth();
+    console.log(session);
     return (
         <main className="p-24 flex min-h-screen flex-col items-center justify-between">
             <div className="font-mono z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex">
