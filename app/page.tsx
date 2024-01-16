@@ -1,33 +1,14 @@
-'use client';
 import React from 'react';
 import Image from 'next/image';
-import {
-    Button,
-    ButtonSize,
-    EditAvatar,
-    Heading,
-    HeadingSize,
-    IconCalendar,
-    IconEye,
-    IconLink,
-    IconMumble,
-    IconOnlyButton,
-    IconProfile,
-    Input,
-    InputType,
-    LikeButton,
-    ShareButton,
-    Tabs,
-    Textarea,
-    Variant,
-} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { auth } from '@/app/api/auth/[...nextauth]';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import LoginButton from '@/components/login-button';
+import LogoutButton from '@/components/logout-button';
 
-/** TODO: don't use disable next line */
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
+    console.log('session start');
     const session = await auth();
     console.log(session);
+    console.log('session happened');
     return (
         <main className="p-24 flex min-h-screen flex-col items-center justify-between">
             <div className="font-mono z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex">
@@ -65,15 +46,19 @@ export default async function Home() {
                     priority
                 />
             </div>
+            {session ? (
+                <div>
+                    <p>{session.user?.name}</p>
+                    <LogoutButton />
+                </div>
+            ) : (
+                <div>
+                    <LoginButton />
+                </div>
+            )}
 
-            <div className="flex flex-col gap-xl bg-white p-xl">
-                <Button
-                    label="DS Button"
-                    Icon={IconEye}
-                    size={ButtonSize.M}
-                    aria-label="DS Button"
-                    fill
-                />
+            {/*<div className="flex flex-col gap-xl bg-white p-xl">
+
                 <IconOnlyButton Icon={IconMumble} aria-label="mumble logo button" />
                 <EditAvatar
                     onEdit={() => {
@@ -122,7 +107,7 @@ export default async function Home() {
                     labelShared="you did it!"
                     link="https://migros.ch"
                 />
-            </div>
+            </div>*/}
 
             <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
                 <a
