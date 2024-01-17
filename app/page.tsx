@@ -3,12 +3,17 @@ import Image from 'next/image';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import LoginButton from '@/components/login-button';
 import LogoutButton from '@/components/logout-button';
+import LivePosts from '@/components/live-posts';
+import NewPost from '@/components/new-post';
+import Post from '@/components/post';
+import { getPostList } from '@/mumble/api';
 
 export default async function Home() {
     console.log('session start');
     const session = await auth();
     console.log(session);
     console.log('session happened');
+    const posts = await getPostList();
     return (
         <main className="p-24 flex min-h-screen flex-col items-center justify-between">
             <div className="font-mono z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex">
@@ -56,6 +61,23 @@ export default async function Home() {
                     <LoginButton />
                 </div>
             )}
+            {session && (
+                <div>
+                    <h2>Create a post</h2>
+                    <NewPost />
+                </div>
+            )}
+            <div>
+                <h2>Latest Posts</h2>
+                <LivePosts />
+                <ul>
+                    {posts.map((post) => (
+                        <li key={post.id}>
+                            <Post post={post} />
+                        </li>
+                    ))}
+                </ul>
+            </div>
 
             {/*<div className="flex flex-col gap-xl bg-white p-xl">
 

@@ -16,7 +16,6 @@ export const {
             },
             checks: ['pkce', 'state'],
             client: { token_endpoint_auth_method: 'none' },
-            //clientSecret: process.env.ZITADEL_CLIENT_SECRET,
         }),
     ],
     callbacks: {
