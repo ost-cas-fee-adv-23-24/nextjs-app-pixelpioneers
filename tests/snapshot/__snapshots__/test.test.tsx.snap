@@ -6,19 +6,49 @@ exports[`Home renders a heading 1`] = `
   "baseElement": <body>
     <div>
       <button
-        class="px-3 py-2 text-base bg-amber-300 hover:bg-amber-500"
-        type="button"
+        class="flex h-fit justify-center w-fit hover:ring-3 active:ring-4 bg-primary-600 fill-white text-white hover:bg-primary-700 hover:ring-primary-100 active:bg-primary-700 active:ring-primary-200 gap-xs rounded-s p-base transition-all duration-350 ease-in-out active:duration-300 disabled:bg-secondary-400 disabled:cursor-not-allowed"
       >
-        hey
+        <span
+          class="wrap-label font-default font-semibold leading-none text-sm text-inherit"
+        >
+          Login with Zitadel
+        </span>
+        <svg
+          aria-hidden="true"
+          class="self-center"
+          height="16"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 7a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM8 8.5a7.008 7.008 0 0 0-7 7 .5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5 7.008 7.008 0 0 0-7-7Z"
+          />
+        </svg>
       </button>
     </div>
   </body>,
   "container": <div>
     <button
-      class="px-3 py-2 text-base bg-amber-300 hover:bg-amber-500"
-      type="button"
+      class="flex h-fit justify-center w-fit hover:ring-3 active:ring-4 bg-primary-600 fill-white text-white hover:bg-primary-700 hover:ring-primary-100 active:bg-primary-700 active:ring-primary-200 gap-xs rounded-s p-base transition-all duration-350 ease-in-out active:duration-300 disabled:bg-secondary-400 disabled:cursor-not-allowed"
     >
-      hey
+      <span
+        class="wrap-label font-default font-semibold leading-none text-sm text-inherit"
+      >
+        Login with Zitadel
+      </span>
+      <svg
+        aria-hidden="true"
+        class="self-center"
+        height="16"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 7a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM8 8.5a7.008 7.008 0 0 0-7 7 .5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5 7.008 7.008 0 0 0-7-7Z"
+        />
+      </svg>
     </button>
   </div>,
   "debug": [Function],
