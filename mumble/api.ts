@@ -32,8 +32,7 @@ export async function createPost(text: string) {
         },
     });
 
-    const post = (await res.json()) as Post;
-    return post;
+    return (await res.json()) as Post;
 }
 
 export enum PostEvents {

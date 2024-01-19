@@ -9,10 +9,7 @@ import Post from '@/components/post';
 import { getPostList } from '@/mumble/api';
 
 export default async function Home() {
-    console.log('session start');
     const session = await auth();
-    console.log(session);
-    console.log('session happened');
     const posts = await getPostList();
     return (
         <main className="p-24 flex min-h-screen flex-col items-center justify-between">
