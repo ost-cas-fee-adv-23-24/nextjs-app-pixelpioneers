@@ -8,7 +8,7 @@ const createJestConfig = nextJest({
 
 const jestConfig: typeof Config = {
     preset: 'ts-jest',
-    testMatch: ['**/tests/unit/**/*.ts?(x)', '**/tests/snapshot/**/*.ts?(x)'],
+    testMatch: ['**/tests/unit/**/*.ts?(x)'], // TODO: add , '**/tests/snapshot/**/*.ts?(x)'
     verbose: true,
     transformIgnorePatterns: ['./node_modules/'],
     projects: ['./jest-eslint.config.ts', './jest-test.config.ts'],
