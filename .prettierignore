@@ -7,5 +7,4 @@ coverage
 
 # ignore build
 node_modules/
-storybook-static/
 lib/
