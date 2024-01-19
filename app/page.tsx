@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import LoginButton from '@/components/login-button';
-import LogoutButton from '@/components/logout-button';
-import LivePosts from '@/components/live-posts';
-import NewPost from '@/components/new-post';
-import Post from '@/components/post';
-import { getPostList } from '@/mumble/api';
+import LoginButton from '@/src/components/login-button';
+import LogoutButton from '@/src/components/logout-button';
+import LivePosts from '@/src/components/live-posts';
+import NewPost from '@/src/components/new-post';
+import Post from '@/src/components/post';
+import { getPostList } from '@/src/helpers/api';
 
 export default async function Home() {
     const session = await auth();

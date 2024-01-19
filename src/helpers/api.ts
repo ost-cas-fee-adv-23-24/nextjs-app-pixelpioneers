@@ -1,5 +1,5 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { PaginatedResult, Post } from './types';
+import { PaginatedResult, Post } from '../model/types';
 
 const apiUrl = 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app';
 
