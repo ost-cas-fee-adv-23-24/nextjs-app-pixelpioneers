@@ -1,9 +1,7 @@
-import { expect, test } from '@playwright/test';
-
 describe('Home', () => {
     test('renders a heading', () => {
         /*const button = render(
-    <Button label="Login with Zitadel" Icon={IconProfile} size={ButtonSize.M} />,
+<Button label="Login with Zitadel" Icon={IconProfile} size={ButtonSize.M} />,
 );*/
 
         // expect('hey').toBeInTheDocument();
