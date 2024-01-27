@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default async function Users() {
-    return <></>;
+    return <>Page: Users</>;
 }

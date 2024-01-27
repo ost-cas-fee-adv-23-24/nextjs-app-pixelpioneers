@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default async function Profile() {
-    return <></>;
+    return <>Page: Profile</>;
 }
