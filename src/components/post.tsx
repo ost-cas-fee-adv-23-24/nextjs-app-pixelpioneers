@@ -1,4 +1,4 @@
-import { Post } from '@/mumble/types';
+import { Post } from '@/src/model/types';
 
 export default function Post({ post }: { post: Post }) {
     return (

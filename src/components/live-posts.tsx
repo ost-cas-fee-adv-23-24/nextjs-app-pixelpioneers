@@ -1,7 +1,7 @@
 'use client';
 
-import { PostEvents, getPostEventSource } from '@/mumble/api';
-import { Post as ApiPost } from '@/mumble/types';
+import { getPostEventSource, PostEvents } from '@/src/helpers/api';
+import { Post as ApiPost } from '@/src/model/types';
 import { useEffect, useState } from 'react';
 import Post from './post';
 

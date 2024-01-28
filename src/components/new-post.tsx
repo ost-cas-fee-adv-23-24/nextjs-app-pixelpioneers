@@ -1,4 +1,4 @@
-import { createPost } from '@/mumble/api';
+import { createPost } from '@/src/helpers/api';
 
 export default function NewPost() {
     async function createNewPost(data: FormData) {

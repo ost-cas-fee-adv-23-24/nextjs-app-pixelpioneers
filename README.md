@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-## Next.js App - PixelPioneers 🐥
+## Next.js App Mumble - PixelPioneers 🐥
 
 ![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/3-test-jest.yml?label=test%20jest)
 ![](https://img.shields.io/github/actions/workflow/status/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers/4-test-playwright.yml?label=test%20e2e)
