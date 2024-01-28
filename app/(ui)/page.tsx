@@ -20,6 +20,7 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
 
+
 export default async function Home() {
     const session = await auth();
     const posts = await getPostList();
