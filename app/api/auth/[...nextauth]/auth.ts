@@ -5,6 +5,9 @@ export const {
     handlers: { GET, POST },
     auth,
 } = NextAuth({
+    session: {
+        strategy: 'jwt',
+    },
     providers: [
         ZITADEL({
             clientId: process.env.ZITADEL_CLIENT_ID,
@@ -30,7 +33,9 @@ export const {
             }
             return token;
         },
-        session({ session, token }) {
+        // FIXME: type correctly
+        // eslint-disable-next-line
+        session({ session, token }: any) {
             session.accessToken = token.accessToken;
             session.user = token.user;
             return session;
