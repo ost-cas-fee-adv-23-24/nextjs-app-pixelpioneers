@@ -7,7 +7,18 @@ import LivePosts from '@/src/components/live-posts';
 import NewPost from '@/src/components/new-post';
 import Post from '@/src/components/post';
 import { getPostList } from '@/src/helpers/api';
-import DisplayName from '@/src/compositions/display-name';
+import DisplayName from '@/src/compositions/display-name/display-name';
+import {
+    Button,
+    ButtonSize,
+    IconProfile,
+    Label,
+    LabelSize,
+    LabelType,
+    // NaviUser,
+    Variant,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
 
 export default async function Home() {
     const session = await auth();
@@ -30,6 +41,7 @@ export default async function Home() {
                     <p>{session.user?.name}</p>
                     <LogoutButton />
                     <DisplayName />
+                    <RecommendedUser />
                 </div>
             ) : (
                 <div>
@@ -42,6 +54,24 @@ export default async function Home() {
                     <NewPost />
                 </div>
             )}
+            <Button
+                Icon={IconProfile}
+                size={ButtonSize.M}
+                variant={Variant.PRIMARY}
+                label={'hey'}
+            />
+            {/* <NaviUser
+                variant={Variant.SECONDARY}
+                Icon={IconProfile}
+                size={ButtonSize.L}
+                label="Profile"
+                onClick={() => {
+                    console.info('Hello');
+                }}
+            /> */}
+            <Label size={LabelSize.L} type={LabelType.SPAN}>
+                hello
+            </Label>
             <div>
                 <h2>Latest Posts</h2>
                 <LivePosts />

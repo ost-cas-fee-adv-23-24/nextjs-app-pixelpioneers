@@ -47,14 +47,14 @@
     ]
   },
   "dependencies": {
-    "@ost-cas-fee-adv-23-24/design-system-pixelpioneers": "^5.2.2",
+    "@ost-cas-fee-adv-23-24/design-system-pixelpioneers": "^5.3.3",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "clsx": "^2.1.0",
     "next": "^14.0.4",
     "next-auth": "^5.0.0-beta.4",
-    "postcss": "8.4.29",
+    "postcss": "8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
