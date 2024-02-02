@@ -1,14 +1,11 @@
-export type PublicUser = {
+export type User = {
     id: string;
     username: string;
     avatarUrl?: string;
-};
-
-export type User = PublicUser & {
     firstName: string;
     lastname: string;
 };
 
-export type UpdateUserData = User & {
-    username: string;
-};
+export type PublicUser = Omit<User, 'firstname' | 'lastname'>;
+
+export type UpdateUserData = Omit<User, 'id' | 'avatarUrl'>;
