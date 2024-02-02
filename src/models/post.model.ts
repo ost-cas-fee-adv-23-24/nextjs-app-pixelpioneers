@@ -10,3 +10,7 @@ type PostBase = {
 export type Post = PostBase & {
     replies: number;
 };
+
+export type DeletedPost = {
+    id: string;
+};
