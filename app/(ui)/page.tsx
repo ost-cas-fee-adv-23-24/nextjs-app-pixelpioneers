@@ -6,7 +6,7 @@ import LogoutButton from '@/src/components/logout-button';
 import LivePosts from '@/src/components/live-posts';
 import NewPost from '@/src/components/new-post';
 import Post from '@/src/components/post';
-import { getPostList } from '@/src/helpers/api';
+import { getPostList } from '@/src/services/post.service';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import {
     Button,
