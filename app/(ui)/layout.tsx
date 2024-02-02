@@ -2,6 +2,15 @@ import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import {
+    Avatar,
+    AvatarSize,
+    ButtonSize,
+    IconLogoutAnimated,
+    IconSettingsAnimated,
+    LogoMumbleHorizontal,
+    NaviButton,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,7 +22,35 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
+                    <div className="flex w-[800px] flex-row">
+                        <LogoMumbleHorizontal
+                            titleClasses="fill-white"
+                            iconClasses="fill-white"
+                            sizeWidth="235"
+                            sizeHeight="34"
+                            className="hidden md:flex"
+                        />
+                        <section className="flex flex-1 flex-row-reverse items-center">
+                            <NaviButton
+                                size={ButtonSize.L}
+                                className="text-white"
+                                label={'Logout'}
+                                Icon={IconLogoutAnimated}
+                            />
+                            <NaviButton
+                                size={ButtonSize.L}
+                                className="text-white"
+                                label={'Settings'}
+                                Icon={IconSettingsAnimated}
+                            />
+                            <Avatar size={AvatarSize.S} alt="George Michael" />
+                        </section>
+                    </div>
+                </nav>
+                <main>{children}</main>
+            </body>
         </html>
     );
 }

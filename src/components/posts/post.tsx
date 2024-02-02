@@ -1,4 +1,4 @@
-import { Post } from '@/src/models/types';
+import { Post } from '@/src/models/post.model';
 
 export default function Post({ post }: { post: Post }) {
     return (
