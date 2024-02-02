@@ -1,10 +1,16 @@
+/* eslint-disable curly */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import NextAuth, { Session } from 'next-auth';
 import ZITADEL from '@auth/core/providers/zitadel';
-import NextAuth from 'next-auth';
 
 export const {
     handlers: { GET, POST },
     auth,
 } = NextAuth({
+    secret: process.env.NEXTAUTH_SECRET,
+    trustHost: true,
     session: {
         strategy: 'jwt',
     },
@@ -33,14 +39,13 @@ export const {
             }
             return token;
         },
-        // FIXME: type correctly
+        // Next Auth Beta 5
+        // https://github.com/nextauthjs/next-auth/issues/9633
         // eslint-disable-next-line
-        session({ session, token }: any) {
+        session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
             session.user = token.user;
             return session;
         },
     },
-    secret: process.env.NEXTAUTH_SECRET,
-    trustHost: true,
 });
