@@ -1,4 +1,4 @@
-import { createPost } from '@/src/helpers/api';
+import { createPost } from '@/src/services/post.service';
 
 export default function NewPost() {
     async function createNewPost(data: FormData) {

@@ -1,7 +1,7 @@
 'use client';
 
 import { getPostEventSource, PostEvents } from '@/src/helpers/api';
-import { Post as ApiPost } from '@/src/model/types';
+import { Post as ApiPost } from '@/src/models/post.model';
 import { useEffect, useState } from 'react';
 import Post from './post';
 

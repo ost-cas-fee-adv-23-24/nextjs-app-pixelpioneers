@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import LoginButton from '@/src/components/login-button';
-import LogoutButton from '@/src/components/logout-button';
-import LivePosts from '@/src/components/live-posts';
-import NewPost from '@/src/components/new-post';
-import Post from '@/src/components/post';
-import { getPostList } from '@/src/helpers/api';
+import LoginButton from '@/src/components/login/login-button';
+import LogoutButton from '@/src/components/login/logout-button';
+import LivePosts from '@/src/components/posts/live-posts';
+import NewPost from '@/src/components/posts/new-post';
+import Post from '@/src/components/posts/post';
+import { getPostList } from '@/src/services/post.service';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import {
     Button,
