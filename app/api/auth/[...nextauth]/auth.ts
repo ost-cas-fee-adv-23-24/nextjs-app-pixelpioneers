@@ -1,7 +1,3 @@
-/* eslint-disable curly */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import NextAuth, { Session } from 'next-auth';
 import ZITADEL from '@auth/core/providers/zitadel';
 
