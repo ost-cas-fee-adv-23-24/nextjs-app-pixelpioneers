@@ -1,5 +1,5 @@
 export enum PAGE_ROUTES {
     HOME = '/',
-    USER = '/user/:id',
+    USERS = '/users/:id',
     POSTS = '/posts/:id',
 }
