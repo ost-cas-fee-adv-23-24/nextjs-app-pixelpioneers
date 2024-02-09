@@ -1,5 +1,8 @@
-type PostBase = {
+import { PublicUser } from './user.model';
+
+export type PostBase = {
     id: string;
+    creator: PublicUser;
     text?: string;
     mediaUrl?: string;
     mediaType?: string;
@@ -14,3 +17,8 @@ export type Post = PostBase & {
 export type DeletedPost = {
     id: string;
 };
+
+export type UpdatePostData = Omit<
+    PostBase,
+    'id' | 'creator' | 'mediaUrl' | 'mediaType' | 'likes' | 'likedBySelf'
+>;
