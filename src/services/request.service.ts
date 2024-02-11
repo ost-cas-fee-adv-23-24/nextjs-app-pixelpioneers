@@ -1,12 +1,12 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 // TODO: Need to sync with team member
-export async function qwackerRequest(
+import { Response } from '@/src/models/fetch.model';
+
+export async function request<T>(
     endpoint: string,
     jwtToken: string,
     options: { [key: string]: string | FormData },
-) {
-    const url = `${BASE_URL}/${endpoint}`;
+): Promise<Response<T>> {
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
     const headers: { [key: string]: string } = {
         'content-type': 'application/json',
         Authorization: `Bearer ${jwtToken}`,
@@ -20,17 +20,13 @@ export async function qwackerRequest(
         headers,
         ...options,
     }).catch((error) => {
-        console.error('Error during qwackerRequest', error);
+        console.error('Error during request', error);
     });
 
-    if (!response?.ok) {
-        const message = 'Something went wrong. Please try later again..';
-        console.error(message);
+    if (!response || !response?.ok) {
+        console.error(`Error ${response?.status}: ${response?.json}`);
+        return { error: { request: `${response?.status}: ${response?.json}` } };
     }
 
-    if (response?.status !== 200) {
-        return;
-    }
-
-    return response.json();
+    return { data: response.json() as T };
 }
