@@ -1,6 +1,5 @@
-import { TokenModel } from '../models/token.model';
-import { qwackerRequest } from './qwacker.service';
+import { request } from './request.service';
 
-export function getUser({ token, id }: TokenModel) {
-    return qwackerRequest(`users/${id}`, token, { method: 'GET' });
+export function getUser(token: string, id: string) {
+    return request(`users/${id}`, token, { method: 'GET' });
 }
