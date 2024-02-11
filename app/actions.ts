@@ -71,7 +71,7 @@ export async function createPost(formData: FormData): Promise<Post | CreatePostE
     });
 
     if (!response.data) {
-        return response.error || { request: 'data not found' };
+        return response.error || { request: 'post not found' };
     }
 
     return response.data;

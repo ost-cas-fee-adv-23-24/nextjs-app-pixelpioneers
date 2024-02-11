@@ -3,12 +3,12 @@ import { z } from 'zod';
 
 export const CreatePostSchema = z.union([
     z.object({
-        text: z.string().optional(),
+        text: z.string().nullish(),
         media: z.string(),
     }),
     z.object({
         text: z.string(),
-        media: z.string().optional(),
+        media: z.string().nullish(),
     }),
 ]);
 
@@ -27,6 +27,7 @@ export const PostSchema = z.object({
 
 export type Post = {
     id: string;
+    created: string;
     creator: PublicUser;
     text?: string;
     mediaUrl?: string;
