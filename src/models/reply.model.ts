@@ -1,8 +1,5 @@
-import { PostBase } from './post.model';
+import { Post } from './post.model';
 
-export type Reply = Omit<
-    PostBase,
-    'id' | 'text' | 'creator' | 'mediaUrl' | 'mediaType' | 'likes' | 'likedBySelf'
-> & {
+export type Reply = Omit<Post, 'replies'> & {
     parentId: string;
 };
