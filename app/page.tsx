@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import LoginButton from '@/src/components/login/login-button';
 import LogoutButton from '@/src/components/login/logout-button';
@@ -8,71 +7,77 @@ import NewPost from '@/src/components/posts/new-post';
 import Post from '@/src/components/posts/post';
 import { getPostList } from '@/src/services/post.service';
 import DisplayName from '@/src/compositions/display-name/display-name';
-import {
-    Button,
-    ButtonSize,
-    IconProfile,
-    Label,
-    LabelSize,
-    LabelType,
-    Variant,
-} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
+import {
+    Avatar,
+    AvatarSize,
+    ButtonSize,
+    IconLogoutAnimated,
+    IconMumble,
+    IconSettingsAnimated,
+    LogoMumbleHorizontal,
+    NaviButton,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default async function Home() {
     const session = await auth();
     const posts = await getPostList();
     return (
-        <main className="p-24 flex min-h-screen flex-col items-center justify-between">
-            <h1 className="p-m">Hello!</h1>
-            <div className="relative z-[-1] flex place-items-center">
-                <Image
-                    className="relative"
-                    src="/next.svg"
-                    alt="Next.js Logo"
-                    width={180}
-                    height={37}
-                    priority
-                />
-            </div>
-            {session ? (
-                <div>
-                    <p>{session.user?.name}</p>
-                    <LogoutButton />
-                    <DisplayName />
-                    <RecommendedUser />
+        <>
+            <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
+                <div className="flex w-[800px] flex-row">
+                    <LogoMumbleHorizontal
+                        titleClasses="fill-white"
+                        iconClasses="fill-white"
+                        sizeWidth="235"
+                        sizeHeight="34"
+                        className="hidden md:flex"
+                    />
+                    <section className="flex flex-1 flex-row-reverse items-center">
+                        {session ? (
+                            <NaviButton
+                                size={ButtonSize.L}
+                                className="text-white"
+                                label={'Logout'}
+                                Icon={IconLogoutAnimated}
+                            />
+                        ) : (
+                            <NaviButton
+                                size={ButtonSize.L}
+                                className="text-white"
+                                label={'Logout'}
+                                Icon={IconMumble}
+                            />
+                        )}
+                        <NaviButton
+                            size={ButtonSize.L}
+                            className="text-white"
+                            label={'Settings'}
+                            Icon={IconSettingsAnimated}
+                        />
+                        <Avatar size={AvatarSize.S} alt="George Michael" />
+                    </section>
                 </div>
-            ) : (
-                <div>
+            </nav>
+            <main className="p-24 flex min-h-screen flex-col items-center justify-between">
+                {session ? (
+                    <>
+                        <p>{session.user?.name}</p>
+                        <LogoutButton />
+                        <DisplayName />
+                        <RecommendedUser />
+                    </>
+                ) : (
                     <LoginButton />
-                </div>
-            )}
-            {session && (
-                <div>
-                    <h2>Create a post</h2>
-                    <NewPost />
-                </div>
-            )}
-            <Button
-                Icon={IconProfile}
-                size={ButtonSize.M}
-                variant={Variant.PRIMARY}
-                label={'hey'}
-            />
-            <Label size={LabelSize.L} type={LabelType.SPAN}>
-                hello
-            </Label>
-            <div>
-                <h2>Latest Posts</h2>
-                <LivePosts />
-                <ul>
+                )}
+                {session && <NewPost />}
+                <section className="flex flex-col gap-y-m">
+                    <LivePosts />
                     {posts.map((post) => (
-                        <li key={post.id}>
-                            <Post post={post} />
-                        </li>
+                        <Post key={post.id} post={post} />
                     ))}
-                </ul>
-            </div>
-        </main>
+                </section>
+            </main>
+        </>
     );
 }
