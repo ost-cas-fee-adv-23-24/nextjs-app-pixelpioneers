@@ -2,20 +2,19 @@
 
 import { signOut } from 'next-auth/react';
 import {
-    Button,
     ButtonSize,
-    IconProfile,
-    Variant,
+    IconLogoutAnimated,
+    NaviButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default function LogoutButton() {
     return (
-        <Button
+        <NaviButton
+            size={ButtonSize.L}
+            className="text-white"
+            label={'Logout'}
+            Icon={IconLogoutAnimated}
             onClick={() => signOut()}
-            label="Logout"
-            size={ButtonSize.M}
-            variant={Variant.TERTIARY}
-            Icon={IconProfile}
         />
     );
 }

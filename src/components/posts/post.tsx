@@ -27,9 +27,8 @@ export default function Post({ post }: { post: Post }) {
                     src={post?.creator?.avatarUrl}
                 />
             </div>
-
             <Label className="px-l pb-s pt-l" size={LabelSize.L} type={LabelType.SPAN}>
-                Britney Spears
+                Ben Hur
             </Label>
             <section className="flex flex-row gap-xs px-l">
                 <IconLink
@@ -39,10 +38,9 @@ export default function Post({ post }: { post: Post }) {
                 />
                 <IconLink label={'vor 11 Minuten'} variant={Variant.SECONDARY} Icon={IconTime} />
             </section>
-
             {post.text && <p className="px-l py-m">{post.text}</p>}
             <section className="flex flex-row px-m pb-m">
-                <CommentButton amount={1} />
+                <CommentButton amount={post.replies} />
                 <LikeButton
                     onClick={async () =>
                         post.likedBySelf ? await unlikePost(post.id) : await likePost(post.id)
@@ -55,7 +53,6 @@ export default function Post({ post }: { post: Post }) {
                     labelShared="Link copied"
                     link="https://www.coop.ch"
                 />
-                <div>{post.replies} replies</div>
             </section>
         </article>
     );

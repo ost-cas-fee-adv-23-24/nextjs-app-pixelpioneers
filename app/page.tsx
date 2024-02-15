@@ -12,8 +12,6 @@ import {
     Avatar,
     AvatarSize,
     ButtonSize,
-    IconLogoutAnimated,
-    IconMumble,
     IconSettingsAnimated,
     LogoMumbleHorizontal,
     NaviButton,
@@ -35,40 +33,29 @@ export default async function Home() {
                     />
                     <section className="flex flex-1 flex-row-reverse items-center">
                         {session ? (
-                            <NaviButton
-                                size={ButtonSize.L}
-                                className="text-white"
-                                label={'Logout'}
-                                Icon={IconLogoutAnimated}
-                            />
+                            <>
+                                <LogoutButton />
+                                <NaviButton
+                                    size={ButtonSize.L}
+                                    className="text-white"
+                                    label={'Settings'}
+                                    Icon={IconSettingsAnimated}
+                                />
+                            </>
                         ) : (
-                            <NaviButton
-                                size={ButtonSize.L}
-                                className="text-white"
-                                label={'Logout'}
-                                Icon={IconMumble}
-                            />
+                            <LoginButton />
                         )}
-                        <NaviButton
-                            size={ButtonSize.L}
-                            className="text-white"
-                            label={'Settings'}
-                            Icon={IconSettingsAnimated}
-                        />
                         <Avatar size={AvatarSize.S} alt="George Michael" />
                     </section>
                 </div>
             </nav>
             <main className="p-24 flex min-h-screen flex-col items-center justify-between">
-                {session ? (
+                {session && (
                     <>
-                        <p>{session.user?.name}</p>
-                        <LogoutButton />
+                        <p>User: {session.user?.name}</p>
                         <DisplayName />
                         <RecommendedUser />
                     </>
-                ) : (
-                    <LoginButton />
                 )}
                 {session && <NewPost />}
                 <section className="flex flex-col gap-y-m">

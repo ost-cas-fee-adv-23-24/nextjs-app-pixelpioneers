@@ -2,18 +2,19 @@
 
 import { signIn } from 'next-auth/react';
 import {
-    Button,
     ButtonSize,
-    IconProfile,
+    IconMumble,
+    NaviButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default function LoginButton() {
     return (
-        <Button
+        <NaviButton
+            size={ButtonSize.L}
+            className="text-white"
+            label={'Login'}
+            Icon={IconMumble}
             onClick={() => signIn('zitadel')}
-            Icon={IconProfile}
-            size={ButtonSize.M}
-            label="Login with Zitadel"
         />
     );
 }
