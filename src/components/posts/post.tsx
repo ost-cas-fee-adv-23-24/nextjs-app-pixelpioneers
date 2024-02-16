@@ -20,17 +20,17 @@ import { likePost, unlikePost } from '@/app/actions';
 export default function Post({ post }: { post: Post }) {
     return (
         <article className="relative flex min-h-[140px] flex-col rounded-m bg-white md:w-[680px]">
-            <div className="z-5 absolute left-[-20px] top-[20px]">
+            <div className="z-5 absolute left-[-32px] top-[20px]">
                 <Avatar
-                    size={AvatarSize.S}
+                    size={AvatarSize.M}
                     alt={post?.creator?.username}
                     src={post?.creator?.avatarUrl}
                 />
             </div>
-            <Label className="px-l pb-s pt-l" size={LabelSize.L} type={LabelType.SPAN}>
-                Ben Hur
+            <Label className="px-xl pb-s pt-l" size={LabelSize.L} type={LabelType.SPAN}>
+                Vorname Nachname
             </Label>
-            <section className="flex flex-row gap-xs px-l">
+            <section className="flex flex-row gap-s px-xl">
                 <IconLink
                     label={post?.creator?.username}
                     variant={Variant.PRIMARY}
@@ -38,8 +38,8 @@ export default function Post({ post }: { post: Post }) {
                 />
                 <IconLink label={'vor 11 Minuten'} variant={Variant.SECONDARY} Icon={IconTime} />
             </section>
-            {post.text && <p className="px-l py-m">{post.text}</p>}
-            <section className="flex flex-row px-m pb-m">
+            {post.text && <p className="px-xl py-m">{post.text}</p>}
+            <section className="ml-[-12px] flex flex-row gap-x-l px-xl pb-m">
                 <CommentButton amount={post.replies} />
                 <LikeButton
                     onClick={async () =>

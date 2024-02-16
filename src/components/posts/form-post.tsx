@@ -6,21 +6,27 @@ import {
     ButtonSize,
     IconSend,
     IconUpload,
+    Label,
+    LabelSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default function NewPost() {
+    // TODO: We need to have the label size of 32px - 2xl
     return (
         <form
-            className="relative my-m flex flex-col gap-y-m rounded-m bg-white p-l md:min-h-[200px] md:w-[680px]"
+            className="relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl py-l md:min-h-[326px] md:w-[680px]"
             action={createPost}
         >
-            <div className="z-5 absolute left-[-20px] top-[20px]">
-                <Avatar size={AvatarSize.S} alt="George Michael" />
+            <div className="z-5 absolute left-[-32px] top-[20px]">
+                <Avatar size={AvatarSize.M} alt="George Michael" />
             </div>
-            <label htmlFor="text">Hey, was gibt&apos;s Neues?</label>
+
+            <Label size={LabelSize.XL} htmlFor="text">
+                Hey, was gibt&apos;s Neues?
+            </Label>
             <textarea
-                className="resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
+                className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
                 name="text"
                 id="text"
                 placeholder="Deine Meinung zählt!"

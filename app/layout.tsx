@@ -1,10 +1,7 @@
 import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import clsx from 'clsx';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'Mumble App',
@@ -16,7 +13,7 @@ export default function RootLayout(
     posts: React.ReactNode,
     users: React.ReactNode,
 ) {
-    const backgroundColor = clsx(inter.className, 'bg-slate-100');
+    const backgroundColor = clsx('bg-slate-100');
 
     return (
         <html lang="en">

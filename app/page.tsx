@@ -1,7 +1,7 @@
 import React from 'react';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import LivePosts from '@/src/components/posts/live-posts';
-import NewPost from '@/src/components/posts/new-post';
+import LivePosts from '@/src/components/posts/list-post';
+import NewPost from '@/src/components/posts/form-post';
 import Post from '@/src/components/posts/post';
 import { getPostList } from '@/src/services/post.service';
 import DisplayName from '@/src/compositions/display-name/display-name';
