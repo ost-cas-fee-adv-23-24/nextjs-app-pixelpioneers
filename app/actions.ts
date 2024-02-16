@@ -95,7 +95,7 @@ export async function getUser(userId: string): Promise<User | ActionError> {
     );
 
     if (!response.data) {
-        return response.error || { request: 'post not found' };
+        return response.error || { request: 'user not found' };
     }
 
     return response.data;

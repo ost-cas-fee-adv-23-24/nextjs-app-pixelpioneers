@@ -51,7 +51,7 @@ export default function Post({ post }: { post: Post }) {
                 <ShareButton
                     label="Copy Link"
                     labelShared="Link copied"
-                    link="https://www.coop.ch"
+                    link="https://www.denner.ch"
                 />
             </section>
         </article>
