@@ -108,6 +108,7 @@ export async function getPosts(
         redirectToLogin();
         return loginError;
     }
+    const options = ''; // TODO: gather all params, filter undefined ones, multiply array values, turn into Record<string, string>
 
     console.info(
         newerThanId,
@@ -118,6 +119,7 @@ export async function getPosts(
         likedByUserId,
         offset,
         limit,
+        options,
     );
     const response = await request<Post[]>(getRoute(API_ROUTES.POSTS, undefined, {}), {
         method: 'GET',
