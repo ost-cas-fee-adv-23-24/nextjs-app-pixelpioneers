@@ -3,13 +3,13 @@ import { Response } from '@/src/models/fetch.model';
 
 export async function request<T>(
     endpoint: string,
-    jwtToken: string,
     options: { [key: string]: string | FormData },
+    jwtToken?: string,
 ): Promise<Response<T>> {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
     const headers: { [key: string]: string } = {
         'content-type': 'application/json',
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: jwtToken ? `Bearer ${jwtToken}` : '',
     };
 
     if (options.body && typeof options.body !== 'string') {

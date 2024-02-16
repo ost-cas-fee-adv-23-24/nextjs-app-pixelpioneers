@@ -2,6 +2,7 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Post } from '../models/post.model';
 import { PaginatedResult } from '../models/paginate.model';
 import { apiUrl, authHeader } from '../helpers/api';
+import { decodeTime } from 'ulid';
 
 export async function getPostList() {
     const session = await auth();
@@ -13,4 +14,12 @@ export async function getPostList() {
     });
     const posts = (await response.json()) as PaginatedResult<Post>;
     return posts.data;
+}
+
+export function postReducer(post: Post): Post {
+    return { ...post, created: decodeTime(post.id) };
+}
+
+export function postsReducer(posts: Post[]): Post[] {
+    return posts.map((post) => postReducer(post));
 }

@@ -5,8 +5,15 @@ import { redirectToLogin } from '@/src/helpers/checkLogin';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { CreatePostSchema, Post } from '@/src/models/post.model';
 import { request } from '@/src/services/request.service';
-import { ActionError, CreatePostError, LoginError } from '@/src/models/fetch.model';
 import { User } from '@/src/models/user.model';
+import {
+    ActionError,
+    CreatePostError,
+    LoginError,
+    RequestError,
+    Response,
+} from '@/src/models/fetch.model';
+import { postReducer, postsReducer } from '@/src/services/post.service';
 
 const loginError: LoginError = { login: 'session outdated' };
 
@@ -18,16 +25,13 @@ export async function likePost(postId: string): Promise<void | ActionError> {
     }
     const response = await request<void>(
         getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
-        session.accessToken,
         {
             method: 'PUT',
         },
+        session.accessToken,
     );
-    if (response.error) {
-        return response.error;
-    }
-
     //revalidateTag('posts') // Update cached posts
+    return resolveEmptyResponse(response, 'like post failed');
 }
 
 export async function unlikePost(postId: string): Promise<void | ActionError> {
@@ -38,16 +42,13 @@ export async function unlikePost(postId: string): Promise<void | ActionError> {
     }
     const response = await request<void>(
         getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
-        session.accessToken,
         {
             method: 'DELETE',
         },
+        session.accessToken,
     );
-    if (response.error) {
-        return response.error;
-    }
-
     //revalidateTag('posts') // Update cached posts
+    return resolveEmptyResponse(response, 'unlike post failed');
 }
 
 export async function createPost(formData: FormData): Promise<Post | CreatePostError> {
@@ -66,16 +67,63 @@ export async function createPost(formData: FormData): Promise<Post | CreatePostE
         return validatedFields.error.flatten().fieldErrors;
     }
 
-    const response = await request<Post>(getRoute(API_ROUTES.POSTS), session.accessToken, {
-        method: 'POST',
-        body: formData,
-    });
+    const response = await request<Post>(
+        getRoute(API_ROUTES.POSTS),
+        {
+            method: 'POST',
+            body: formData,
+        },
+        session.accessToken,
+    );
 
-    if (!response.data) {
-        return response.error || { request: 'post not found' };
+    return resolveResponse<Post>(response, 'post not uploaded');
+}
+
+export async function getPost(postId: string): Promise<Post | ActionError> {
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        redirectToLogin();
+        return loginError;
     }
 
-    return response.data;
+    const response = await request<Post>(getRoute(API_ROUTES.POSTS_ID, postId), {
+        method: 'GET',
+    });
+
+    return resolveResponse<Post>(response, 'post not found', postReducer);
+}
+
+export async function getPosts(
+    newerThanId?: string,
+    olderThanId?: string,
+    searchText?: string,
+    tags?: string[],
+    creatorIds?: string[],
+    likedByUserId?: string[],
+    offset?: number,
+    limit?: number,
+): Promise<Post[] | ActionError> {
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        redirectToLogin();
+        return loginError;
+    }
+
+    console.info(
+        newerThanId,
+        olderThanId,
+        searchText,
+        tags,
+        creatorIds,
+        likedByUserId,
+        offset,
+        limit,
+    );
+    const response = await request<Post[]>(getRoute(API_ROUTES.POSTS, undefined, {}), {
+        method: 'GET',
+    });
+
+    return resolveResponse<Post[]>(response, 'post not found', postsReducer);
 }
 
 export async function getUser(userId: string): Promise<User | ActionError> {
@@ -88,15 +136,35 @@ export async function getUser(userId: string): Promise<User | ActionError> {
 
     const response = await request<User>(
         getRoute(API_ROUTES.USERS_ID, userId),
-        session.accessToken,
         {
             method: 'GET',
         },
+        session.accessToken,
     );
 
-    if (!response.data) {
-        return response.error || { request: 'user not found' };
-    }
+    return resolveResponse<User>(response, 'user not found');
+}
 
+function resolveResponse<T>(
+    response: Response<T>,
+    errorMessage?: string,
+    reducer?: (object: T) => T,
+): T | RequestError {
+    if (!response.data) {
+        return response.error || { request: errorMessage || 'error' };
+    }
+    if (reducer) {
+        return reducer(response.data);
+    }
     return response.data;
+}
+
+function resolveEmptyResponse(
+    response: Response<void>,
+    errorMessage?: string,
+): RequestError | void {
+    if (response.error) {
+        return response.error || { request: errorMessage || 'error' };
+    }
+    return;
 }
