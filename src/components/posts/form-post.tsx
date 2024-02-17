@@ -10,8 +10,9 @@ import {
     LabelSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { Session } from 'next-auth';
 
-export default function NewPost() {
+export default function NewPost({ session }: { session: Session | null }) {
     // TODO: We need to have the label size of 32px - 2xl
     return (
         <form
@@ -19,7 +20,11 @@ export default function NewPost() {
             action={createPost}
         >
             <div className="z-5 absolute left-[-32px] top-[20px]">
-                <Avatar size={AvatarSize.M} alt="George Michael" />
+                <Avatar
+                    size={AvatarSize.M}
+                    src={session?.user?.image || ''}
+                    alt={session?.user?.name || ''}
+                />
             </div>
 
             <Label size={LabelSize.XL} htmlFor="text">

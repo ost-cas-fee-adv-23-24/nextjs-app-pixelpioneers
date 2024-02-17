@@ -17,12 +17,11 @@ export default async function Home() {
             <main className="p-24 flex min-h-screen flex-col items-center justify-between">
                 {session && (
                     <>
-                        <p>User: {session.user?.name}</p>
                         <DisplayName />
                         <RecommendedUser />
                     </>
                 )}
-                {session && <NewPost />}
+                {session && <NewPost session={session} />}
                 <section className="flex flex-col gap-y-m">
                     <LivePosts />
                     {posts.map((post) => (

@@ -10,10 +10,12 @@ import {
 import { Session } from 'next-auth';
 
 export default function LoginButton({ session }: { session: Session | null }) {
+    const classNavButton = 'bg-primary-600 hover:bg-primary-700 text-white';
+
     return session ? (
         <NaviButton
             size={ButtonSize.L}
-            className="text-white"
+            className={classNavButton}
             label={'Logout'}
             Icon={IconLogoutAnimated}
             onClick={() => signOut()}
@@ -21,7 +23,7 @@ export default function LoginButton({ session }: { session: Session | null }) {
     ) : (
         <NaviButton
             size={ButtonSize.L}
-            className="text-white"
+            className={classNavButton}
             label={'Login'}
             Icon={IconMumble}
             onClick={() => signIn('zitadel')}

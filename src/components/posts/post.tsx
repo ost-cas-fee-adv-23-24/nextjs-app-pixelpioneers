@@ -20,7 +20,7 @@ import { likePost, unlikePost } from '@/app/actions';
 export default function Post({ post }: { post: Post }) {
     return (
         <article className="relative flex min-h-[140px] flex-col rounded-m bg-white md:w-[680px]">
-            <section className="gap-4 grid grid-flow-col grid-rows-3 px-xl pt-l md:flex md:flex-row md:flex-col">
+            <section className="gap-4 grid grid-flow-col grid-rows-2 px-xl pt-l md:flex md:flex-col">
                 <div className="z-5 relative row-span-3 md:absolute md:left-[-32px] md:top-[20px]">
                     <Avatar
                         size={AvatarSize.M}
