@@ -19,7 +19,7 @@ export default function NewPost({ session }: { session: Session | null }) {
             className="relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl py-l md:min-h-[326px] md:w-[680px]"
             action={createPost}
         >
-            <div className="z-5 absolute left-[-32px] top-[20px]">
+            <div className="z-5 absolute left-[32px] top-[-20px] md:left-[-32px] md:top-[20px]">
                 <Avatar
                     size={AvatarSize.M}
                     src={session?.user?.image || ''}
@@ -27,7 +27,7 @@ export default function NewPost({ session }: { session: Session | null }) {
                 />
             </div>
 
-            <Label size={LabelSize.XL} htmlFor="text">
+            <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
                 Hey, was gibt&apos;s Neues?
             </Label>
             <textarea
@@ -36,7 +36,7 @@ export default function NewPost({ session }: { session: Session | null }) {
                 id="text"
                 placeholder="Deine Meinung zählt!"
             ></textarea>
-            <section className="flex flex-row justify-between ">
+            <section className="flex flex-row justify-between">
                 <Button
                     type="button"
                     Icon={IconUpload}

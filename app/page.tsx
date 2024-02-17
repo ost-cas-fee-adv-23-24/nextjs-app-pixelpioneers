@@ -14,7 +14,7 @@ export default async function Home() {
         <>
             <Navigation session={session} />
             <main className="p-24 flex min-h-screen flex-col items-center justify-between">
-                <header className="md:w-[680px]">
+                <header className="mx-m md:mx-0 md:w-[680px]">
                     <Heading variant={HeadingLevel.H2} className="pt-m text-primary-600">
                         Willkommen auf Mumble
                     </Heading>
@@ -23,7 +23,11 @@ export default async function Home() {
                         repellat dicta.
                     </Heading>
                 </header>
-                {session && <NewPost session={session} />}
+                {session && (
+                    <section className="flex w-full flex-col gap-y-m px-m md:w-auto md:px-0">
+                        <NewPost session={session} />
+                    </section>
+                )}
                 <section className="flex flex-col gap-y-m">
                     <LivePosts />
                     {posts.map((post) => (

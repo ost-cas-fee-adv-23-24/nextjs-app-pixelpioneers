@@ -1,6 +1,6 @@
 {
   "printWidth": 100,
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-packagejson"],
+  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"],
   "tailwindFunctions": ["clsx", "tw"],
   "overrides": [
     {
