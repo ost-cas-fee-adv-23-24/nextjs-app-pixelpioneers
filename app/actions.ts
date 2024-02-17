@@ -6,6 +6,7 @@ import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { CreatePostSchema, Post } from '@/src/models/post.model';
 import { request } from '@/src/services/request.service';
 import { ActionError, CreatePostError, LoginError } from '@/src/models/fetch.model';
+import { User } from '@/src/models/user.model';
 
 const loginError: LoginError = { login: 'session outdated' };
 
@@ -72,6 +73,29 @@ export async function createPost(formData: FormData): Promise<Post | CreatePostE
 
     if (!response.data) {
         return response.error || { request: 'post not found' };
+    }
+
+    return response.data;
+}
+
+export async function getUser(userId: string): Promise<User | ActionError> {
+    const session = await auth();
+
+    if (session === null || session.accessToken === undefined) {
+        redirectToLogin();
+        return loginError;
+    }
+
+    const response = await request<User>(
+        getRoute(API_ROUTES.USERS_ID, userId),
+        session.accessToken,
+        {
+            method: 'GET',
+        },
+    );
+
+    if (!response.data) {
+        return response.error || { request: 'user not found' };
     }
 
     return response.data;

@@ -6,11 +6,11 @@ import { apiUrl, authHeader } from '../helpers/api';
 export async function getPostList() {
     const session = await auth();
 
-    const res = await fetch(`${apiUrl}/posts`, {
+    const response = await fetch(`${apiUrl}/posts`, {
         headers: {
             ...authHeader(session?.accessToken),
         },
     });
-    const posts = (await res.json()) as PaginatedResult<Post>;
+    const posts = (await response.json()) as PaginatedResult<Post>;
     return posts.data;
 }

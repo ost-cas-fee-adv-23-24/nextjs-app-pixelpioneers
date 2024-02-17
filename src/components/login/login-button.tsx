@@ -1,19 +1,30 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import {
-    Button,
     ButtonSize,
-    IconProfile,
+    IconLogoutAnimated,
+    IconMumble,
+    NaviButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { Session } from 'next-auth';
 
-export default function LoginButton() {
-    return (
-        <Button
+export default function LoginButton({ session }: { session: Session | null }) {
+    return session ? (
+        <NaviButton
+            size={ButtonSize.L}
+            className="text-white"
+            label={'Logout'}
+            Icon={IconLogoutAnimated}
+            onClick={() => signOut()}
+        />
+    ) : (
+        <NaviButton
+            size={ButtonSize.L}
+            className="text-white"
+            label={'Login'}
+            Icon={IconMumble}
             onClick={() => signIn('zitadel')}
-            Icon={IconProfile}
-            size={ButtonSize.M}
-            label="Login with Zitadel"
         />
     );
 }
