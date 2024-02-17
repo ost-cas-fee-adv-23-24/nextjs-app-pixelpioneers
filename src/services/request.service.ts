@@ -16,17 +16,20 @@ export async function request<T>(
         delete headers['content-type'];
     }
 
-    const response = await fetch(url, {
-        headers,
-        ...options,
-    }).catch((error) => {
-        console.error('Error during request', error);
-    });
+    try {
+        const response = await fetch(url, {
+            headers,
+            ...options,
+        }).catch((error) => {
+            console.error('Error during request', error);
+        });
 
-    if (!response || !response?.ok) {
-        console.error(`Error ${response?.status}: ${response?.json}`);
-        return { error: { request: `${response?.status}: ${response?.json}` } };
+        if (!response || !response?.ok) {
+            console.error(`Error ${response?.status}: ${response?.json}`);
+            return { error: { request: `${response?.status}: ${response?.json}` } };
+        }
+        return { data: response.json() as T };
+    } catch (error) {
+        return { error: { request: 'request failed, check your internet connection' } };
     }
-
-    return { data: response.json() as T };
 }

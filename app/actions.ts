@@ -93,35 +93,28 @@ export async function getPost(postId: string): Promise<Post | ActionError> {
     return resolveResponse<Post>(response, 'post not found', postReducer);
 }
 
-export async function getPosts(
-    newerThanId?: string,
-    olderThanId?: string,
-    searchText?: string,
-    tags?: string[],
-    creatorIds?: string[],
-    likedByUserId?: string[],
-    offset?: number,
-    limit?: number,
-): Promise<Post[] | ActionError> {
+/**
+ * get all Posts, filter possible by options param
+ * The following options are available at the endpoint:
+ * - newerThan: post ULID; string
+ * - olderThan: post ULID; string
+ * - text: text to search for; string
+ * - tags: tag to search for, multiple records possible; string
+ * - creators: creator ID to filter for, multiple records possible; string
+ * - likedBy: user ID who liked the post to filter for, multiple records possible; string
+ * - offset; number as string
+ * - limit; number as string
+ * @param options
+ */
+export async function getPosts(options: Record<string, string>): Promise<Post[] | ActionError> {
     const session = await auth();
     if (session === null || session.accessToken === undefined) {
         redirectToLogin();
         return loginError;
     }
-    const options = ''; // TODO: gather all params, filter undefined ones, multiply array values, turn into Record<string, string>
+    //const options = ''; // TODO: gather all params, filter undefined ones, multiply array values, turn into Record<string, string>
 
-    console.info(
-        newerThanId,
-        olderThanId,
-        searchText,
-        tags,
-        creatorIds,
-        likedByUserId,
-        offset,
-        limit,
-        options,
-    );
-    const response = await request<Post[]>(getRoute(API_ROUTES.POSTS, undefined, {}), {
+    const response = await request<Post[]>(getRoute(API_ROUTES.POSTS, undefined, options), {
         method: 'GET',
     });
 
