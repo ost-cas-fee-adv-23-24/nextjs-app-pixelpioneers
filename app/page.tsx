@@ -4,9 +4,8 @@ import LivePosts from '@/src/components/posts/list-post';
 import NewPost from '@/src/components/posts/form-post';
 import Post from '@/src/components/posts/post';
 import { getPostList } from '@/src/services/post.service';
-import DisplayName from '@/src/compositions/display-name/display-name';
-import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
 import Navigation from '@/src/components/navigation/navigation';
+import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default async function Home() {
     const session = await auth();
@@ -15,12 +14,15 @@ export default async function Home() {
         <>
             <Navigation session={session} />
             <main className="p-24 flex min-h-screen flex-col items-center justify-between">
-                {session && (
-                    <>
-                        <DisplayName />
-                        <RecommendedUser />
-                    </>
-                )}
+                <header className="md:w-[680px]">
+                    <Heading variant={HeadingLevel.H2} className="pt-m text-primary-600">
+                        Willkommen auf Mumble
+                    </Heading>
+                    <Heading variant={HeadingLevel.H4} className="pb-m text-slate-500">
+                        Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel
+                        repellat dicta.
+                    </Heading>
+                </header>
                 {session && <NewPost session={session} />}
                 <section className="flex flex-col gap-y-m">
                     <LivePosts />
