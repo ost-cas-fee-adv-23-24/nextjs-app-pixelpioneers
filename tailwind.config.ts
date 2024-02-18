@@ -11,7 +11,11 @@ const config: Config = {
         './node_modules/@ost-cas-fee-adv-23-24/design-system-pixelpioneers/lib/esm/components/**/*.js',
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['var(--font-poppins)'],
+            },
+        },
     },
     variants: {
         extend: {},

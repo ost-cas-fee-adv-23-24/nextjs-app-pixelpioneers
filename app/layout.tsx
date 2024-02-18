@@ -1,7 +1,6 @@
 import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
-import clsx from 'clsx';
 import Navigation from '@/src/components/navigation/navigation';
 
 export const metadata: Metadata = {
@@ -18,10 +17,9 @@ export default function RootLayout({
     posts: React.ReactNode;
     users: React.ReactNode;
 }) {
-    const backgroundColor = clsx('bg-slate-100');
     return (
         <html lang="en">
-            <body className={backgroundColor}>
+            <body className="bg-slate-100">
                 <Navigation />
                 <main className="p-24 flex min-h-screen flex-col items-center justify-between">
                     {children}
