@@ -1,4 +1,5 @@
 'use client';
+
 import { Post } from '@/src/models/post.model';
 import React from 'react';
 import {
