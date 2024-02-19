@@ -16,15 +16,15 @@ import {
 // TODO: Need to sync with the team realting different sizes
 export default function RecommendedUser() {
     return (
-        <section className="flex h-[242px] w-[174px] flex-col items-center space-y-s rounded-m border border-secondary-300 bg-white p-m hover:bg-secondary-100">
-            <Avatar size={AvatarSize.M} alt="Michael Jackson" />
+        <section className="flex flex-col items-center space-y-s rounded-m border border-secondary-300 bg-white p-m hover:bg-secondary-100 md:h-[242px] md:w-[216px]">
+            <Avatar size={AvatarSize.L} alt="Michael Jackson" />
             <Label
                 size={LabelSize.M}
-                title={'Michael Jackson'}
-                aria-label={'Michael Jackson'}
-                className="... truncate"
+                title={'Vorname Nachname'}
+                aria-label={'Vorname Nachname'}
+                className="truncate"
             >
-                Michael Jackson
+                Vorname Nachname
             </Label>
             <IconLink
                 className="mr-xs"
@@ -37,6 +37,7 @@ export default function RecommendedUser() {
                 size={ButtonSize.M}
                 variant={Variant.PRIMARY}
                 label="Follow"
+                className="hover:cursor-pointer"
             />
         </section>
     );

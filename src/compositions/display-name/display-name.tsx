@@ -25,7 +25,7 @@ export default function DisplayName({ showAvatar }: { showAvatar?: boolean }) {
                 <div>
                     <Heading variant={HeadingLevel.H4}>George Michael</Heading>
                 </div>
-                <p className="inline-flex">
+                <p className="flex flex-wrap gap-y-xs md:inline-flex md:flex-nowrap">
                     <IconLink
                         className="mr-xs"
                         label="Username"

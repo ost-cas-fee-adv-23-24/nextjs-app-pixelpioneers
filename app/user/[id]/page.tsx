@@ -1,20 +1,22 @@
 import React from 'react';
-import Image from 'next/image';
 import {
-    Avatar,
-    AvatarSize,
+    Heading,
+    HeadingLevel,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import TabsProfile from '@/src/components/tabs-profile/tabs-profile';
+import BackgroundImage from '@/src/components/background-image/background-image';
+import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
+import FollowStatus from '@/src/components/follow-status/follow-status';
 
 export default async function Profile() {
     const session = await auth();
     return (
         <>
-            {/* <section className="flex h-[200px] w-[800px] items-center justify-around md:content-center">
+            {/* <section className="flex h-[200px] w-[680px] items-center justify-around md:content-center">
                 <div className="flex h-[200px] animate-pulse flex-row items-center justify-center space-x-m">
                     <div className="h-xl w-xl rounded-full bg-slate-300 "></div>
                     <div className="flex flex-col space-y-m">
@@ -25,40 +27,25 @@ export default async function Profile() {
 
             </section> */}
 
-            <section className="flex h-full w-full flex-col items-center justify-around gap-y-l md:content-center">
-                <section className="rounded flex h-[40px] w-[800px] animate-pulse items-center justify-around bg-slate-300 md:content-center"></section>
+            {/* <section className="flex h-full w-full flex-col items-center justify-around gap-y-l md:content-center"> */}
+            <section className="flex min-h-screen flex-col items-center justify-between p-xl">
+                <section className="rounded flex h-[40px] w-full animate-pulse items-center justify-around bg-slate-300 md:w-[680px] md:content-center"></section>
 
-                <section>
-                    <div className="animate-pulse space-y-[4px] p-[4px]">
+                <section className="flex w-full flex-col md:w-[680px]">
+                    <div className="animate-pulse space-y-[4px] py-[4px]">
                         <div className="rounded h-[32px] w-full bg-slate-300"></div>
                         <div className="space-y-[2px]">
-                            <div className="rounded h-[4px] w-[600px] bg-slate-300"></div>
-                            <div className="rounded h-[4px] w-[300px] bg-slate-300"></div>
+                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
+                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
+                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
                         </div>
                     </div>
                 </section>
 
-                <div className="mb-4 relative flex h-[320px] w-[800px] cursor-pointer flex-row rounded-m bg-primary-600 object-contain">
-                    <Image
-                        src="https://cdn.dnaindia.com/sites/default/files/styles/full/public/2018/04/05/668453-cyberattacks-thinkstock-113017.jpg"
-                        alt="Profile"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        fill
-                    />
-                    <div className="absolute bottom-[-70px] right-[30px]">
-                        <Avatar
-                            src={(session?.user && session.user.image) || null || undefined}
-                            alt={'Name Vorname'}
-                            size={AvatarSize.XL}
-                        />
-                        {/* <EditAvatar
-                        src={session && session?.user?.image || null || undefined}
-                        alt={'Name Vorname'}
-                        onEdit={() => auth()}
-                    /> */}
-                    </div>
+                <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
+                    <BackgroundImage session={session} />
                 </div>
-                <section className="flex w-[800px] flex-col">
+                <section className="flex w-full flex-col md:w-[680px]">
                     <div className="ml-[-24px] self-start">
                         <DisplayName showAvatar={false}></DisplayName>
                     </div>
@@ -72,10 +59,32 @@ export default async function Profile() {
                         indisch, baut seit neustem Duplotürme und Brio-Bahnanlagen.
                     </Paragraph>
                 </section>
-                <section className="flex w-[800px] flex-col">
+                <section className="flex w-full flex-col py-s md:w-[680px]">
                     <TabsProfile />
                 </section>
-                <section className="flex w-[800px] flex-col">Posts...</section>
+                <section className="flex w-full flex-col items-end py-s md:w-[680px]">
+                    <FollowStatus />
+                </section>
+                <Heading
+                    className="w-full py-s text-slate-600 md:w-[680px]"
+                    variant={HeadingLevel.H3}
+                >
+                    Empfohlene User
+                </Heading>
+                <section className="flex w-full flex-row flex-wrap gap-s py-s md:w-[680px]">
+                    <RecommendedUser />
+                    <RecommendedUser />
+                    <RecommendedUser />
+
+                    <RecommendedUser />
+                    <RecommendedUser />
+                    <RecommendedUser />
+
+                    <RecommendedUser />
+                    <RecommendedUser />
+                    <RecommendedUser />
+                </section>
+                <section className="flex w-full flex-col md:w-[680px]">Posts...</section>
             </section>
         </>
     );
