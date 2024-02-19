@@ -24,13 +24,13 @@ export enum API_ROUTES {
 export const getRoute = (
     route: APP_ROUTES | API_ROUTES,
     id = '',
-    options?: Record<string, string>,
+    options?: Record<string, string[]>,
 ): string => `${route.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
 
-const getRouteOptions = (options: Record<string, string>): string => {
+const getRouteOptions = (options: Record<string, string[]>): string => {
     let optionString = '?';
-    Object.entries(options).forEach(
-        ([key, value]) => (optionString = `${optionString}&${key}=${value}`),
-    );
+    Object.entries(options).map(([key, values]) => {
+        values.map((value) => (optionString = `${optionString}&${key}=${value}`));
+    });
     return optionString;
 };

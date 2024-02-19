@@ -31,13 +31,14 @@ export default function NewPost() {
                 id="text"
                 placeholder="Deine Meinung zählt!"
             ></textarea>
-            <section className="flex flex-row justify-between ">
+            <section className="flex flex-row gap-s">
                 <Button
                     type="button"
                     Icon={IconUpload}
                     size={ButtonSize.M}
                     variant={Variant.SECONDARY}
                     label="Bild hochladen"
+                    fill
                 />
                 <Button
                     type="submit"
@@ -45,6 +46,7 @@ export default function NewPost() {
                     size={ButtonSize.M}
                     variant={Variant.PRIMARY}
                     label="Absenden"
+                    fill
                 />
             </section>
         </form>

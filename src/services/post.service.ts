@@ -20,6 +20,6 @@ export function postReducer(post: Post): Post {
     return { ...post, created: decodeTime(post.id) };
 }
 
-export function postsReducer(posts: Post[]): Post[] {
-    return posts.map((post) => postReducer(post));
+export function postsReducer(paginatedPosts: PaginatedResult<Post>): PaginatedResult<Post> {
+    return { ...paginatedPosts, data: paginatedPosts.data.map((post) => postReducer(post)) };
 }
