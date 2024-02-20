@@ -11,8 +11,11 @@ import TabsProfile from '@/src/components/tabs-profile/tabs-profile';
 import BackgroundImage from '@/src/components/background-image/background-image';
 import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
+import clsx from 'clsx';
 
 export default async function Profile() {
+    const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
+
     const session = await auth();
     return (
         <>
@@ -31,7 +34,7 @@ export default async function Profile() {
             <section className="flex min-h-screen flex-col items-center justify-between p-xl">
                 <section className="rounded flex h-[40px] w-full animate-pulse items-center justify-around bg-slate-300 md:w-[680px] md:content-center"></section>
 
-                <section className="flex w-full flex-col md:w-[680px]">
+                <section className={sectionClasses}>
                     <div className="animate-pulse space-y-[4px] py-[4px]">
                         <div className="rounded h-[32px] w-full bg-slate-300"></div>
                         <div className="space-y-[2px]">
@@ -45,7 +48,7 @@ export default async function Profile() {
                 <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
                     <BackgroundImage session={session} />
                 </div>
-                <section className="flex w-full flex-col md:w-[680px]">
+                <section className={sectionClasses}>
                     <div className="ml-[-24px] self-start">
                         <DisplayName showAvatar={false}></DisplayName>
                     </div>
@@ -59,10 +62,10 @@ export default async function Profile() {
                         indisch, baut seit neustem Duplotürme und Brio-Bahnanlagen.
                     </Paragraph>
                 </section>
-                <section className="flex w-full flex-col py-s md:w-[680px]">
+                <section className={sectionClasses}>
                     <TabsProfile />
                 </section>
-                <section className="flex w-full flex-col items-end py-s md:w-[680px]">
+                <section className={clsx(sectionClasses, 'items-end py-s')}>
                     <FollowStatus />
                 </section>
                 <Heading
@@ -84,7 +87,7 @@ export default async function Profile() {
                     <RecommendedUser />
                     <RecommendedUser />
                 </section>
-                <section className="flex w-full flex-col md:w-[680px]">Posts...</section>
+                <section className={sectionClasses}>Posts...</section>
             </section>
         </>
     );
