@@ -1,6 +1,7 @@
 // TODO: Need to sync with team member
 
 import { ActionError } from '@/src/models/fetch.model';
+import { StatusCodes } from 'http-status-codes';
 
 export async function request<T>(
     endpoint: string,
@@ -28,10 +29,11 @@ export async function request<T>(
         throw new ActionError({ request: 'request failed, check your internet connection' });
     }
     if (!response?.ok) {
-        throw new ActionError({ request: `${response?.status}: ${response?.json}` });
+        throw new ActionError({ request: `${response?.status}` });
     }
-    if (response.status === 204) {
+    if (response.status === StatusCodes.NO_CONTENT) {
         // if no content is given with the succeeded request, return undefined
+        // TODO: ask if it makes sense to return undefined as T
         return undefined as T;
     }
     return (await response.json()) as T;
