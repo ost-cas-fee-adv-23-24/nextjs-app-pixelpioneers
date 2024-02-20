@@ -10,6 +10,7 @@ import LoginButton from '../login/login-button';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
 export default async function Navigation() {
+    // TODO: is this the best way, calling session in every component?
     const session = await auth();
     return (
         <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
