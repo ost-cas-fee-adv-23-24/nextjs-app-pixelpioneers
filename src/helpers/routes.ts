@@ -21,4 +21,17 @@ export enum API_ROUTES {
     USERS_AVATAR = '/posts/avatar',
 }
 
-export const getRoute = (route: APP_ROUTES | API_ROUTES, id = '') => route.replace('[id]', id);
+export const getRoute = (
+    route: APP_ROUTES | API_ROUTES,
+    id = '',
+    options?: Record<string, string[]>,
+): string => `${route.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
+
+const getRouteOptions = (options: Record<string, string[]>): string => {
+    let optionString = '?';
+    Object.entries(options).map(([key, values]) => {
+        // set a key for every value, since some keys allow to have multiple values
+        values.map((value) => (optionString = `${optionString}${key}=${value}&`));
+    });
+    return optionString;
+};

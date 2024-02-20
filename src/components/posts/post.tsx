@@ -24,8 +24,8 @@ export default function Post({ post }: { post: Post }) {
                 <div className="z-5 relative row-span-3 md:absolute md:left-[-32px] md:top-[20px]">
                     <Avatar
                         size={AvatarSize.M}
-                        alt={post?.creator?.username}
-                        src={post?.creator?.avatarUrl}
+                        alt={post.creator.username}
+                        src={post.creator.avatarUrl}
                     />
                 </div>
                 <Label className="col-span-2 pb-s md:flex" size={LabelSize.L} type={LabelType.SPAN}>
@@ -33,12 +33,12 @@ export default function Post({ post }: { post: Post }) {
                 </Label>
                 <div className="col-span-2 row-span-2 flex gap-s md:flex md:flex-row">
                     <IconLink
-                        label={post?.creator?.username}
+                        label={post.creator.username}
                         variant={Variant.PRIMARY}
                         Icon={IconProfile}
                     />
                     <IconLink
-                        label={'vor 11 Minuten'}
+                        label={post.created.toString()}
                         variant={Variant.SECONDARY}
                         Icon={IconTime}
                     />

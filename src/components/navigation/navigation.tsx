@@ -1,5 +1,3 @@
-'use client';
-
 import {
     Avatar,
     AvatarSize,
@@ -9,9 +7,11 @@ import {
     NaviButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import LoginButton from '../login/login-button';
-import { Session } from 'next-auth';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
-export default function Navigation({ session }: { session: Session | null }) {
+export default async function Navigation() {
+    // TODO: is this the best way, calling session in every component?
+    const session = await auth();
     return (
         <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
             <div className="flex w-[800px] flex-row">

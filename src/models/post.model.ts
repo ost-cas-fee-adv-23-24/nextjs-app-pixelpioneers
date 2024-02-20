@@ -27,7 +27,7 @@ export const PostSchema = z.object({
 
 export type Post = {
     id: string;
-    created: string;
+    created: number;
     creator: PublicUser;
     text?: string;
     mediaUrl?: string;
