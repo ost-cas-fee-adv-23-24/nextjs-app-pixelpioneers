@@ -30,7 +30,8 @@ export const getRoute = (
 const getRouteOptions = (options: Record<string, string[]>): string => {
     let optionString = '?';
     Object.entries(options).map(([key, values]) => {
-        values.map((value) => (optionString = `${optionString}&${key}=${value}`));
+        // set a key for every value, since some keys allow to have multiple values
+        values.map((value) => (optionString = `${optionString}${key}=${value}&`));
     });
     return optionString;
 };

@@ -12,7 +12,7 @@ export default async function Home() {
     const paginatedPosts = await getPosts();
     return (
         <>
-            <Navigation session={session} />
+            <Navigation />
             <main className="p-24 flex min-h-screen flex-col items-center justify-between">
                 {session && (
                     <>
