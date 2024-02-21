@@ -1,5 +1,5 @@
-export type PaginatedResult<TData> = {
-    data: TData[];
+export type PaginatedResult<T> = {
+    data: T[];
     count: number;
     next?: string;
     previous?: string;
