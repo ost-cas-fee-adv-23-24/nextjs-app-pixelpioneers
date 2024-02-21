@@ -12,7 +12,6 @@ export default function LoginButton({ session }: { session: Session | null }) {
     return (
         <NaviButton
             size={ButtonSize.L}
-            className="text-white"
             label={session ? 'Logout' : 'Login'}
             Icon={IconLogoutAnimated}
             onClick={() => (session ? signOut() : signIn('zitadel'))}
