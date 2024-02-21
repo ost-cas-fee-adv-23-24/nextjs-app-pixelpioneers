@@ -28,7 +28,6 @@ export default async function Navigation() {
                     <LoginButton session={session} />
                     <NaviButton
                         size={ButtonSize.L}
-                        className="bg-primary-600 text-white hover:bg-primary-700"
                         label={'Settings'}
                         Icon={IconSettingsAnimated}
                     />
