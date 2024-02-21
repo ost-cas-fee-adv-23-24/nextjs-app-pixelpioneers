@@ -10,8 +10,6 @@ export type User = {
 
 export type PublicUser = Omit<User, 'firstname' | 'lastname'>;
 
-export type UpdateUserData = Omit<User, 'id' | 'avatarUrl'>;
-
 export const UpdateAvatarSchema = z.object({
     media: z.string(),
 });
