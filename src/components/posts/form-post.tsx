@@ -1,4 +1,3 @@
-import { createPost } from '@/app/actions';
 import {
     Avatar,
     AvatarSize,
@@ -10,6 +9,7 @@ import {
     LabelSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { createPost } from '@/app/actions/post';
 
 export default function NewPost() {
     // TODO: We need to have the label size of 32px - 2xl

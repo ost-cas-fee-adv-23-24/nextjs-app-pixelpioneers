@@ -1,7 +1,7 @@
 import React from 'react';
-import { getPosts } from '@/app/actions';
 import Post from '@/src/components/posts/post';
-import { ActionError } from '@/src/models/fetch.model';
+import { ActionError } from '@/src/models/error.model';
+import { getPosts } from '@/app/actions/post';
 
 export default async function Posts() {
     try {
@@ -17,13 +17,10 @@ export default async function Posts() {
     } catch (error) {
         if (error instanceof ActionError) {
             return (
-                <div>
-                    {Object.entries(error.issues).map(([key, value]) => (
-                        <div key={key}>
-                            {key} {value}
-                        </div>
-                    ))}
-                </div>
+                <>
+                    <p>{error.subject}</p>
+                    <p>{error.issue}</p>
+                </>
             );
         }
     }

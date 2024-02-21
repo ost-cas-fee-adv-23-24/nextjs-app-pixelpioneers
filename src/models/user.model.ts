@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export type User = {
     id: string;
     username: string;
@@ -9,3 +11,9 @@ export type User = {
 export type PublicUser = Omit<User, 'firstname' | 'lastname'>;
 
 export type UpdateUserData = Omit<User, 'id' | 'avatarUrl'>;
+
+export const UpdateAvatarSchema = z.object({
+    media: z.string(),
+});
+
+export type AvatarValidationResult = { text?: string[]; media?: string[] };

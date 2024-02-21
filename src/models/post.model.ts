@@ -37,6 +37,8 @@ export type Post = {
     replies: number;
 };
 
+export type PostValidationResult = { text?: string[]; media?: string[] };
+
 export type DeletedPost = {
     id: string;
 };
@@ -45,3 +47,7 @@ export type UpdatePostData = Omit<
     Post,
     'id' | 'creator' | 'mediaUrl' | 'mediaType' | 'likes' | 'likedBySelf' | 'replies'
 >;
+
+export type Reply = Omit<Post, 'replies'> & {
+    parentId: string;
+};
