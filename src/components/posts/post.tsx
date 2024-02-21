@@ -15,7 +15,7 @@ import {
     ShareButton,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { likePost, unlikePost } from '@/app/actions';
+import { likePost, unlikePost } from '@/app/actions/post';
 
 export default function Post({ post }: { post: Post }) {
     return (
@@ -48,6 +48,7 @@ export default function Post({ post }: { post: Post }) {
             <section className="ml-[-12px] flex flex-row gap-x-m px-xl pb-m md:gap-x-l">
                 <CommentButton amount={post.replies} />
                 <LikeButton
+                    // TODO: why does likedBy not work properly?
                     onClick={async () =>
                         post.likedBySelf ? await unlikePost(post.id) : await likePost(post.id)
                     }
