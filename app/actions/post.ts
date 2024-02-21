@@ -8,11 +8,11 @@ import { PaginatedResult } from '@/src/models/paginate.model';
 import { getSession } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { validatePostData } from '@/src/helpers/validator';
-import { PostValidationError } from '@/src/models/error.model';
+import { ValidationError } from '@/src/models/error.model';
 
 export async function likePost(postId: string): Promise<void> {
     const session = await getSession();
-    await request<void>(
+    await request(
         getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
         {
             method: 'PUT',
@@ -24,7 +24,7 @@ export async function likePost(postId: string): Promise<void> {
 
 export async function unlikePost(postId: string): Promise<void> {
     const session = await getSession();
-    await request<void>(
+    await request(
         getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
         {
             method: 'DELETE',
@@ -39,31 +39,31 @@ export async function createPost(formData: FormData): Promise<Post> {
     const errors = validatePostData(formData);
     if (errors) {
         // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
-        throw new PostValidationError(errors);
+        throw new ValidationError(errors);
     }
 
-    const post = await request<Post>(
+    const post = (await request(
         getRoute(API_ROUTES.POSTS),
         {
             method: 'POST',
             body: formData,
         },
         session.accessToken,
-    );
+    )) as Post;
     revalidateTag('posts');
     return post;
 }
 
 export async function getPost(postId: string): Promise<Post> {
     return postReducer(
-        await request<Post>(getRoute(API_ROUTES.POSTS_ID, postId), {
+        (await request(getRoute(API_ROUTES.POSTS_ID, postId), {
             method: 'GET',
-        }),
+        })) as Post,
     );
 }
 
 export async function deletePost(postId: string): Promise<void> {
-    await request<void>(getRoute(API_ROUTES.POSTS_ID, postId), {
+    await request(getRoute(API_ROUTES.POSTS_ID, postId), {
         method: 'DELETE',
     });
 }
@@ -83,7 +83,7 @@ export async function deletePost(postId: string): Promise<void> {
  */
 export async function getPosts(options?: Record<string, string[]>): Promise<PaginatedResult<Post>> {
     return postsReducer(
-        await request<PaginatedResult<Post>>(
+        (await request(
             getRoute(API_ROUTES.POSTS, undefined, options),
             {
                 method: 'GET',
@@ -91,7 +91,7 @@ export async function getPosts(options?: Record<string, string[]>): Promise<Pagi
             undefined,
             ['posts'],
             15,
-        ),
+        )) as PaginatedResult<Post>,
     );
 }
 
@@ -100,17 +100,17 @@ export async function createReply(postId: string, formData: FormData): Promise<R
     const errors = validatePostData(formData);
     if (errors) {
         // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
-        throw new PostValidationError(errors);
+        throw new ValidationError(errors);
     }
 
-    const reply = await request<Reply>(
+    const reply = (await request(
         getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
         {
             method: 'POST',
             body: formData,
         },
         session.accessToken,
-    );
+    )) as Reply;
     revalidateTag('posts');
     revalidateTag(`replies-${postId}`);
     return reply;
@@ -129,7 +129,7 @@ export async function getReplies(
     options?: Record<string, string[]>,
 ): Promise<PaginatedResult<Reply>> {
     return repliesReducer(
-        await request<PaginatedResult<Reply>>(
+        (await request(
             getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
             {
                 method: 'GET',
@@ -137,6 +137,6 @@ export async function getReplies(
             undefined,
             [`replies-${postId}`],
             15,
-        ),
+        )) as PaginatedResult<Reply>,
     );
 }

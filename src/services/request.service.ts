@@ -3,13 +3,13 @@
 import { ActionError } from '@/src/models/error.model';
 import { StatusCodes } from 'http-status-codes';
 
-export async function request<T>(
+export async function request(
     endpoint: string,
     options: { [key: string]: string | FormData },
     jwtToken?: string,
     tags?: string[],
     revalidate?: number,
-): Promise<T> {
+): Promise<object | undefined> {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
     const headers: { [key: string]: string } = {
         'content-type': 'application/json',
@@ -36,8 +36,7 @@ export async function request<T>(
     }
     if (response.status === StatusCodes.NO_CONTENT) {
         // if no content is given with the succeeded request, return undefined
-        // TODO: ask if it makes sense to return undefined as T
-        return undefined as T;
+        return undefined;
     }
-    return (await response.json()) as T;
+    return await response.json();
 }

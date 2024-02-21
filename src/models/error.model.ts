@@ -28,7 +28,7 @@ export class ActionError extends Error {
   }
 }*/
 
-export class PostValidationError extends Error {
+export class ValidationError extends Error {
     issues: Record<string, string[]>;
 
     constructor(issues: Record<string, string[]>) {
