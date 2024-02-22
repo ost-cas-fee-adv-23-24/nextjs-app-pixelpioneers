@@ -4,31 +4,31 @@ import Image from 'next/image';
 
 import { Avatar, AvatarSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { Session } from 'next-auth';
-
-const uploadBackgroundImage = () => {
-    alert('There will be an dialog appeared!');
-};
+import { getRandomIimage } from './utils';
 
 export default function BackgroundImage({ session }: { session: Session | null }) {
+    // TODO: Need to observe why the error occurs in the console
+    const randomImage = getRandomIimage(1, 6);
     return (
         <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[800px] md:object-contain">
             {session ? (
                 <Image
-                    src="https://cdn.dnaindia.com/sites/default/files/styles/full/public/2018/04/05/668453-cyberattacks-thinkstock-113017.jpg"
-                    alt="Profile"
+                    src={`/wallpapers/${randomImage}.jpg`}
+                    alt="Your Wallpaper"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    fill
                     className="cursor-pointer"
-                    onClick={() => {
-                        uploadBackgroundImage();
-                    }}
+                    fill
+                    quality={75}
+                    loading="lazy"
                 />
             ) : (
                 <Image
-                    src="https://cdn.dnaindia.com/sites/default/files/styles/full/public/2018/04/05/668453-cyberattacks-thinkstock-113017.jpg"
-                    alt="Profile"
+                    src={`/wallpapers/${randomImage}.jpg`}
+                    alt="Your Wallpaper"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill
+                    quality={75}
+                    loading="lazy"
                 />
             )}
             <div className="absolute bottom-[-70px] right-[30px]">

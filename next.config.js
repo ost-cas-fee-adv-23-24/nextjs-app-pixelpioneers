@@ -3,7 +3,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                hostname: 'cdn.dnaindia.com',
+                protocol: 'https',
+                hostname: '**',
             },
         ],
     },
