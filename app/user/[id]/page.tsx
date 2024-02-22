@@ -12,6 +12,7 @@ import BackgroundImage from '@/src/components/background-image/background-image'
 import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
+import SkeletonPost from '@/src/components/posts/skeleton-post';
 
 export default async function Profile() {
     const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
@@ -19,32 +20,8 @@ export default async function Profile() {
     const session = await auth();
     return (
         <>
-            {/* <section className="flex h-[200px] w-[680px] items-center justify-around md:content-center">
-                <div className="flex h-[200px] animate-pulse flex-row items-center justify-center space-x-m">
-                    <div className="h-xl w-xl rounded-full bg-slate-300 "></div>
-                    <div className="flex flex-col space-y-m">
-                        <div className="h-[8px] w-[200px] rounded-m bg-slate-300 "></div>
-                        <div className="h-[8px] w-[200px] rounded-m bg-slate-300 "></div>
-                    </div>
-                </div>
-
-            </section> */}
-
-            {/* <section className="flex h-full w-full flex-col items-center justify-around gap-y-l md:content-center"> */}
+            <SkeletonPost></SkeletonPost>
             <section className="flex min-h-screen flex-col items-center justify-between p-xl">
-                <section className="rounded flex h-[40px] w-full animate-pulse items-center justify-around bg-slate-300 md:w-[680px] md:content-center"></section>
-
-                <section className={sectionClasses}>
-                    <div className="animate-pulse space-y-[4px] py-[4px]">
-                        <div className="rounded h-[32px] w-full bg-slate-300"></div>
-                        <div className="space-y-[2px]">
-                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
-                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
-                            <div className="rounded h-[4px] w-2/3 bg-slate-300"></div>
-                        </div>
-                    </div>
-                </section>
-
                 <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
                     <BackgroundImage session={session} />
                 </div>
