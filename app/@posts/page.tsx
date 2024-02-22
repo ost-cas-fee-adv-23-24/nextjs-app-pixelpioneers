@@ -7,7 +7,7 @@ export default async function Posts() {
     try {
         const paginatedPosts = await getPosts();
         return (
-            <section className="flex flex-col gap-y-m">
+            <section className="mx-m flex flex-col gap-y-m">
                 {/*<LivePosts />*/}
                 {paginatedPosts.data.map((post) => (
                     <Post key={post.id} post={post} />
