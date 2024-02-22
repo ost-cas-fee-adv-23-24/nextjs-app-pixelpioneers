@@ -7,17 +7,17 @@ export default function SkeletonPost() {
     return (
         <>
             <h3>Post</h3>
-            <section className="flex h-[200px] w-[680px] items-center justify-around md:content-center">
-                <div className="flex h-[200px] animate-pulse flex-row items-center justify-center space-x-m rounded-m border-[2px] border-slate-300 p-m">
+            <section className="flex h-[200px] w-[680px] justify-around md:content-center">
+                <div className="flex h-full animate-pulse flex-row items-start  space-x-m rounded-m border-[2px] border-slate-300 p-m">
                     <div className="h-xl w-xl rounded-full bg-slate-300 "></div>
                     <div className="flex flex-col space-y-m">
                         <div className="h-[14px] w-[200px] rounded-m bg-slate-300 "></div>
                         <div className="h-[8px] w-[200px] rounded-m bg-slate-300 "></div>
                         <div className="h-[24px] w-[300px] rounded-m bg-slate-300 "></div>
                         <div className="flex w-full flex-row space-x-xs ">
-                            <div className="h-[16px] w-[100px] rounded-m bg-slate-300 "></div>
-                            <div className="h-[16px] w-[100px] rounded-m bg-slate-300 "></div>
-                            <div className="h-[16px] w-[100px] rounded-m bg-slate-300 "></div>
+                            <div className="h-[28px] w-[100px] rounded-m bg-slate-300 "></div>
+                            <div className="h-[28px] w-[100px] rounded-m bg-slate-300 "></div>
+                            <div className="h-[28px] w-[100px] rounded-m bg-slate-300 "></div>
                         </div>
                     </div>
                 </div>
