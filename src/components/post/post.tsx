@@ -1,71 +1,50 @@
 'use client';
-
 import { Post } from '@/src/models/post.model';
 import React from 'react';
-import {
-    Avatar,
-    AvatarSize,
-    CommentButton,
-    IconLink,
-    IconProfile,
-    IconTime,
-    Label,
-    LabelSize,
-    LabelType,
-    LikeButton,
-    ShareButton,
-    Variant,
-} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { likePost, unlikePost } from '@/app/actions/post';
+import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import clsx from 'clsx';
+import PostHeader from '@/src/components/post/post-header';
+import PostActions from '@/src/components/post/post-actions';
+import Image from 'next/image';
 
-export default function Post({ post }: { post: Post }) {
+export default function Post({
+    post,
+    showComments = false,
+    showActions = true,
+}: {
+    post: Post;
+    showComments: boolean;
+    showActions: boolean;
+}) {
+    /*
+     * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
+     * TODO: width 680 or 615px?
+     */
+    const postClasses = clsx(
+        'relative flex flex-col bg-white',
+        'mx-0 w-full gap-s px-m py-s', // mobile
+        'md:mx-m md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+    );
     return (
-        <article className="relative min-h-[140px] rounded-m bg-white md:mx-0 md:w-[680px] ">
-            <section className="gap-4 grid grid-flow-col grid-rows-2 place-items-start px-xl pt-l md:flex md:flex-col md:place-items-baseline">
-                <div className="z-5 relative row-span-3 md:absolute md:left-[-32px] md:top-[20px]">
-                    <Avatar
-                        size={AvatarSize.M}
-                        alt={post?.creator?.username}
-                        src={post?.creator?.avatarUrl}
+        <article className={postClasses}>
+            {/* TODO: replace PostHeader with display name as soon as display name composition done */}
+            <PostHeader post={post} />
+            {post.mediaUrl && (
+                <section className="relative h-[500px] w-full">
+                    <Image
+                        // TODO: fix 500px static height, cache images?
+                        className="rounded-s"
+                        alt={`image from ${post.creator.username}`}
+                        src={post.mediaUrl}
+                        datatype={post.mediaType}
+                        style={{ objectFit: 'cover' }}
+                        fill
                     />
-                </div>
-                <Label
-                    className="col-span-3 md:flex md:pb-s"
-                    size={LabelSize.L}
-                    type={LabelType.SPAN}
-                >
-                    Vorname Nachname
-                </Label>
-                <div className="col-span-3 row-span-2 flex gap-s md:flex md:flex-row">
-                    <IconLink
-                        label={post.creator.username}
-                        variant={Variant.PRIMARY}
-                        Icon={IconProfile}
-                    />
-                    <IconLink
-                        label={post.created.toString()}
-                        variant={Variant.SECONDARY}
-                        Icon={IconTime}
-                    />
-                </div>
-            </section>
-            {post.text && <p className="px-xl py-m">{post.text}</p>}
-            <section className="ml-[-12px] flex flex-row gap-x-m px-xl pb-m md:gap-x-l">
-                <CommentButton amount={post.replies} />
-                <LikeButton
-                    // TODO: why does likedBy not work properly?
-                    onClick={async () =>
-                        post.likedBySelf ? await unlikePost(post.id) : await likePost(post.id)
-                    }
-                    isLiked={post.likedBySelf || false}
-                    amount={post.likes}
-                />
-                <ShareButton
-                    label="Copy Link"
-                    labelShared="Link copied"
-                    link="https://www.denner.ch"
-                />
-            </section>
+                </section>
+            )}
+            {post.text && <Paragraph size={ParagraphSize.M}>{post.text}</Paragraph>}
+            {showActions && <PostActions post={post} />}
+            {showComments && <>this is the detail view with comments</>}
         </article>
     );
 }
