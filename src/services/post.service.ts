@@ -1,4 +1,4 @@
-import { Post, Reply } from '../models/post.model';
+import { Post, PostWithReplies, Reply } from '../models/post.model';
 import { PaginatedResult } from '../models/paginate.model';
 import { decodeTime } from 'ulid';
 
@@ -22,4 +22,8 @@ export function repliesReducer(paginatedReplies: PaginatedResult<Reply>): Pagina
         ...paginatedReplies,
         data: paginatedReplies.data.map((reply) => replyReducer(reply)),
     };
+}
+
+export function postWithRepliesReducer(post: Post, replies: Reply[]): PostWithReplies {
+    return { ...post, replyList: replies };
 }

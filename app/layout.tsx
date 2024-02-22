@@ -21,7 +21,7 @@ export default function RootLayout({
         <html lang="en">
             <body className="bg-slate-100">
                 <Navigation />
-                <main className="p-24 flex min-h-screen flex-col items-center justify-between">
+                <main className="my-l flex min-h-screen flex-col items-center justify-between">
                     {children}
                     {posts}
                     {users}

@@ -1,12 +1,17 @@
 'use server';
 
-import { Post, Reply } from '@/src/models/post.model';
-import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
+import { Post, PostWithReplies, Reply } from '@/src/models/post.model';
+import {
+    postReducer,
+    postsReducer,
+    postWithRepliesReducer,
+    repliesReducer,
+} from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
-import { API_ROUTES, getRoute } from '@/src/helpers/routes';
+import { API_ROUTES, APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { getSession } from '@/app/actions/utils';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { validatePostData } from '@/src/helpers/validator';
 import { ValidationError } from '@/src/models/error.model';
 
@@ -54,12 +59,37 @@ export async function createPost(formData: FormData): Promise<Post> {
     return post;
 }
 
-export async function getPost(postId: string): Promise<Post> {
+async function getPost(postId: string): Promise<Post> {
     return postReducer(
-        (await request(getRoute(API_ROUTES.POSTS_ID, postId), {
-            method: 'GET',
-        })) as Post,
+        (await request(
+            getRoute(API_ROUTES.POSTS_ID, postId),
+            {
+                method: 'GET',
+            },
+            undefined,
+            [`post-${postId}`],
+        )) as Post,
     );
+}
+
+/**
+ * get all Replies from a certain Post, pagination possible by options param
+ * The following options are available at the endpoint:
+ * - offset; number as string
+ * - limit; number as string
+ * @param postId
+ * @param options
+ */
+export async function getPostWithReplies(
+    postId: string,
+    options?: Record<string, string[]>,
+): Promise<PostWithReplies> {
+    const post = await getPost(postId);
+    const paginatedReplies = await getReplies(postId, options);
+    // TODO: why does revalidate work, but not as good?
+    //revalidateTag('posts');
+    revalidatePath(getRoute(APP_ROUTES.POST, postId));
+    return postWithRepliesReducer(post, paginatedReplies.data);
 }
 
 export async function deletePost(postId: string): Promise<void> {
@@ -124,7 +154,7 @@ export async function createReply(postId: string, formData: FormData): Promise<R
  * @param postId
  * @param options
  */
-export async function getReplies(
+async function getReplies(
     postId: string,
     options?: Record<string, string[]>,
 ): Promise<PaginatedResult<Reply>> {

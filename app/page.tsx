@@ -8,10 +8,10 @@ export default async function Home() {
     return (
         <>
             <header className="mx-m md:mx-0 md:w-[680px]">
-                <Heading variant={HeadingLevel.H2} className="pt-m text-primary-600">
+                <Heading variant={HeadingLevel.H2} className="text-primary-600">
                     Willkommen auf Mumble
                 </Heading>
-                <Heading variant={HeadingLevel.H4} className="pb-m text-slate-500">
+                <Heading variant={HeadingLevel.H4} className="text-slate-500">
                     Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel repellat
                     dicta.
                 </Heading>

@@ -24,6 +24,8 @@ export type Post = {
     replies: number;
 };
 
+export type PostWithReplies = Post & { replyList: Reply[] };
+
 export type PostValidationResult = { text?: string[]; media?: string[] };
 
 export type Reply = Omit<Post, 'replies'> & {

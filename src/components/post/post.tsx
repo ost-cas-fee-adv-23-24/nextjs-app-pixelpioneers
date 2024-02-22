@@ -1,6 +1,6 @@
 'use client';
 import { Post } from '@/src/models/post.model';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
 import PostHeader from '@/src/components/post/post-header';
@@ -9,12 +9,12 @@ import Image from 'next/image';
 
 export default function Post({
     post,
-    showComments = false,
-    showActions = true,
+    children,
+    inline = false,
 }: {
     post: Post;
-    showComments: boolean;
-    showActions: boolean;
+    children?: ReactNode;
+    inline?: boolean;
 }) {
     /*
      * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
@@ -43,8 +43,8 @@ export default function Post({
                 </section>
             )}
             {post.text && <Paragraph size={ParagraphSize.M}>{post.text}</Paragraph>}
-            {showActions && <PostActions post={post} />}
-            {showComments && <>this is the detail view with comments</>}
+            {!inline && <PostActions post={post} />}
+            {children}
         </article>
     );
 }
