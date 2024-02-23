@@ -14,7 +14,7 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 // TODO: Need to sync with the team realting different sizes
-export default function RecommendedUser() {
+export default function User() {
     return (
         <section className="flex flex-col items-center space-y-s rounded-m border border-secondary-300 bg-white p-s hover:bg-secondary-100 md:h-[242px] md:w-[216px]">
             <Avatar size={AvatarSize.L} alt="Michael Jackson" />

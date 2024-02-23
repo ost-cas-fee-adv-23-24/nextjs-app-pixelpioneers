@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from '@/src/components/posts/post';
+import Post from '@/src/components/post/post';
 import { ActionError } from '@/src/models/error.model';
 import { getPosts } from '@/app/actions/post';
 
