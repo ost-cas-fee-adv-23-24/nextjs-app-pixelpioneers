@@ -1,13 +1,108 @@
 import DisplayName from '@/src/compositions/display-name/display-name';
-import User from '@/src/compositions/user/user';
+import { AvatarPostion } from '@/src/compositions/display-name/types';
+import { LabelSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import React from 'react';
 
 export default async function Settings() {
     return (
         <>
             Page: Settings
-            <DisplayName />
-            <User />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.S}
+                showAvatar
+                avatarSpecialPosition={AvatarPostion.SPECIAL}
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.M}
+                showAvatar
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.L}
+                showAvatar
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.XL}
+                showAvatar
+                showJoined
+                showLocation
+                showSetting
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.S}
+                showAvatar
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.M}
+                showAvatar
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.L}
+                showAvatar
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.XL}
+                showAvatar
+                showJoined
+                showLocation
+                showSetting
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.S}
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.M}
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.L}
+                showJoined
+                showLocation
+                showTimestamp
+            />
+            <DisplayName
+                post={null}
+                labelSize={LabelSize.XL}
+                showJoined
+                showLocation
+                showSetting
+                showTimestamp
+            />
         </>
     );
 }
