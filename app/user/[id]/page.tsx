@@ -12,8 +12,8 @@ import BackgroundImage from '@/src/components/background-image/background-image'
 import User from '@/src/compositions/user/user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
-import SkeletonPost from '@/src/components/post/post-skeleton';
-import SkeletonUser from '@/src/compositions/user/user-skeleton';
+import PostSkeleton from '@/src/components/post/post-skeleton';
+import UserSkeleton from '@/src/compositions/user/user-skeleton';
 
 export default async function Profile() {
     const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
@@ -64,13 +64,13 @@ export default async function Profile() {
                     <User />
                     <User />
 
-                    <SkeletonUser />
-                    <SkeletonUser />
-                    <SkeletonUser />
+                    <UserSkeleton />
+                    <UserSkeleton />
+                    <UserSkeleton />
                 </section>
                 <section className={sectionClasses}>
-                    <SkeletonPost />
-                    <SkeletonPost />
+                    <PostSkeleton />
+                    <PostSkeleton />
                 </section>
             </section>
         </>

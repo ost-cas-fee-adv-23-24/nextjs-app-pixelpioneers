@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export default function SkeletonUser() {
+export default function UserSkeleton() {
     // const skeletonAvatarText = 'rounded h-[4px] w-2/3 bg-slate-300';
     const skeletonText = 'w-full rounded-m bg-slate-300';
 
