@@ -24,6 +24,7 @@ export default function RootLayout({
                 <main className="my-l flex min-h-screen flex-col items-center justify-between">
                     {children}
                     {posts}
+                    {/* TODO: remove ;) */}
                     {users}
                 </main>
             </body>

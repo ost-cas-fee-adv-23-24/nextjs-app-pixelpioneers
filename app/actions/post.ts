@@ -8,12 +8,13 @@ import {
     repliesReducer,
 } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
-import { API_ROUTES, APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { getSession } from '@/app/actions/utils';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { validatePostData } from '@/src/helpers/validator';
 import { ValidationError } from '@/src/models/error.model';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
 export async function likePost(postId: string): Promise<void> {
     const session = await getSession();
@@ -86,9 +87,6 @@ export async function getPostWithReplies(
 ): Promise<PostWithReplies> {
     const post = await getPost(postId);
     const paginatedReplies = await getReplies(postId, options);
-    // TODO: why does revalidate work, but not as good?
-    //revalidateTag('posts');
-    revalidatePath(getRoute(APP_ROUTES.POST, postId));
     return postWithRepliesReducer(post, paginatedReplies.data);
 }
 
@@ -112,13 +110,15 @@ export async function deletePost(postId: string): Promise<void> {
  * @param options
  */
 export async function getPosts(options?: Record<string, string[]>): Promise<PaginatedResult<Post>> {
+    const session = await auth();
+
     return postsReducer(
         (await request(
             getRoute(API_ROUTES.POSTS, undefined, options),
             {
                 method: 'GET',
             },
-            undefined,
+            session?.accessToken,
             ['posts'],
             15,
         )) as PaginatedResult<Post>,

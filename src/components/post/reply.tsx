@@ -1,20 +1,11 @@
 'use client';
-import { Post } from '@/src/models/post.model';
+import { Reply } from '@/src/models/post.model';
 import React, { ReactNode } from 'react';
 import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
-import PostHeader from '@/src/components/post/post-header';
-import PostActions from '@/src/components/post/post-actions';
-import Image from 'next/image';
+import DisplayName from '@/src/compositions/display-name/display-name';
 
-export default function Post({
-    post,
-    children,
-}: {
-    post: Post;
-    children?: ReactNode;
-    inline?: boolean;
-}) {
+export default function Reply({ reply, children }: { reply: Reply; children?: ReactNode }) {
     /*
      * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
      * TODO: width 680 or 615px?
@@ -27,22 +18,21 @@ export default function Post({
     return (
         <article className={postClasses}>
             {/* TODO: replace PostHeader with display name as soon as display name composition done */}
-            <PostHeader post={post} />
-            {post.mediaUrl && (
+            <DisplayName />
+            {reply.mediaUrl && (
                 <section className="relative h-[500px] w-full">
-                    <Image
+                    {/*<Image
                         // TODO: fix 500px static height, cache images?
                         className="rounded-s"
-                        alt={`image from ${post.creator.username}`}
-                        src={post.mediaUrl}
-                        datatype={post.mediaType}
+                        alt={`image from ${reply.creator.username}`}
+                        src={reply.mediaUrl}
+                        datatype={reply.mediaType}
                         style={{ objectFit: 'cover' }}
                         fill
-                    />
+                    />*/}
                 </section>
             )}
-            {post.text && <Paragraph size={ParagraphSize.M}>{post.text}</Paragraph>}
-            <PostActions post={post} />
+            {reply.text && <Paragraph size={ParagraphSize.M}>{reply.text}</Paragraph>}
             {children}
         </article>
     );
