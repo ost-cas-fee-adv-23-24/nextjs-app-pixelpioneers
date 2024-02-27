@@ -1,5 +1,5 @@
 import DisplayName from '@/src/compositions/display-name/display-name';
-import RecommendedUser from '@/src/compositions/recommended-user/recommended-user';
+import User from '@/src/compositions/user/user';
 import React from 'react';
 
 export default async function Settings() {
@@ -7,7 +7,7 @@ export default async function Settings() {
         <>
             Page: Settings
             <DisplayName />
-            <RecommendedUser />
+            <User />
         </>
     );
 }

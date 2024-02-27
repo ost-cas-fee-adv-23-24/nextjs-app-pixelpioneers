@@ -13,17 +13,19 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 // TODO: Need to sync with the team realting different sizes
-export default function DisplayName() {
+export default function DisplayName({ showAvatar }: { showAvatar?: boolean }) {
     return (
         <section className="rounded-xl space-x-4 mx-auto flex max-w-sm items-center p-m">
-            <div className="mr-xs shrink-0">
-                <Avatar size={AvatarSize.S} alt="George Michael" />
-            </div>
+            {showAvatar && (
+                <div className="mr-xs shrink-0">
+                    <Avatar size={AvatarSize.S} alt="George Michael" />
+                </div>
+            )}
             <div>
                 <div>
                     <Heading variant={HeadingLevel.H4}>George Michael</Heading>
                 </div>
-                <p className="inline-flex">
+                <p className="flex flex-wrap gap-y-xs md:inline-flex md:flex-nowrap">
                     <IconLink
                         className="mr-xs"
                         label="Username"

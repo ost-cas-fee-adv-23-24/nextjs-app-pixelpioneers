@@ -1,4 +1,5 @@
 'use client';
+
 import { Post } from '@/src/models/post.model';
 import React from 'react';
 import {
@@ -19,8 +20,8 @@ import { likePost, unlikePost } from '@/app/actions/post';
 
 export default function Post({ post }: { post: Post }) {
     return (
-        <article className="relative mx-m flex min-h-[140px] flex-col rounded-m bg-white md:mx-0 md:w-[680px]">
-            <section className="gap-4 grid grid-flow-col grid-rows-2 place-items-center px-xl pt-l md:flex md:flex-col md:place-items-baseline">
+        <article className="relative min-h-[140px] rounded-m bg-white md:mx-0 md:w-[680px] ">
+            <section className="gap-4 grid grid-flow-col grid-rows-2 place-items-start px-xl pt-l md:flex md:flex-col md:place-items-baseline">
                 <div className="z-5 relative row-span-3 md:absolute md:left-[-32px] md:top-[20px]">
                     <Avatar
                         size={AvatarSize.M}
@@ -29,13 +30,13 @@ export default function Post({ post }: { post: Post }) {
                     />
                 </div>
                 <Label
-                    className="col-span-2 md:flex md:pb-s"
+                    className="col-span-3 md:flex md:pb-s"
                     size={LabelSize.L}
                     type={LabelType.SPAN}
                 >
                     Vorname Nachname
                 </Label>
-                <div className="col-span-2 row-span-2 flex gap-s md:flex md:flex-row">
+                <div className="col-span-3 row-span-2 flex gap-s md:flex md:flex-row">
                     <IconLink
                         label={post.creator.username}
                         variant={Variant.PRIMARY}
