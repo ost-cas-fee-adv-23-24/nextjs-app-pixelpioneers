@@ -16,15 +16,18 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
 import { AvatarPostion } from './types';
+import { User } from '@/src/models/user.model';
 
 export default function DisplayName({
-    showAvatar,
+    user,
     avatarSpecialPosition = 0,
     labelSize,
+    showAvatar,
 }: {
-    showAvatar?: boolean;
+    user: User;
     avatarSpecialPosition?: AvatarPostion;
     labelSize: LabelSize;
+    showAvatar?: boolean;
 }) {
     return (
         <>
@@ -36,7 +39,7 @@ export default function DisplayName({
                             : 'z-5 md:absolute md:left-[-62px]',
                     )}
                 >
-                    {showAvatar && (
+                    {showAvatar && user?.avatarUrl && (
                         <Avatar
                             size={AvatarSize.S}
                             alt={'post?.creator?.username'}
@@ -51,7 +54,7 @@ export default function DisplayName({
                         </Label>
 
                         <IconLink
-                            label=""
+                            label="Einstellung"
                             variant={Variant.PRIMARY}
                             Icon={IconSettingsAnimated}
                             className="pl-xs"

@@ -28,7 +28,16 @@ export default async function Profile() {
                 </div>
                 <section className={sectionClasses}>
                     <div className="mb-s ml-[-8px] self-start">
-                        <DisplayName labelSize={LabelSize.XL} />
+                        <DisplayName
+                            user={{
+                                id: '179944860378202369',
+                                username: 'max_muster',
+                                avatarUrl: 'string',
+                                firstName: 'string',
+                                lastName: 'string',
+                            }}
+                            labelSize={LabelSize.XL}
+                        />
                     </div>
                     <Paragraph
                         className="w-fill text-slate-400"
