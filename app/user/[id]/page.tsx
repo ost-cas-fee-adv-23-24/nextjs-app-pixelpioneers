@@ -28,7 +28,7 @@ export default async function Profile() {
                 </div>
                 <section className={sectionClasses}>
                     <div className="mb-s ml-[-8px] self-start">
-                        <DisplayName post={null} labelSize={LabelSize.XL} showJoined showLocation />
+                        <DisplayName labelSize={LabelSize.XL} />
                     </div>
                     <Paragraph
                         className="w-fill text-slate-400"

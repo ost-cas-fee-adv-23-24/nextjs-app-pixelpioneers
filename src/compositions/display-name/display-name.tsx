@@ -1,6 +1,5 @@
 'use client';
 
-import { Post } from '@/src/models/post.model';
 import {
     Avatar,
     AvatarSize,
@@ -19,26 +18,14 @@ import clsx from 'clsx';
 import { AvatarPostion } from './types';
 
 export default function DisplayName({
-    post, // eslint-disable-line
     showAvatar,
     avatarSpecialPosition = 0,
-    showTimestamp,
-    showLocation,
-    showJoined,
-    showSetting,
     labelSize,
 }: {
-    post: Post | null;
     showAvatar?: boolean;
     avatarSpecialPosition?: AvatarPostion;
-    showTimestamp?: boolean;
-    showLocation?: boolean;
-    showJoined?: boolean;
-    showSetting?: boolean;
     labelSize: LabelSize;
 }) {
-    // if (!post) return null;
-
     return (
         <>
             <section className="relative flex flex-row">
@@ -62,14 +49,13 @@ export default function DisplayName({
                         <Label size={labelSize} type={LabelType.SPAN}>
                             Vorname Nachname
                         </Label>
-                        {showSetting && (
-                            <IconLink
-                                label=""
-                                variant={Variant.PRIMARY}
-                                Icon={IconSettingsAnimated}
-                                className="pl-xs"
-                            />
-                        )}
+
+                        <IconLink
+                            label=""
+                            variant={Variant.PRIMARY}
+                            Icon={IconSettingsAnimated}
+                            className="pl-xs"
+                        />
                     </div>
                     <div className="flex w-full flex-wrap place-items-baseline gap-s">
                         <IconLink
@@ -77,27 +63,17 @@ export default function DisplayName({
                             variant={Variant.PRIMARY}
                             Icon={IconProfile}
                         />
-                        {showTimestamp && (
-                            <IconLink
-                                label={'post.created.toString()'}
-                                variant={Variant.SECONDARY}
-                                Icon={IconTime}
-                            />
-                        )}
-                        {showLocation && (
-                            <IconLink
-                                label="Location"
-                                variant={Variant.SECONDARY}
-                                Icon={IconLocation}
-                            />
-                        )}
-                        {showJoined && (
-                            <IconLink
-                                label="Joined"
-                                variant={Variant.SECONDARY}
-                                Icon={IconCalendar}
-                            />
-                        )}
+                        <IconLink
+                            label={'post.created.toString()'}
+                            variant={Variant.SECONDARY}
+                            Icon={IconTime}
+                        />
+                        <IconLink
+                            label="Location"
+                            variant={Variant.SECONDARY}
+                            Icon={IconLocation}
+                        />
+                        <IconLink label="Joined" variant={Variant.SECONDARY} Icon={IconCalendar} />
                     </div>
                 </div>
             </section>

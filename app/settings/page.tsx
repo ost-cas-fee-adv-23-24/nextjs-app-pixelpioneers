@@ -8,101 +8,21 @@ export default async function Settings() {
         <>
             Page: Settings
             <DisplayName
-                post={null}
                 labelSize={LabelSize.S}
                 showAvatar
                 avatarSpecialPosition={AvatarPostion.SPECIAL}
-                showJoined
-                showLocation
-                showTimestamp
             />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.M}
-                showAvatar
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.L}
-                showAvatar
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.XL}
-                showAvatar
-                showJoined
-                showLocation
-                showSetting
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.S}
-                showAvatar
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.M}
-                showAvatar
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.L}
-                showAvatar
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.XL}
-                showAvatar
-                showJoined
-                showLocation
-                showSetting
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.S}
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.M}
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.L}
-                showJoined
-                showLocation
-                showTimestamp
-            />
-            <DisplayName
-                post={null}
-                labelSize={LabelSize.XL}
-                showJoined
-                showLocation
-                showSetting
-                showTimestamp
-            />
+            <DisplayName labelSize={LabelSize.M} showAvatar />
+            <DisplayName labelSize={LabelSize.L} showAvatar />
+            <DisplayName labelSize={LabelSize.XL} showAvatar />
+            <DisplayName labelSize={LabelSize.S} showAvatar />
+            <DisplayName labelSize={LabelSize.M} showAvatar />
+            <DisplayName labelSize={LabelSize.L} showAvatar />
+            <DisplayName labelSize={LabelSize.XL} showAvatar />
+            <DisplayName labelSize={LabelSize.S} />
+            <DisplayName labelSize={LabelSize.M} />
+            <DisplayName labelSize={LabelSize.L} />
+            <DisplayName labelSize={LabelSize.XL} />
         </>
     );
 }
