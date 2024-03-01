@@ -12,6 +12,7 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import React from 'react';
 
+// TODO: remove
 export default function PostHeader({ post }: { post: Post }) {
     return (
         <section className="gap-4 grid grid-flow-col grid-rows-2 place-items-center md:flex md:flex-col md:place-items-baseline">

@@ -7,14 +7,13 @@ import PostHeader from '@/src/components/post/post-header';
 import PostActions from '@/src/components/post/post-actions';
 import Image from 'next/image';
 
-export default function Post({
-    post,
-    children,
-}: {
+type PostProps = {
     post: Post;
+    detailView?: boolean;
     children?: ReactNode;
-    inline?: boolean;
-}) {
+};
+
+export default function Post({ post, detailView, children }: PostProps) {
     /*
      * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
      * TODO: width 680 or 615px?
@@ -42,7 +41,7 @@ export default function Post({
                 </section>
             )}
             {post.text && <Paragraph size={ParagraphSize.M}>{post.text}</Paragraph>}
-            <PostActions post={post} />
+            <PostActions post={post} detailView={detailView} />
             {children}
         </article>
     );

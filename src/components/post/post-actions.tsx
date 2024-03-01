@@ -9,16 +9,17 @@ import { likePost, unlikePost } from '@/app/actions/post';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
-export default function PostActions({ post }: { post: Post }) {
+type PostActionsProps = { post: Post; detailView?: boolean };
+export default function PostActions({ post, detailView }: PostActionsProps) {
     const router = useRouter();
     return (
         <section className="ml-[-12px] flex flex-row justify-between md:justify-start md:gap-x-l">
             <CommentButton
                 amount={post.replies}
                 onClick={() => router.push(getRoute(APP_ROUTES.POST, post.id))}
+                disabled={detailView}
             />
             <LikeButton
-                // TODO: why does likedBy not work properly?
                 onClick={async () =>
                     post.likedBySelf ? await unlikePost(post.id) : await likePost(post.id)
                 }
