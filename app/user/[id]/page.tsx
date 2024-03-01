@@ -2,6 +2,7 @@ import React from 'react';
 import {
     Heading,
     HeadingLevel,
+    LabelSize,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
@@ -26,8 +27,8 @@ export default async function Profile() {
                     <BackgroundImage session={session} />
                 </div>
                 <section className={sectionClasses}>
-                    <div className="ml-[-24px] self-start">
-                        <DisplayName showAvatar={false}></DisplayName>
+                    <div className="mb-s ml-[-8px] self-start">
+                        <DisplayName post={null} labelSize={LabelSize.XL} showJoined showLocation />
                     </div>
                     <Paragraph
                         className="w-fill text-slate-400"
