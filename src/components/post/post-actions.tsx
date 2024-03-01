@@ -1,3 +1,4 @@
+'use client';
 import { Post } from '@/src/models/post.model';
 import {
     CommentButton,
@@ -27,7 +28,11 @@ export default function PostActions({ post, detailView }: PostActionsProps) {
                 amount={post.likes}
             />
             {/* TODO: get full URL */}
-            <ShareButton label="Copy Link" labelShared="Link copied" link="https://www.denner.ch" />
+            <ShareButton
+                label="Copy Link"
+                labelShared="Link copied"
+                link={getRoute(APP_ROUTES.POST, post.id)}
+            />
         </section>
     );
 }

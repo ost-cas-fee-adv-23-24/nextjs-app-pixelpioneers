@@ -1,8 +1,9 @@
 'use client';
-
 import {
     Avatar,
     AvatarSize,
+    Heading,
+    HeadingLevel,
     IconCalendar,
     IconLink,
     IconLocation,
@@ -14,69 +15,103 @@ import {
     LabelType,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import clsx from 'clsx';
-import { AvatarPostion } from './types';
 import { User } from '@/src/models/user.model';
+import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { useRouter } from 'next/navigation';
+
+export enum DisplayNameVariant {
+    REPLY = 'reply',
+    POST_TIMELINE = 'post-timeline',
+    POST_DETAIL_VIEW = 'post-detail-view',
+    PROFILE = 'profile',
+}
+
+type DisplayNameProps = {
+    user: User;
+    variant: DisplayNameVariant;
+    postTimestamp?: number;
+    location?: string;
+    joinedTimestamp?: number;
+};
 
 export default function DisplayName({
     user,
-    avatarSpecialPosition = 0,
-    labelSize,
-    showAvatar,
-}: {
-    user: User;
-    avatarSpecialPosition?: AvatarPostion;
-    labelSize: LabelSize;
-    showAvatar?: boolean;
-}) {
+    variant,
+    postTimestamp,
+    location,
+    joinedTimestamp,
+}: DisplayNameProps) {
+    const router = useRouter();
+    const labelSize = (): LabelSize => {
+        switch (variant) {
+            case DisplayNameVariant.REPLY:
+                return LabelSize.M;
+            case DisplayNameVariant.POST_TIMELINE:
+                return LabelSize.L;
+            default:
+                return LabelSize.XL;
+        }
+    };
     return (
         <>
             <section className="relative flex flex-row">
-                <div
-                    className={clsx(
-                        avatarSpecialPosition === 0
-                            ? 'relative pr-xs'
-                            : 'z-5 md:absolute md:left-[-62px]',
-                    )}
-                >
-                    {showAvatar && user?.avatarUrl && (
+                <div className="relative pr-xs">
+                    {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
                         <Avatar
                             size={AvatarSize.S}
-                            alt={'post?.creator?.username'}
-                            src={'post?.creator?.avatarUrl'}
+                            alt={`avatar from ${user.username}`}
+                            src={user.avatarUrl}
                         />
                     )}
                 </div>
                 <div className="flex flex-col gap-xs">
                     <div className="flex w-full flex-wrap place-items-baseline">
-                        <Label size={labelSize} type={LabelType.SPAN}>
-                            Vorname Nachname
-                        </Label>
+                        {variant === DisplayNameVariant.PROFILE ? (
+                            <Heading variant={HeadingLevel.H3}>Vorname Nachname</Heading>
+                        ) : (
+                            <Label size={labelSize()} type={LabelType.SPAN}>
+                                Vorname Nachname
+                            </Label>
+                        )}
 
-                        <IconLink
-                            label="Einstellung"
-                            variant={Variant.PRIMARY}
-                            Icon={IconSettingsAnimated}
-                            className="pl-xs"
-                        />
+                        {/* TODO: check if user logged in, show settings only if so */}
+                        {variant === DisplayNameVariant.PROFILE && (
+                            <IconLink
+                                label=""
+                                variant={Variant.PRIMARY}
+                                Icon={IconSettingsAnimated}
+                                className="pl-xs"
+                            />
+                        )}
                     </div>
                     <div className="flex w-full flex-wrap place-items-baseline gap-s">
                         <IconLink
-                            label={'post.creator.username'}
+                            label={user.username}
                             variant={Variant.PRIMARY}
                             Icon={IconProfile}
+                            onClick={() => router.push(getRoute(APP_ROUTES.USER, user.id))}
                         />
-                        <IconLink
-                            label={'post.created.toString()'}
-                            variant={Variant.SECONDARY}
-                            Icon={IconTime}
-                        />
-                        <IconLink
-                            label="Location"
-                            variant={Variant.SECONDARY}
-                            Icon={IconLocation}
-                        />
-                        <IconLink label="Joined" variant={Variant.SECONDARY} Icon={IconCalendar} />
+                        {postTimestamp && (
+                            <IconLink
+                                label={postTimestamp.toString()}
+                                variant={Variant.SECONDARY}
+                                Icon={IconTime}
+                            />
+                        )}
+                        {location && (
+                            <IconLink
+                                label={location}
+                                variant={Variant.SECONDARY}
+                                Icon={IconLocation}
+                            />
+                        )}
+                        {joinedTimestamp && (
+                            <IconLink
+                                label="Joined"
+                                variant={Variant.SECONDARY}
+                                Icon={IconCalendar}
+                            />
+                        )}
                     </div>
                 </div>
             </section>

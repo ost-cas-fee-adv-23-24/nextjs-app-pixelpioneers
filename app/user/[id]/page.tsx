@@ -2,12 +2,11 @@ import React from 'react';
 import {
     Heading,
     HeadingLevel,
-    LabelSize,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import DisplayName from '@/src/compositions/display-name/display-name';
+import DisplayName, { DisplayNameVariant } from '@/src/compositions/display-name/display-name';
 import TabsProfile from '@/src/components/tabs-profile/tabs-profile';
 import BackgroundImage from '@/src/components/background-image/background-image';
 import User from '@/src/compositions/user/user';
@@ -36,7 +35,7 @@ export default async function Profile() {
                                 firstName: 'string',
                                 lastName: 'string',
                             }}
-                            labelSize={LabelSize.XL}
+                            variant={DisplayNameVariant.PROFILE}
                         />
                     </div>
                     <Paragraph

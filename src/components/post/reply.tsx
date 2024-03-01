@@ -3,7 +3,6 @@ import { Reply } from '@/src/models/post.model';
 import React from 'react';
 import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
-import DisplayName from '@/src/compositions/display-name/display-name';
 import Image from 'next/image';
 
 type ReplyProps = {
@@ -22,7 +21,6 @@ export default function Reply({ reply }: ReplyProps) {
     );
     return (
         <article className={postClasses}>
-            <DisplayName />
             {reply.mediaUrl && (
                 <section className="relative h-[500px] w-full">
                     <Image
