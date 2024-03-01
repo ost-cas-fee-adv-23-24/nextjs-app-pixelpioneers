@@ -5,7 +5,7 @@ export type User = {
     username: string;
     avatarUrl?: string;
     firstName: string;
-    lastname: string;
+    lastName: string;
 };
 
 export type PublicUser = Omit<User, 'firstname' | 'lastname'>;
