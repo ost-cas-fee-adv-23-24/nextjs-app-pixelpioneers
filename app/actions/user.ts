@@ -63,12 +63,13 @@ export async function getFollowers(
     userId: string,
     options?: Record<string, string[]>,
 ): Promise<PaginatedResult<PublicUser>> {
+    const session = await auth();
     return (await request(
         getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId, options),
         {
             method: 'GET',
         },
-        undefined,
+        session?.accessToken,
         undefined,
         120,
     )) as PaginatedResult<PublicUser>;
@@ -106,10 +107,7 @@ export async function uploadAvatar(formData: FormData): Promise<void> {
         },
         session.accessToken,
     );
-    // we could use avatarUrl
-    // TODO does this make sense?
-    // revalidateTag('users');
-    // revalidateTag('posts');
+    // TODO: we could use avatarUrl
 }
 
 export async function removeAvatar(): Promise<void> {

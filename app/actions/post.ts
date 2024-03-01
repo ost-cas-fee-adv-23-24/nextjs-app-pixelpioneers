@@ -25,6 +25,7 @@ export async function likePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
+    // TODO: must be done in component, not server action
     revalidateTag('posts');
 }
 
@@ -37,6 +38,7 @@ export async function unlikePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
+    // TODO: must be done in component, not server action
     revalidateTag('posts');
 }
 
@@ -56,18 +58,20 @@ export async function createPost(formData: FormData): Promise<Post> {
         },
         session.accessToken,
     )) as Post;
+    // TODO: must be done in component, not server action
     revalidateTag('posts');
     return post;
 }
 
 async function getPost(postId: string): Promise<Post> {
+    const session = await auth();
     return postReducer(
         (await request(
             getRoute(API_ROUTES.POSTS_ID, postId),
             {
                 method: 'GET',
             },
-            undefined,
+            session?.accessToken,
             [`post-${postId}`],
         )) as Post,
     );
@@ -91,9 +95,14 @@ export async function getPostWithReplies(
 }
 
 export async function deletePost(postId: string): Promise<void> {
-    await request(getRoute(API_ROUTES.POSTS_ID, postId), {
-        method: 'DELETE',
-    });
+    const session = await getSession();
+    await request(
+        getRoute(API_ROUTES.POSTS_ID, postId),
+        {
+            method: 'DELETE',
+        },
+        session.accessToken,
+    );
 }
 
 /**
@@ -111,7 +120,6 @@ export async function deletePost(postId: string): Promise<void> {
  */
 export async function getPosts(options?: Record<string, string[]>): Promise<PaginatedResult<Post>> {
     const session = await auth();
-
     return postsReducer(
         (await request(
             getRoute(API_ROUTES.POSTS, undefined, options),
@@ -133,7 +141,7 @@ export async function createReply(postId: string, formData: FormData): Promise<R
         throw new ValidationError(errors);
     }
 
-    const reply = (await request(
+    return (await request(
         getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
         {
             method: 'POST',
@@ -141,9 +149,6 @@ export async function createReply(postId: string, formData: FormData): Promise<R
         },
         session.accessToken,
     )) as Reply;
-    revalidateTag('posts');
-    revalidateTag(`replies-${postId}`);
-    return reply;
 }
 
 /**
@@ -158,13 +163,14 @@ async function getReplies(
     postId: string,
     options?: Record<string, string[]>,
 ): Promise<PaginatedResult<Reply>> {
+    const session = await auth();
     return repliesReducer(
         (await request(
             getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
             {
                 method: 'GET',
             },
-            undefined,
+            session?.accessToken,
             [`replies-${postId}`],
             15,
         )) as PaginatedResult<Reply>,
