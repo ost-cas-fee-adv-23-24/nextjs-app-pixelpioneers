@@ -6,14 +6,15 @@ import {
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import DisplayName, { DisplayNameVariant } from '@/src/compositions/display-name/display-name';
+import DisplayName from '@/src/compositions/display-name/display-name';
 import TabsProfile from '@/src/components/tabs-profile/tabs-profile';
 import BackgroundImage from '@/src/components/background-image/background-image';
 import User from '@/src/compositions/user/user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
-import PostSkeleton from '@/src/components/post/post-skeleton';
+import PostSkeleton from '@/src/compositions/post/post-skeleton';
 import UserSkeleton from '@/src/compositions/user/user-skeleton';
+import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 
 export default async function Profile() {
     const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';

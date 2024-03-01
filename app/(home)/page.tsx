@@ -1,6 +1,6 @@
 import React from 'react';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import NewPost from '@/src/components/post/form-post';
+import NewPost from '@/src/compositions/post/form-post';
 import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 export default async function Home() {

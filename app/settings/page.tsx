@@ -1,5 +1,6 @@
-import DisplayName, { DisplayNameVariant } from '@/src/compositions/display-name/display-name';
+import DisplayName from '@/src/compositions/display-name/display-name';
 import React from 'react';
+import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 
 const mockUserData = {
     id: '179944860378202369',

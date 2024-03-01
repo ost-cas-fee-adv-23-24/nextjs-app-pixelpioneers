@@ -1,5 +1,5 @@
 import { getPostWithReplies } from '@/app/actions/post';
-import { default as PostComponent } from '@/src/components/post/post';
+import { default as PostComponent } from '@/src/compositions/post/post';
 
 //export const dynamic = 'force-dynamic';
 export default async function Post({ params }: { params: { id: string } }) {

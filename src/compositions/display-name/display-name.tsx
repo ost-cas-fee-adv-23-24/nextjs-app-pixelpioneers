@@ -16,15 +16,9 @@ import {
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { User } from '@/src/models/user.model';
+import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { useRouter } from 'next/navigation';
-
-export enum DisplayNameVariant {
-    REPLY = 'reply',
-    POST_TIMELINE = 'post-timeline',
-    POST_DETAIL_VIEW = 'post-detail-view',
-    PROFILE = 'profile',
-}
 
 type DisplayNameProps = {
     user: User;
@@ -55,15 +49,15 @@ export default function DisplayName({
     return (
         <>
             <section className="relative flex flex-row">
-                <div className="relative pr-xs">
-                    {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
+                {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
+                    <div className="relative pr-xs">
                         <Avatar
                             size={AvatarSize.S}
                             alt={`avatar from ${user.username}`}
                             src={user.avatarUrl}
                         />
-                    )}
-                </div>
+                    </div>
+                )}
                 <div className="flex flex-col gap-xs">
                     <div className="flex w-full flex-wrap place-items-baseline">
                         {variant === DisplayNameVariant.PROFILE ? (
