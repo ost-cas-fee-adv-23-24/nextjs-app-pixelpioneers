@@ -23,7 +23,7 @@ export default function LivePosts() {
         <ul>
             {posts.map((post) => (
                 <li key={post.id}>
-                    <Post post={post} variant={PostVariant.TIMELINE} />
+                    <Post message={post} variant={PostVariant.TIMELINE} />
                 </li>
             ))}
         </ul>

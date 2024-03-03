@@ -1,7 +1,7 @@
-import React from "react";
-import "./globals.css";
-import type { Metadata } from "next";
-import Navigation from "@/src/components/navigation/navigation";
+import React from 'react';
+import './globals.css';
+import type { Metadata } from 'next';
+import Navigation from '@/src/components/navigation/navigation';
 
 // TODO: how does this work?
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className="bg-slate-100">
+            <body className="bg-secondary-100">
                 <Navigation />
                 <main className="my-l flex min-h-screen flex-col items-center justify-between">
                     {children}
