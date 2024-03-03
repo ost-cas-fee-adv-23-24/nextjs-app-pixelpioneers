@@ -9,6 +9,7 @@ import {
     IconUpload,
     Label,
     LabelSize,
+    Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
@@ -31,12 +32,12 @@ export default async function NewPost() {
             <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
                 Hey, was gibt&apos;s Neues?
             </Label>
-            <textarea
+            <Textarea
                 className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
                 name="text"
                 id="text"
                 placeholder="Deine Meinung zählt!"
-            ></textarea>
+            ></Textarea>
             <section className="flex flex-row justify-between gap-s">
                 <Button
                     type="button"
