@@ -1,4 +1,4 @@
-import { Post } from '@/src/models/post.model';
+import { Message } from '@/src/models/post.model';
 import React, { ReactNode } from 'react';
 import {
     Avatar,
@@ -11,14 +11,15 @@ import PostActions from '@/src/compositions/post/post-actions';
 import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
+import { PostVariant } from '@/src/compositions/post/types';
 
 type PostProps = {
-    post: Post;
-    detailView?: boolean;
+    post: Message;
+    variant: PostVariant;
     children?: ReactNode;
 };
 
-export default function Post({ post, detailView, children }: PostProps) {
+export default function Post({ post, variant, children }: PostProps) {
     /*
      * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
      * TODO: width 680 or 615px?
@@ -28,6 +29,16 @@ export default function Post({ post, detailView, children }: PostProps) {
         'mx-0 w-full gap-s px-m py-s', // mobile
         'md:mx-m md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
+    const displayNameVariant = (): DisplayNameVariant => {
+        switch (variant) {
+            case PostVariant.DETAIL_VIEW:
+                return DisplayNameVariant.POST_DETAIL_VIEW;
+            case PostVariant.TIMELINE:
+                return DisplayNameVariant.POST_TIMELINE;
+            default:
+                return DisplayNameVariant.REPLY;
+        }
+    };
     return (
         <article className={postClasses}>
             <div className="z-5 relative row-span-3 md:absolute md:left-[-32px] md:top-[20px]">
@@ -37,7 +48,7 @@ export default function Post({ post, detailView, children }: PostProps) {
                     src={post.creator.avatarUrl}
                 />
             </div>
-            <DisplayName user={post.creator} variant={DisplayNameVariant.POST_TIMELINE} />
+            <DisplayName user={post.creator} variant={displayNameVariant()} />
             {post.mediaUrl && (
                 <section className="relative h-[500px] w-full">
                     <Image
@@ -52,7 +63,7 @@ export default function Post({ post, detailView, children }: PostProps) {
                 </section>
             )}
             {post.text && <Paragraph size={ParagraphSize.M}>{post.text}</Paragraph>}
-            <PostActions post={post} detailView={detailView} />
+            <PostActions post={post} detailView={variant === PostVariant.DETAIL_VIEW} />
             {children}
         </article>
     );

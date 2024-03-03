@@ -1,5 +1,5 @@
 'use client';
-import { Post } from '@/src/models/post.model';
+import { Message } from '@/src/models/post.model';
 import {
     CommentButton,
     LikeButton,
@@ -10,7 +10,7 @@ import { likePost, unlikePost } from '@/app/actions/post';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
-type PostActionsProps = { post: Post; detailView?: boolean };
+type PostActionsProps = { post: Message; detailView?: boolean };
 export default function PostActions({ post, detailView }: PostActionsProps) {
     const router = useRouter();
     return (

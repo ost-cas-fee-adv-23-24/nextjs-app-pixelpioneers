@@ -2,6 +2,7 @@ import React from 'react';
 import Post from '@/src/compositions/post/post';
 import { ActionError } from '@/src/models/error.model';
 import { getPosts } from '@/app/actions/post';
+import { PostVariant } from '@/src/compositions/post/types';
 
 export default async function Posts() {
     try {
@@ -10,7 +11,7 @@ export default async function Posts() {
             <section className="mx-m flex flex-col gap-y-m">
                 {/*<LivePosts />*/}
                 {paginatedPosts.data.map((post) => (
-                    <Post key={post.id} post={post} />
+                    <Post key={post.id} post={post} variant={PostVariant.TIMELINE} />
                 ))}
             </section>
         );

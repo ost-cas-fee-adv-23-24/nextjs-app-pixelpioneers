@@ -31,3 +31,8 @@ export type PostValidationResult = { text?: string[]; media?: string[] };
 export type Reply = Omit<Post, 'replies'> & {
     parentId: string;
 };
+
+export type Message = Omit<Post, 'replies'> &
+    Omit<Reply, 'parentId'> &
+    Partial<Pick<Post, 'replies'>> &
+    Partial<Pick<Reply, 'parentId'>>;

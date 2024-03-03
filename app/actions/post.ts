@@ -63,7 +63,7 @@ export async function createPost(formData: FormData): Promise<Post> {
     return post;
 }
 
-async function getPost(postId: string): Promise<Post> {
+export async function getPost(postId: string): Promise<Post> {
     const session = await auth();
     return postReducer(
         (await request(
@@ -77,7 +77,7 @@ async function getPost(postId: string): Promise<Post> {
     );
 }
 
-/**
+/** TODO: is needed?
  * get all Replies from a certain Post, pagination possible by options param
  * The following options are available at the endpoint:
  * - offset; number as string
@@ -159,7 +159,7 @@ export async function createReply(postId: string, formData: FormData): Promise<R
  * @param postId
  * @param options
  */
-async function getReplies(
+export async function getReplies(
     postId: string,
     options?: Record<string, string[]>,
 ): Promise<PaginatedResult<Reply>> {
