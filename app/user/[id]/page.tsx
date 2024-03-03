@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Heading,
     HeadingLevel,
-    LabelSize,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
@@ -13,8 +12,9 @@ import BackgroundImage from '@/src/components/background-image/background-image'
 import User from '@/src/compositions/user/user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
-import PostSkeleton from '@/src/components/post/post-skeleton';
+import PostSkeleton from '@/src/compositions/post/post-skeleton';
 import UserSkeleton from '@/src/compositions/user/user-skeleton';
+import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 
 export default async function Profile() {
     const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
@@ -36,7 +36,7 @@ export default async function Profile() {
                                 firstName: 'string',
                                 lastName: 'string',
                             }}
-                            labelSize={LabelSize.XL}
+                            variant={DisplayNameVariant.PROFILE}
                         />
                     </div>
                     <Paragraph

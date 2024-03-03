@@ -4,6 +4,7 @@ import { getPostEventSource, PostEvents } from '@/src/helpers/api';
 import { Post as ApiPost } from '@/src/models/post.model';
 import { useEffect, useState } from 'react';
 import Post from './post';
+import { PostVariant } from '@/src/compositions/post/types';
 
 export default function LivePosts() {
     const [posts, setPosts] = useState<ApiPost[]>([]);
@@ -22,7 +23,7 @@ export default function LivePosts() {
         <ul>
             {posts.map((post) => (
                 <li key={post.id}>
-                    <Post post={post} />
+                    <Post message={post} variant={PostVariant.TIMELINE} />
                 </li>
             ))}
         </ul>
