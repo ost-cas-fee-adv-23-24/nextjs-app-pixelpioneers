@@ -8,17 +8,29 @@ import {
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { PostFormTypeVariant } from '../post/types';
+import DisplayName from '../display-name/display-name';
+import { DisplayNameVariant } from '../display-name/types';
 
-export default async function WritePost({ type }: { type: string }) {
+export default async function WritePost({ type }: { type: PostFormTypeVariant }) {
     // TODO: We need to have the label size of 32px - 2xl
     return (
         <>
-            {type === 'mainField' ? (
+            {type === PostFormTypeVariant.MAINFIELD ? (
                 <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
                     Hey, was gibt&apos;s Neues?
                 </Label>
             ) : (
-                <span>Display Name Component</span>
+                <DisplayName
+                    variant={DisplayNameVariant.REPLY}
+                    user={{
+                        id: '179944860378202369',
+                        username: 'max_muster',
+                        avatarUrl: 'string',
+                        firstName: 'Nachname',
+                        lastName: 'Vorname',
+                    }}
+                />
             )}
             <Textarea
                 className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"

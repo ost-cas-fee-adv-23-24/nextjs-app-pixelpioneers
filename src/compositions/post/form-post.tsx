@@ -2,7 +2,7 @@ import { createPost } from '@/app/actions/post';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Avatar, AvatarSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import WritePost from '../write-post/write-post';
-import { PostFormType } from './types';
+import { PostFormTypeVariant } from './types';
 
 export default async function NewPost() {
     const session = await auth();
@@ -20,7 +20,7 @@ export default async function NewPost() {
                 />
             </div>
 
-            <WritePost type={PostFormType.MAINFIELD} />
+            <WritePost type={PostFormTypeVariant.MAINFIELD} />
         </form>
     );
 }

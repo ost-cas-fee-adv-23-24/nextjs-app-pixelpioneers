@@ -50,7 +50,6 @@ export default function DisplayName({
         }
     };
     return (
-        <>
             <section className="relative flex flex-row">
                 {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
                     <div className="relative pr-xs">
@@ -111,7 +110,6 @@ export default function DisplayName({
                         )}
                     </div>
                 </div>
-            </section>
-        </>
+        </section>
     );
 }

@@ -4,7 +4,7 @@ export enum PostVariant {
     DETAIL_VIEW = 'detailView',
 }
 
-export enum PostFormType {
+export enum PostFormTypeVariant {
     MAINFIELD = 'mainField',
     INLINE = 'inline',
 }
