@@ -69,7 +69,6 @@ export default function DisplayName({
                                 {userFullName()}
                             </Label>
                         )}
-
                         {/* TODO: check if user logged in, show settings only if so */}
                         {variant === DisplayNameVariant.PROFILE && (
                             <IconLink
