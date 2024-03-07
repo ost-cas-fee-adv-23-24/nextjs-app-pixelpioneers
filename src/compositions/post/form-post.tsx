@@ -24,12 +24,10 @@ export default async function NewPost() {
                         alt={session?.user?.name || ''}
                     />
                 </div>
-
                 <WritePost user={user} variant={PostFormTypeVariant.MAINFIELD} />
             </form>
         );
+        // TODO: Error handling
+        return <div>Please log in to write a post</div>;
     }
-
-    // TODO: Error handling
-    return <div>Please log in to write a post</div>;
 }
