@@ -18,7 +18,7 @@ export default async function Home() {
             </header>
             {session && (
                 <section className="flex w-full flex-col gap-y-m px-m md:w-auto md:px-0">
-                    <NewPost />
+                    <NewPost session={session} />
                 </section>
             )}
         </>

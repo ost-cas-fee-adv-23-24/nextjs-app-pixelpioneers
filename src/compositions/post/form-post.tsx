@@ -12,6 +12,7 @@ export default async function NewPost() {
     if (session?.user?.profile?.sub) {
         const user: User = await getUser(session.user.profile.sub);
 
+        // TODO: We need to have the label size of 32px - 2xl
         return (
             <form
                 className="relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl py-l md:min-h-[326px] md:w-[680px]"
