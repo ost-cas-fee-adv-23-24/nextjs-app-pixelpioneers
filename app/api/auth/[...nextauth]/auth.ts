@@ -9,6 +9,8 @@ export const {
     trustHost: true,
     session: {
         strategy: 'jwt',
+        // maxAge 10h since Zitadel tokens expire after 12h
+        maxAge: 36000,
     },
     providers: [
         ZITADEL({

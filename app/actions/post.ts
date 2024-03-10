@@ -1,12 +1,7 @@
 'use server';
 
-import { Post, PostWithReplies, Reply } from '@/src/models/post.model';
-import {
-    postReducer,
-    postsReducer,
-    postWithRepliesReducer,
-    repliesReducer,
-} from '@/src/services/post.service';
+import { Post, Reply } from '@/src/models/post.model';
+import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
@@ -75,23 +70,6 @@ export async function getPost(postId: string): Promise<Post> {
             [`post-${postId}`],
         )) as Post,
     );
-}
-
-/** TODO: is needed?
- * get all Replies from a certain Post, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
- * @param postId
- * @param options
- */
-export async function getPostWithReplies(
-    postId: string,
-    options?: Record<string, string[]>,
-): Promise<PostWithReplies> {
-    const post = await getPost(postId);
-    const paginatedReplies = await getReplies(postId, options);
-    return postWithRepliesReducer(post, paginatedReplies.data);
 }
 
 export async function deletePost(postId: string): Promise<void> {

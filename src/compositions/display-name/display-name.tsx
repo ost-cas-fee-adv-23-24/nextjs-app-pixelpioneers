@@ -19,6 +19,7 @@ import { User } from '@/src/models/user.model';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { useRouter } from 'next/navigation';
+import { timeFromNow } from '@/src/services/time.service';
 
 type DisplayNameProps = {
     user: User;
@@ -36,6 +37,8 @@ export default function DisplayName({
     joinedTimestamp,
 }: DisplayNameProps) {
     const router = useRouter();
+    const userFullName = () =>
+        user.firstname ? `${user.firstname} ${user.lastname}` : 'Mumble User';
     const labelSize = (): LabelSize => {
         switch (variant) {
             case DisplayNameVariant.REPLY:
@@ -61,10 +64,10 @@ export default function DisplayName({
                 <div className="flex flex-col gap-xs">
                     <div className="flex w-full flex-wrap place-items-baseline">
                         {variant === DisplayNameVariant.PROFILE ? (
-                            <Heading variant={HeadingLevel.H3}>Vorname Nachname</Heading>
+                            <Heading variant={HeadingLevel.H3}>{userFullName()}</Heading>
                         ) : (
                             <Label size={labelSize()} type={LabelType.SPAN}>
-                                Vorname Nachname
+                                {userFullName()}
                             </Label>
                         )}
 
@@ -87,7 +90,7 @@ export default function DisplayName({
                         />
                         {postTimestamp && (
                             <IconLink
-                                label={postTimestamp.toString()}
+                                label={timeFromNow(postTimestamp)}
                                 variant={Variant.SECONDARY}
                                 Icon={IconTime}
                             />

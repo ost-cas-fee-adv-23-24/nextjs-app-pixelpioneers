@@ -1,6 +1,6 @@
 'use server';
 
-import { PublicUser, User } from '@/src/models/user.model';
+import { User } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { getSession } from '@/app/actions/utils';
@@ -9,19 +9,16 @@ import { validateAvatarData } from '@/src/helpers/validator';
 import { ValidationError } from '@/src/models/error.model';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
-export async function getUser(userId: string): Promise<User | PublicUser> {
+export async function getUser(userId: string): Promise<User> {
+    // TODO: useful to get session in every server action?
     const session = await auth();
-    const user = await request(
+    return (await request(
         getRoute(API_ROUTES.USERS_ID, userId),
         {
             method: 'GET',
         },
         session?.accessToken,
-    );
-    if (session?.accessToken) {
-        return user as User;
-    }
-    return user as PublicUser;
+    )) as User;
 }
 
 /**
@@ -31,11 +28,9 @@ export async function getUser(userId: string): Promise<User | PublicUser> {
  * - limit; number as string
  * @param options
  */
-export async function getUsers(
-    options?: Record<string, string[]>,
-): Promise<PaginatedResult<User | PublicUser>> {
+export async function getUsers(options?: Record<string, string[]>): Promise<PaginatedResult<User>> {
     const session = await auth();
-    const users = await request(
+    return (await request(
         getRoute(API_ROUTES.USERS, undefined, options),
         {
             method: 'GET',
@@ -43,12 +38,7 @@ export async function getUsers(
         session?.accessToken,
         ['users'],
         120,
-    );
-
-    if (session?.accessToken) {
-        return users as PaginatedResult<User>;
-    }
-    return users as PaginatedResult<PublicUser>;
+    )) as PaginatedResult<User>;
 }
 
 /**
@@ -62,7 +52,7 @@ export async function getUsers(
 export async function getFollowers(
     userId: string,
     options?: Record<string, string[]>,
-): Promise<PaginatedResult<PublicUser>> {
+): Promise<PaginatedResult<User>> {
     const session = await auth();
     return (await request(
         getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId, options),
@@ -72,7 +62,7 @@ export async function getFollowers(
         session?.accessToken,
         undefined,
         120,
-    )) as PaginatedResult<PublicUser>;
+    )) as PaginatedResult<User>;
 }
 
 export async function followUser(userId: string): Promise<void> {

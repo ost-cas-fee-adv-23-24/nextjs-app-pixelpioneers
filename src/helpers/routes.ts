@@ -13,6 +13,7 @@ export enum API_ROUTES {
     POSTS_ID = '/posts/[id]',
     POSTS_ID_LIKES = '/posts/[id]/likes',
     POSTS_ID_REPLIES = '/posts/[id]/replies',
+    // TODO: media used?
     POSTS_ID_MEDIA = '/posts/[id]/media',
     POSTS_REAL_TIME_DATA = '/posts/_sse',
     USERS_ID_FOLLOWERS = '/users/[id]/followers',

@@ -8,36 +8,31 @@ import {
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import TabsProfile from '@/src/components/tabs-profile/tabs-profile';
-import BackgroundImage from '@/src/components/background-image/background-image';
+import ImageHeader from '@/src/components/image-header/image-header';
 import User from '@/src/compositions/user/user';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
 import PostSkeleton from '@/src/compositions/post/post-skeleton';
 import UserSkeleton from '@/src/compositions/user/user-skeleton';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
+import { getUser } from '@/app/actions/user';
 
-export default async function Profile() {
-    const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
-
+export default async function Profile({ params }: { params: { id: string } }) {
     const session = await auth();
+    const user = await getUser(params.id);
+    // TODO: check session user ID
+    const activeUser = session?.user?.id === user.id;
+
+    const sectionClasses = 'flex w-full flex-col py-s md:w-[680px]';
     return (
         <>
             <section className="flex min-h-screen flex-col items-center justify-between p-xl">
                 <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
-                    <BackgroundImage session={session} />
+                    <ImageHeader user={user} activeUser={activeUser} />
                 </div>
                 <section className={sectionClasses}>
                     <div className="mb-s ml-[-8px] self-start">
-                        <DisplayName
-                            user={{
-                                id: '179944860378202369',
-                                username: 'max_muster',
-                                avatarUrl: 'string',
-                                firstName: 'string',
-                                lastName: 'string',
-                            }}
-                            variant={DisplayNameVariant.PROFILE}
-                        />
+                        <DisplayName user={user} variant={DisplayNameVariant.PROFILE} />
                     </div>
                     <Paragraph
                         className="w-fill text-slate-400"

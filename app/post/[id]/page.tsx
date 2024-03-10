@@ -8,8 +8,10 @@ export default async function Post({ params }: { params: { id: string } }) {
     const post = await getPost(params.id);
     // TODO: paginate, stream, etc replies
     const replies = await getReplies(params.id);
+    // TODO: error handling
     return (
         <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
+            {/* TODO: add post form */}
             <ReplyContainer paginatedReplies={replies} />
         </PostComponent>
     );

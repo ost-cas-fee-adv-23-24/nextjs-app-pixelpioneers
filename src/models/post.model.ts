@@ -1,4 +1,4 @@
-import { PublicUser } from './user.model';
+import { User } from './user.model';
 import { z } from 'zod';
 
 export const CreatePostSchema = z.union([
@@ -15,7 +15,7 @@ export const CreatePostSchema = z.union([
 export type Post = {
     id: string;
     created: number;
-    creator: PublicUser;
+    creator: User;
     text?: string;
     mediaUrl?: string;
     mediaType?: string;
@@ -24,14 +24,16 @@ export type Post = {
     replies: number;
 };
 
-export type PostWithReplies = Post & { replyList: Reply[] };
-
 export type PostValidationResult = { text?: string[]; media?: string[] };
 
 export type Reply = Omit<Post, 'replies'> & {
     parentId: string;
 };
 
+/**
+ * Message is used as a supertype of post and reply.
+ * It contains all attributes, but is optional on Posts' replies and Replies' parentId.
+ */
 export type Message = Omit<Post, 'replies'> &
     Omit<Reply, 'parentId'> &
     Partial<Pick<Post, 'replies'>> &
