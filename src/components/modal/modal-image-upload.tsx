@@ -14,48 +14,26 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 type ModalImageUploadProps = {
-    onLoadFile: (image: string) => void;
+    onChange: (image: string) => void;
     inputRef: React.RefObject<HTMLInputElement>;
     isOpen: boolean;
     setIsOpen: (state: boolean) => void;
 };
 
-// const isImage = (fileName: string): boolean => {
-//     const regEx = new RegExp(/[^\s]+(.*?).(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$/);
-
-//     if (fileName === null) {
-//         return false;
-//     }
-
-//     return regEx.test(fileName) ? true : false;
-// };
-
 export default function ModalImageUpload({
-    onLoadFile,
+    onChange,
     inputRef,
     isOpen,
     setIsOpen,
 }: ModalImageUploadProps) {
-    const [isImage, setIsImage] = useState<File>();
-
-    const hasFile = (file: File): void => {
-        // TODO: Remove console
-        /* eslint-disable no-alert, no-console */
-        console.log('file ', file);
-        setIsImage(isImage);
-    };
-    // console.log('isImage', isImage);
-
-    const fileStatusClasses = clsx('self-center');
+    const [currentImageEvent, setCurrentImageEvent] = useState<File | undefined>(undefined);
 
     return (
         <Modal
             onSubmit={() => {
                 setIsOpen(false);
-                if (inputRef.current) {
-                    // TODO: Need to check how to get path
-                    onLoadFile?.('');
-                    // onChange?.(URL.createObjectURL());
+                if (currentImageEvent && inputRef.current) {
+                    onChange?.(URL.createObjectURL(currentImageEvent));
                 }
             }}
             onCancel={() => setIsOpen(false)}
@@ -70,28 +48,23 @@ export default function ModalImageUpload({
                 Icon={IconUpload}
                 label="Datei hierhin ziehen..."
                 labelButton="... oder Datei auswählen"
-                // TODO: Need to check how to get the whole file information
-                onLoadFile={hasFile}
+                onLoadFile={(file) => setCurrentImageEvent(file)}
             />
             <div className="flex flex-row self-center">
-                {isImage ? (
-                    <>
-                        <IconCheckmark className="mr-xs fill-primary-600" />
-                        <Label
-                            size={LabelSize.S}
-                            className={clsx(fileStatusClasses, 'text-primary-600')}
-                        >
-                            Bild gewählt
-                        </Label>
-                    </>
+                {currentImageEvent ? (
+                    <IconCheckmark className="mr-xs fill-primary-600" />
                 ) : (
-                    <>
-                        <IconCancel className="mr-xs fill-error" />
-                        <Label size={LabelSize.S} className={clsx(fileStatusClasses, 'text-error')}>
-                            Kein Bild gewählt
-                        </Label>
-                    </>
+                    <IconCancel className="mr-xs fill-error" />
                 )}
+                <Label
+                    size={LabelSize.S}
+                    className={clsx(
+                        'self-center',
+                        currentImageEvent ? 'text-primary-600' : 'text-error',
+                    )}
+                >
+                    {!currentImageEvent && 'Kein '}Bild gewählt
+                </Label>
             </div>
         </Modal>
     );
