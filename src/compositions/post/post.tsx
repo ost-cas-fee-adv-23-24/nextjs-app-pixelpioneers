@@ -33,17 +33,16 @@ export default function Post({ message, variant, children }: PostProps) {
     };
     const detailPostClasses = clsx(
         'mx-0 w-full px-m py-s', // mobile
-        'md:mx-m md:w-[615px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+        'md:mx-m md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
-    /*
-     * TODO: gap-s or gap-m? patternlibrary = s, screendesign = m
-     * TODO: width 680 or 615px?
-     */
     const postClasses = clsx(
         'relative flex flex-col gap-s bg-white',
         {
             inline: '',
-            timeline: detailPostClasses,
+            timeline: clsx(
+                detailPostClasses,
+                'duration-300 ease-in-out hover:ring-2 hover:ring-secondary-200',
+            ),
             detailView: detailPostClasses,
         }[variant],
     );
@@ -83,6 +82,7 @@ export default function Post({ message, variant, children }: PostProps) {
                         src={message.mediaUrl}
                         datatype={message.mediaType}
                         style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 584px) 100vw"
                         fill
                     />
                 </section>
