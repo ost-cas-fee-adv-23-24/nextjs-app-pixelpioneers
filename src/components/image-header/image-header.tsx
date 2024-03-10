@@ -11,7 +11,7 @@ export default function ImageHeader({ user, activeUser }: { user: User; activeUs
     const randomImage = getRandomImage(1, 6);
     const avatarAlt = user.avatarUrl ? `avatar from ${user.username}` : 'no image';
     return (
-        <div className="mb-4 md:object-contai relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[800px]">
+        <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[800px]">
             <Image
                 src={`/wallpapers/${randomImage}.jpg`}
                 alt="Your Wallpaper"
