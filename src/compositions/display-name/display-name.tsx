@@ -27,6 +27,7 @@ type DisplayNameProps = {
     postTimestamp?: number;
     location?: string;
     joinedTimestamp?: number;
+    activeUser?: boolean;
 };
 
 export default function DisplayName({
@@ -35,6 +36,7 @@ export default function DisplayName({
     postTimestamp,
     location,
     joinedTimestamp,
+    activeUser,
 }: DisplayNameProps) {
     const router = useRouter();
     const userFullName = () =>
@@ -50,65 +52,57 @@ export default function DisplayName({
         }
     };
     return (
-            <section className="relative flex flex-row">
-                {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
-                    <div className="relative pr-xs">
-                        <Avatar
-                            size={AvatarSize.S}
-                            alt={`avatar from ${user.username}`}
-                            src={user.avatarUrl}
-                        />
-                    </div>
-                )}
-                <div className="flex flex-col gap-xs">
-                    <div className="flex w-full flex-wrap place-items-baseline">
-                        {variant === DisplayNameVariant.PROFILE ? (
-                            <Heading variant={HeadingLevel.H3}>{userFullName()}</Heading>
-                        ) : (
-                            <Label size={labelSize()} type={LabelType.SPAN}>
-                                {userFullName()}
-                            </Label>
-                        )}
-                        {/* TODO: check if user logged in, show settings only if so */}
-                        {variant === DisplayNameVariant.PROFILE && (
-                            <IconLink
-                                label=""
-                                variant={Variant.PRIMARY}
-                                Icon={IconSettingsAnimated}
-                                className="pl-xs"
-                            />
-                        )}
-                    </div>
-                    <div className="flex w-full flex-wrap place-items-baseline gap-s">
-                        <IconLink
-                            label={user.username}
-                            variant={Variant.PRIMARY}
-                            Icon={IconProfile}
-                            onClick={() => router.push(getRoute(APP_ROUTES.USER, user.id))}
-                        />
-                        {postTimestamp && (
-                            <IconLink
-                                label={timeFromNow(postTimestamp)}
-                                variant={Variant.SECONDARY}
-                                Icon={IconTime}
-                            />
-                        )}
-                        {location && (
-                            <IconLink
-                                label={location}
-                                variant={Variant.SECONDARY}
-                                Icon={IconLocation}
-                            />
-                        )}
-                        {joinedTimestamp && (
-                            <IconLink
-                                label="Joined"
-                                variant={Variant.SECONDARY}
-                                Icon={IconCalendar}
-                            />
-                        )}
-                    </div>
+        <section className="relative flex flex-row">
+            {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
+                <div className="relative pr-xs">
+                    <Avatar
+                        size={AvatarSize.S}
+                        alt={`avatar from ${user.username}`}
+                        src={user.avatarUrl}
+                    />
                 </div>
+            )}
+            <div className="flex flex-col gap-xs">
+                <div className="flex w-full flex-wrap place-items-baseline items-center gap-xs">
+                    {variant === DisplayNameVariant.PROFILE ? (
+                        <Heading variant={HeadingLevel.H3}>{userFullName()}</Heading>
+                    ) : (
+                        <Label size={labelSize()} type={LabelType.SPAN}>
+                            {userFullName()}
+                        </Label>
+                    )}
+                    {variant === DisplayNameVariant.PROFILE && activeUser && (
+                        <button onClick={() => alert('settings') /* TODO: open settings */}>
+                            <IconSettingsAnimated className="fill-primary-600" />
+                        </button>
+                    )}
+                </div>
+                <div className="flex w-full flex-wrap place-items-baseline gap-s">
+                    <IconLink
+                        label={user.username}
+                        variant={Variant.PRIMARY}
+                        Icon={IconProfile}
+                        onClick={() => router.push(getRoute(APP_ROUTES.USER, user.id))}
+                    />
+                    {postTimestamp && (
+                        <IconLink
+                            label={timeFromNow(postTimestamp)}
+                            variant={Variant.SECONDARY}
+                            Icon={IconTime}
+                        />
+                    )}
+                    {location && (
+                        <IconLink
+                            label={location}
+                            variant={Variant.SECONDARY}
+                            Icon={IconLocation}
+                        />
+                    )}
+                    {joinedTimestamp && (
+                        <IconLink label="Joined" variant={Variant.SECONDARY} Icon={IconCalendar} />
+                    )}
+                </div>
+            </div>
         </section>
     );
 }
