@@ -3,7 +3,7 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Avatar, AvatarSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import WritePost from '../write-post/write-post';
 import { PostFormTypeVariant } from './types';
-import { getUser } from '@/app/actions/user';
+// import { getUser } from '@/app/actions/user';
 
 export default async function NewPost() {
     const session = await auth();
@@ -11,7 +11,16 @@ export default async function NewPost() {
     if (session?.accessToken && session.user?.id) {
         // TODO: Need to check why is not working
         // TODO: Already informed our Tutors in Teams - waiting for their response
-        const user = getUser('245809311459051537');
+        // const user = getUser('245809311459051537');
+        // const user = getUser(session.user.id);
+        const user = {
+            id: '245809311459051537',
+            username: 'andre',
+            avatarUrl:
+                'https://storage.googleapis.com/mumble-api-data/28e17313-a62b-411f-8128-f005b908a853',
+            firstname: 'André',
+            lastname: 'Ceres',
+        };
 
         return (
             <form

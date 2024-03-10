@@ -11,14 +11,14 @@ import {
 import { PostFormTypeVariant } from '../post/types';
 import DisplayName from '../display-name/display-name';
 import { DisplayNameVariant } from '../display-name/types';
-import { PublicUser } from '@/src/models/user.model';
+import { User } from '@/src/models/user.model';
 
 export default async function WritePost({
     variant,
     user,
 }: {
     variant: PostFormTypeVariant;
-    user: PublicUser;
+    user: User;
 }) {
     return (
         <>
