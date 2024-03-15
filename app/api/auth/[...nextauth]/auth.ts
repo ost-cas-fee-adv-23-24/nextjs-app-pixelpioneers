@@ -49,9 +49,9 @@ export const {
         session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
             session.user = token.user;
-            // TODO: No idea why this error of undefined (is possiblity undefined)
-            // eslint-disable-next-line
-            session.user!.profile = token.profile;
+            if (session.user) {
+                session.user.profile = token.profile;
+            }
             return session;
         },
     },
