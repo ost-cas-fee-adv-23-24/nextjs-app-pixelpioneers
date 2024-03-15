@@ -1,4 +1,3 @@
-import { createPost } from '@/app/actions/post';
 import { Avatar, AvatarSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import WritePost from '../write-post/write-post';
 import { PostFormTypeVariant } from './types';
@@ -12,10 +11,7 @@ export default async function NewPost({ session }: { session: Session | null }) 
 
         // TODO: We need to have the label size of 32px - 2xl
         return (
-            <form
-                className="relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl py-l md:min-h-[326px] md:w-[680px]"
-                action={createPost}
-            >
+            <section className="relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl py-l md:min-h-[326px] md:w-[680px]">
                 <div className="z-5 absolute left-[32px] top-[-20px] md:left-[-32px] md:top-[20px]">
                     {session && (
                         <Avatar
@@ -26,10 +22,9 @@ export default async function NewPost({ session }: { session: Session | null }) 
                     )}
                 </div>
                 <WritePost user={user} variant={PostFormTypeVariant.MAINFIELD} />
-
-            </form>
+            </section>
         );
-        // TODO: Error handling
-        return <div>Please log in to write a post</div>;
     }
+    // TODO: Error handling
+    return <div>Please log in to write a post</div>;
 }

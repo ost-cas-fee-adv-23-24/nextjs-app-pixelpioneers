@@ -1,5 +1,3 @@
-// TODO: Need to sync with team member
-
 import { ActionError } from '@/src/models/error.model';
 import { StatusCodes } from 'http-status-codes';
 
