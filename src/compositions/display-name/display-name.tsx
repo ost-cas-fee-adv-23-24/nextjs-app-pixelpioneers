@@ -50,7 +50,6 @@ export default function DisplayName({
         }
     };
     return (
-        <>
             <section className="relative flex flex-row">
                 {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
                     <div className="relative pr-xs">
@@ -70,7 +69,6 @@ export default function DisplayName({
                                 {userFullName()}
                             </Label>
                         )}
-
                         {/* TODO: check if user logged in, show settings only if so */}
                         {variant === DisplayNameVariant.PROFILE && (
                             <IconLink
@@ -111,7 +109,6 @@ export default function DisplayName({
                         )}
                     </div>
                 </div>
-            </section>
-        </>
+        </section>
     );
 }

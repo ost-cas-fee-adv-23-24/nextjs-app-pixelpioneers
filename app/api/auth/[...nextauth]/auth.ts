@@ -4,6 +4,7 @@ import ZITADEL from '@auth/core/providers/zitadel';
 export const {
     handlers: { GET, POST },
     auth,
+    signIn,
 } = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     trustHost: true,
@@ -26,7 +27,7 @@ export const {
         }),
     ],
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, user, profile, account }) {
             if (account) {
                 token.accessToken = account.access_token;
                 token.expiresAt = (account.expires_at ?? 0) * 1000;
@@ -35,6 +36,11 @@ export const {
             if (user) {
                 token.user = user;
             }
+
+            if (profile) {
+                token.profile = profile;
+            }
+
             return token;
         },
         // Next Auth Beta 5
@@ -43,6 +49,9 @@ export const {
         session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
             session.user = token.user;
+            if (session.user) {
+                session.user.profile = token.profile;
+            }
             return session;
         },
     },

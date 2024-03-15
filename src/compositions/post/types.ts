@@ -3,3 +3,8 @@ export enum PostVariant {
     TIMELINE = 'timeline',
     DETAIL_VIEW = 'detailView',
 }
+
+export enum PostFormTypeVariant {
+    MAINFIELD = 'mainField',
+    INLINE = 'inline',
+}
