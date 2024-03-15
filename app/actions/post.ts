@@ -20,7 +20,6 @@ export async function likePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
-    // TODO: must be done in component, not server action
     revalidateTag('posts');
 }
 
@@ -33,7 +32,6 @@ export async function unlikePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
-    // TODO: must be done in component, not server action
     revalidateTag('posts');
 }
 
@@ -41,7 +39,6 @@ export async function createPost(formData: FormData): Promise<Post> {
     const session = await getSession();
     const errors = validatePostData(formData);
     if (errors) {
-        // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
         throw new ValidationError(errors);
     }
 
@@ -53,7 +50,6 @@ export async function createPost(formData: FormData): Promise<Post> {
         },
         session.accessToken,
     )) as Post;
-    // TODO: must be done in component, not server action
     revalidateTag('posts');
     return post;
 }
@@ -115,7 +111,6 @@ export async function createReply(postId: string, formData: FormData): Promise<R
     const session = await getSession();
     const errors = validatePostData(formData);
     if (errors) {
-        // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
         throw new ValidationError(errors);
     }
 

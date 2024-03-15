@@ -4,7 +4,6 @@ import { ActionError } from '@/src/models/error.model';
 import { getPosts } from '@/app/actions/post';
 import { PostVariant } from '@/src/compositions/post/types';
 
-// TODO: revalidate posts tag here?
 export default async function Posts() {
     try {
         const paginatedPosts = await getPosts();
