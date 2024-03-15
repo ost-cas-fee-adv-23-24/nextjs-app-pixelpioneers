@@ -9,12 +9,7 @@ import { User } from '@/src/models/user.model';
 export default async function NewPost() {
     const session = await auth();
 
-    if (
-        session?.accessToken &&
-        session.user?.id &&
-        session.user?.profile &&
-        session.user?.profile?.sub
-    ) {
+    if (session?.user?.profile?.sub) {
         const user: User = await getUser(session.user.profile.sub);
 
         return (
