@@ -25,8 +25,8 @@ export default async function NewPost({ session }: { session: Session | null }) 
                         />
                     )}
                 </div>
-
                 <WritePost user={user} variant={PostFormTypeVariant.MAINFIELD} />
+
             </form>
         );
         // TODO: Error handling

@@ -32,8 +32,12 @@ export default function ModalImageUpload({
         <Modal
             onSubmit={() => {
                 setIsOpen(false);
-                if (currentImageEvent && inputRef.current) {
-                    onChange?.(URL.createObjectURL(currentImageEvent));
+                if (currentImageEvent && inputRef.current && currentImageEvent) {
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(currentImageEvent);
+                    inputRef.current.files = dataTransfer.files;
+
+                    onChange?.(URL.createObjectURL(dataTransfer.files[0]));
                 }
             }}
             onCancel={() => setIsOpen(false)}
