@@ -14,33 +14,25 @@ import {
 export default function FollowStatus({
     user,
     onFollow,
-    followedByActiveUser = false,
+    followedByActiveUser,
 }: {
     user: User;
-    onFollow: (formData: FormData) => Promise<void>; // TODO: fix any
-    followedByActiveUser?: boolean;
+    onFollow: () => Promise<void>;
+    followedByActiveUser: boolean;
 }) {
-    const following = followedByActiveUser;
-    //const [following, setFollowing] = useState(followedByActiveUser);
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
     return (
         <div className="flex flex-row items-center gap-m">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
-                Du folgst {name} {!following && 'nicht'}
+                Du folgst {name} {!followedByActiveUser && 'nicht'}
             </Label>
-            {/* TODO: fix form reload */}
             <form action={onFollow}>
                 <Button
                     type="submit"
-                    Icon={following ? IconCancel : IconCheckmark}
+                    Icon={followedByActiveUser ? IconCancel : IconCheckmark}
                     size={ButtonSize.M}
                     variant={Variant.SECONDARY}
-                    label={following ? 'Unfollow' : 'Follow'}
-                    /*onClick={() => {
-onFollow;
-setFollowing(!following);
-}}*/
-                    //onClick={onFollow}
+                    label={followedByActiveUser ? 'Unfollow' : 'Follow'}
                 />
             </form>
         </div>

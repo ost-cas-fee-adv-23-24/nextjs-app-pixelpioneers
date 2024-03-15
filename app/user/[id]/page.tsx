@@ -6,8 +6,9 @@ import FollowStatus from '@/src/components/follow-status/follow-status';
 import clsx from 'clsx';
 import PostSkeleton from '@/src/compositions/post/post-skeleton';
 import UserSkeleton from '@/src/compositions/user/user-skeleton';
-import { followUser, getFollowees, getUser, unfollowUser } from '@/app/actions/user';
+import { followUser, getFollowees, getUser } from '@/app/actions/user';
 import ProfileHeader from '@/src/compositions/profile-header/profile-header';
+import { FollowType } from '@/src/models/user.model';
 
 export default async function Profile({ params }: { params: { id: string } }) {
     //const session = await auth();
@@ -22,6 +23,11 @@ export default async function Profile({ params }: { params: { id: string } }) {
     const followedByActiveUser = !!paginatedFollowees.data.find(
         (follower) => follower.id === user.id,
     );
+    const hydratedFollowUser = followUser.bind(
+        null,
+        user.id,
+        followedByActiveUser ? FollowType.UNFOLLOW : FollowType.FOLLOW,
+    );
 
     const sectionClasses = 'flex flex-col w-full';
     return (
@@ -33,7 +39,7 @@ export default async function Profile({ params }: { params: { id: string } }) {
                 ) : (
                     <FollowStatus
                         user={user}
-                        onFollow={followedByActiveUser ? unfollowUser : followUser}
+                        onFollow={hydratedFollowUser}
                         followedByActiveUser={followedByActiveUser}
                     />
                 )}

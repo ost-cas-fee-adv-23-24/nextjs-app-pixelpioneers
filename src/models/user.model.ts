@@ -8,6 +8,11 @@ export type User = {
     lastname?: string;
 };
 
+export enum FollowType {
+    FOLLOW = 'follow',
+    UNFOLLOW = 'unfollow',
+}
+
 export const UpdateAvatarSchema = z.object({
     media: z.string(),
 });

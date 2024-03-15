@@ -1,6 +1,6 @@
 'use server';
 
-import { User } from '@/src/models/user.model';
+import { FollowType, User } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { getSession } from '@/app/actions/utils';
@@ -90,27 +90,12 @@ export async function getFollowees(
     )) as PaginatedResult<User>;
 }
 
-export async function followUser(formData: FormData): Promise<void> {
-    const userId = formData + '';
-    const session = await auth();
+export async function followUser(userId: string, followType: FollowType): Promise<void> {
+    const session = await getSession();
     await request(
         getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
-        { method: 'PUT' },
-        session?.accessToken,
-    );
-    // TODO: fix id
-    revalidateTag('followees-245808067160180753');
-    revalidateTag(`followers-${userId}`);
-}
-
-// work with form data - hidden input mit user id auf client
-export async function unfollowUser(formData: FormData): Promise<void> {
-    const userId = formData + '';
-    const session = await auth();
-    await request(
-        getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
-        { method: 'DELETE' },
-        session?.accessToken,
+        { method: followType === FollowType.FOLLOW ? 'PUT' : 'DELETE' },
+        session.accessToken,
     );
     // TODO: fix id
     revalidateTag('followees-245808067160180753');
