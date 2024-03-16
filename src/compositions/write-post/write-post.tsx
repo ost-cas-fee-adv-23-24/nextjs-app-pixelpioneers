@@ -25,24 +25,22 @@ export default function WritePost({ variant, user }: { variant: PostFormTypeVari
     const [image, setImage] = useState<string | undefined>(undefined);
     const imageRef = useRef<HTMLInputElement>(null);
 
-    const enterPost = createPost.bind(null);
-
     return (
-        <form action={enterPost}>
+        <form action={createPost} className="flex flex-col gap-y-s">
             {variant === PostFormTypeVariant.MAINFIELD ? (
                 <>
                     <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
                         Hey, was gibt&apos;s Neues?
                     </Label>
                     {image && (
-                        <div className="flex flex-col">
-                            <div className="w-fill relative h-[110px]">
+                        <>
+                            <div className="w-fill relative h-[200px]">
                                 <Image
                                     src={image}
                                     alt="Vorschau"
                                     className="mx-auto rounded-m"
-                                    height={100}
-                                    width={100}
+                                    height={200}
+                                    width={200}
                                 />
                             </div>
                             <Button
@@ -60,7 +58,7 @@ export default function WritePost({ variant, user }: { variant: PostFormTypeVari
                                 label="Bildvorschau löschen"
                                 className="mt-m"
                             />
-                        </div>
+                        </>
                     )}
                 </>
             ) : (
