@@ -4,6 +4,7 @@ import { PostFormTypeVariant } from './types';
 import { getUser } from '@/app/actions/user';
 import { User } from '@/src/models/user.model';
 import { Session } from 'next-auth';
+import { createPost } from '@/app/actions/post';
 
 export default async function NewPost({ session }: { session: Session | null }) {
     if (session?.user?.profile?.sub) {
@@ -21,7 +22,11 @@ export default async function NewPost({ session }: { session: Session | null }) 
                         />
                     )}
                 </div>
-                <WritePost user={user} variant={PostFormTypeVariant.MAINFIELD} />
+                <WritePost
+                    user={user}
+                    variant={PostFormTypeVariant.MAINFIELD}
+                    action={createPost}
+                />
             </section>
         );
     }

@@ -18,15 +18,20 @@ import { User } from '@/src/models/user.model';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import ModalImageUpload from '@/src/components/modal/modal-image-upload';
-import { createPost } from '@/app/actions/post';
 
-export default function WritePost({ variant, user }: { variant: PostFormTypeVariant; user: User }) {
+type WritePostProps = {
+    variant: PostFormTypeVariant;
+    user: User;
+    action?: (formData: FormData) => void;
+};
+
+export default function WritePost({ variant, user, action }: WritePostProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | undefined>(undefined);
     const imageRef = useRef<HTMLInputElement>(null);
 
     return (
-        <form action={createPost} className="flex flex-col gap-y-s">
+        <form action={action} className="flex flex-col gap-y-s">
             {variant === PostFormTypeVariant.MAINFIELD ? (
                 <>
                     <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
