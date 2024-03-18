@@ -4,34 +4,42 @@ import {
     Button,
     ButtonSize,
     IconCancel,
-    IconSend,
-    IconUpload,
     Label,
     LabelSize,
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { PostFormTypeVariant } from '../post/types';
+import { ActionType, PostFormTypeVariant } from '../post/types';
 import DisplayName from '../display-name/display-name';
 import { DisplayNameVariant } from '../display-name/types';
 import { User } from '@/src/models/user.model';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import ModalImageUpload from '@/src/components/modal/modal-image-upload';
+import { createPost, createReply } from '@/app/actions/post';
+import ActionButton from './action-button';
 
 type WritePostProps = {
     variant: PostFormTypeVariant;
     user: User;
-    action?: (formData: FormData) => void;
+    variantTypeAction: ActionType;
 };
 
-export default function WritePost({ variant, user, action }: WritePostProps) {
+export default function WritePost({ variant, user, variantTypeAction }: WritePostProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | undefined>(undefined);
     const imageRef = useRef<HTMLInputElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+
+    // Create or reply post
+    const formAction = async (formData: FormData) => {
+        variantTypeAction === ActionType.CREATE_POST
+            ? await createPost(formData)
+            : createReply.bind(formData, user.id);
+    };
 
     return (
-        <form action={action} className="flex flex-col gap-y-s">
+        <form ref={formRef} action={formAction} className="flex flex-col gap-y-s">
             {variant === PostFormTypeVariant.MAINFIELD ? (
                 <>
                     <Label className="pl-xxl md:pl-0" size={LabelSize.XL} htmlFor="text">
@@ -39,7 +47,7 @@ export default function WritePost({ variant, user, action }: WritePostProps) {
                     </Label>
                     {image && (
                         <>
-                            <div className="w-fill relative h-[200px]">
+                            <div className="w-fill relative mx-auto h-auto rounded-m bg-violet-50 p-xs">
                                 <Image
                                     src={image}
                                     alt="Vorschau"
@@ -61,7 +69,6 @@ export default function WritePost({ variant, user, action }: WritePostProps) {
                                 variant={Variant.PRIMARY}
                                 fill
                                 label="Bildvorschau löschen"
-                                className="mt-m"
                             />
                         </>
                     )}
@@ -74,35 +81,17 @@ export default function WritePost({ variant, user, action }: WritePostProps) {
                 name="text"
                 id="text"
                 placeholder="Deine Meinung zählt!"
-            ></Textarea>
-            <input type="file" name="media" id="uploadImage" ref={imageRef} hidden />
+            />
+            <section className="flex flex-row justify-between gap-s">
+                <ActionButton isOpen={isOpen} setIsOpen={setIsOpen} />
+            </section>
+            <input type="file" name="media" id="media" ref={imageRef} hidden />
             <ModalImageUpload
                 onChange={setImage}
                 inputRef={imageRef}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
             />
-            <section className="flex flex-row justify-between gap-s">
-                <Button
-                    type="button"
-                    Icon={IconUpload}
-                    size={ButtonSize.M}
-                    variant={Variant.SECONDARY}
-                    label="Bild hochladen"
-                    fill
-                    onClick={() => {
-                        setIsOpen(!isOpen);
-                    }}
-                />
-                <Button
-                    type="submit"
-                    Icon={IconSend}
-                    size={ButtonSize.M}
-                    variant={Variant.PRIMARY}
-                    label="Absenden"
-                    fill
-                />
-            </section>
         </form>
     );
 }

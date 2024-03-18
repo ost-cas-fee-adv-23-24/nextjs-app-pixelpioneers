@@ -58,13 +58,13 @@ export default function ModalImageUpload({
                 {currentImageEvent ? (
                     <IconCheckmark className="mr-xs fill-primary-600" />
                 ) : (
-                    <IconCancel className="mr-xs fill-error" />
+                    <IconCancel className="mr-xs fill-slate-400" />
                 )}
                 <Label
                     size={LabelSize.S}
                     className={clsx(
                         'self-center',
-                        currentImageEvent ? 'text-primary-600' : 'text-error',
+                        currentImageEvent ? 'text-primary-600' : 'text-slate-400',
                     )}
                 >
                     {!currentImageEvent && 'Kein '}Bild gewählt

@@ -1,10 +1,9 @@
 import { Avatar, AvatarSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import WritePost from '../write-post/write-post';
-import { PostFormTypeVariant } from './types';
+import { ActionType, PostFormTypeVariant } from './types';
 import { getUser } from '@/app/actions/user';
 import { User } from '@/src/models/user.model';
 import { Session } from 'next-auth';
-import { createPost } from '@/app/actions/post';
 
 export default async function NewPost({ session }: { session: Session | null }) {
     if (session?.user?.profile?.sub) {
@@ -25,7 +24,7 @@ export default async function NewPost({ session }: { session: Session | null }) 
                 <WritePost
                     user={user}
                     variant={PostFormTypeVariant.MAINFIELD}
-                    action={createPost}
+                    variantTypeAction={ActionType.CREATE_POST}
                 />
             </section>
         );
