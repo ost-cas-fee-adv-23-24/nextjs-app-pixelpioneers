@@ -1,6 +1,7 @@
 export enum APP_ROUTES {
     POST = '/post/[id]',
-    USER = '/user/[id]',
+    USER = '/user/[id]/posts',
+    USER_LIKES = '/user/[id]/likes',
     // TODO: Followers, login & settings ?
     USER_FOLLOWERS = '/user/[id]/followers',
     SETTINGS = '/settings',

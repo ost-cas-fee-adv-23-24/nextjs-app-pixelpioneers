@@ -129,3 +129,15 @@ export async function removeAvatar(): Promise<void> {
         session.accessToken,
     );
 }
+
+export async function checkIsActiveUser(
+    userId: string,
+): Promise<{ isActiveUser: boolean; user?: User }> {
+    const session = await auth();
+    if (session?.user?.profile.sub) {
+        const activeUser = await getUser(session.user.profile.sub);
+        return { isActiveUser: activeUser.id === userId, user: activeUser };
+    }
+    // return false when no session available
+    return { isActiveUser: false };
+}

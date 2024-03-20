@@ -1,5 +1,5 @@
 'use client';
-import { User } from '@/src/models/user.model';
+import { FollowingType, User } from '@/src/models/user.model';
 import {
     Button,
     ButtonSize,
@@ -18,21 +18,26 @@ export default function FollowStatus({
 }: {
     user: User;
     onFollow: () => Promise<void>;
-    followedByActiveUser: boolean;
+    followedByActiveUser: FollowingType;
 }) {
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
+    const isFollowing = followedByActiveUser === FollowingType.FOLLOWING;
+    if (followedByActiveUser === FollowingType.NOT_LOGGED_IN) {
+        // TODO: LOGIN button
+        return <div>Logge dich jetzt ein, um {user.username} zu folgen.</div>;
+    }
     return (
         <div className="flex flex-row items-center gap-m">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
-                Du folgst {name} {!followedByActiveUser && 'nicht'}
+                Du folgst {name} {!isFollowing && 'nicht'}
             </Label>
             <form action={onFollow}>
                 <Button
                     type="submit"
-                    Icon={followedByActiveUser ? IconCancel : IconCheckmark}
+                    Icon={isFollowing ? IconCancel : IconCheckmark}
                     size={ButtonSize.M}
                     variant={Variant.SECONDARY}
-                    label={followedByActiveUser ? 'Unfollow' : 'Follow'}
+                    label={isFollowing ? 'Unfollow' : 'Follow'}
                 />
             </form>
         </div>

@@ -8,7 +8,7 @@ export default async function Posts() {
     try {
         const paginatedPosts = await getPosts();
         return (
-            <section className="mx-m flex flex-col gap-y-m">
+            <section className="mx-m flex flex-col gap-s">
                 {/*<LivePosts />*/}
                 {paginatedPosts.data.map((post) => (
                     <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />

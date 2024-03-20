@@ -13,6 +13,12 @@ export enum FollowType {
     UNFOLLOW = 'unfollow',
 }
 
+export enum FollowingType {
+    FOLLOWING = 'following',
+    NOT_FOLLOWING = 'notFollowing',
+    NOT_LOGGED_IN = 'notLoggedIn',
+}
+
 export const UpdateAvatarSchema = z.object({
     media: z.string(),
 });
