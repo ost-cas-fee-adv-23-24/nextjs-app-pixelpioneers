@@ -30,7 +30,8 @@ export default function LoginButton({
     const onClick = () => (session ? signOut() : signIn('zitadel'));
     if (navBar) {
         return (
-            <div className="flex min-w-[52px] flex-col justify-center">
+            // static width for login and logout button container
+            <div className="flex w-[68px] flex-col items-center">
                 <NaviButton
                     size={ButtonSize.L}
                     label={label}
