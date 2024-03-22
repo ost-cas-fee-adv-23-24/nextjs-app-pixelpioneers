@@ -1,4 +1,4 @@
-import NextAuth, { Session } from 'next-auth';
+import NextAuth, { Session, User } from 'next-auth';
 import ZITADEL from '@auth/core/providers/zitadel';
 
 export const {
@@ -30,6 +30,10 @@ export const {
         async jwt({ token, user, account }) {
             if (user) {
                 token.user = user;
+
+                if (account) {
+                    (token.user as User).id = account.providerAccountId;
+                }
             }
 
             if (account) {
@@ -45,7 +49,7 @@ export const {
         // eslint-disable-next-line
         session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
-            session.user = token;
+            session.user = token.user;
             return session;
         },
     },
