@@ -27,18 +27,15 @@ export const {
         }),
     ],
     callbacks: {
-        async jwt({ token, user, profile, account }) {
-            if (account) {
-                token.accessToken = account.access_token;
-                token.expiresAt = (account.expires_at ?? 0) * 1000;
-            }
-
+        async jwt({ token, user, account }) {
             if (user) {
                 token.user = user;
             }
 
-            if (profile) {
-                token.profile = profile;
+            if (account) {
+                token.sub = account.providerAccountId;
+                token.accessToken = account.access_token;
+                token.expiresAt = (account.expires_at ?? 0) * 1000;
             }
 
             return token;
@@ -48,10 +45,7 @@ export const {
         // eslint-disable-next-line
         session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
-            session.user = token.user;
-            if (session.user) {
-                session.user.profile = token.profile;
-            }
+            session.user = token;
             return session;
         },
     },

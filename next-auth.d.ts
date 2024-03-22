@@ -1,13 +1,14 @@
 import '@auth/core/jwt';
 import '@auth/core/types';
-import { User, Profile } from '@auth/core/types';
+import { User } from '@auth/core/types';
 
 declare module '@auth/core/types' {
     interface User {
         id: string;
         name: string;
         email: string;
-        profile: Profile;
+        sub: string;
+        picture: string;
     }
 
     interface Session {
