@@ -5,6 +5,8 @@ import { getPosts } from '@/app/actions/post';
 import { ProfileHeader, ProfilePosts, ProfilePostType } from '@/src/models/profile.model';
 import { FollowingType } from '@/src/models/user.model';
 import { userPostsHydrator } from '@/src/services/post.service';
+import { redirect } from 'next/navigation';
+import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
 export async function getProfileHeader(userId: string): Promise<ProfileHeader> {
     const user = await getUser(userId);
@@ -30,9 +32,16 @@ export async function getProfilePosts(
 ): Promise<ProfilePosts> {
     const user = await getUser(userId);
     const { isActiveUser } = await checkIsActiveUser(userId);
+
+    // redirect user to /posts, when attempting to see likes of other users
+    if (!isActiveUser && type === ProfilePostType.LIKED_BY) {
+        redirect(getRoute(APP_ROUTES.USER, userId));
+    }
+
     const paginatedPosts = await getPosts(
         type === ProfilePostType.CREATED_BY ? { creators: [user.id] } : { likedBy: [user.id] },
     );
+
     return {
         user,
         isActiveUser,

@@ -15,7 +15,7 @@ export default async function User({ params }: { params: { id: string } }) {
         followedByActiveUser === FollowingType.FOLLOWING ? FollowType.UNFOLLOW : FollowType.FOLLOW,
     );
 
-    // TODO: redirect when likes?
+    // TODO: redirect when likes instead of posts?
 
     return (
         <>

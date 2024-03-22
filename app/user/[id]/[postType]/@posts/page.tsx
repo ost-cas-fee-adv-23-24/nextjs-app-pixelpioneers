@@ -8,11 +8,7 @@ export default async function UserPosts({ params }: { params: { id: string; post
         params.id,
         params.postType === 'likes' ? ProfilePostType.LIKED_BY : ProfilePostType.CREATED_BY,
     );
-    if (!isActiveUser && params.postType === 'likes') {
-        // TODO: clean solution
-        //redirect(getRoute(APP_ROUTES.USER, params.id));
-        return <div>Error: HTTP 403</div>;
-    }
+
     return (
         <ProfilePosts
             user={user}

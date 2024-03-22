@@ -10,6 +10,7 @@ import {
     LabelType,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import LoginButton from '@/src/components/login/login-button';
 
 export default function FollowStatus({
     user,
@@ -24,7 +25,12 @@ export default function FollowStatus({
     const isFollowing = followedByActiveUser === FollowingType.FOLLOWING;
     if (followedByActiveUser === FollowingType.NOT_LOGGED_IN) {
         // TODO: LOGIN button
-        return <div>Logge dich jetzt ein, um {user.username} zu folgen.</div>;
+        return (
+            <div className="flex flex-row items-center gap-xs">
+                <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
+                <span>um {user.username} zu folgen.</span>
+            </div>
+        );
     }
     return (
         <div className="flex flex-row items-center gap-m">
