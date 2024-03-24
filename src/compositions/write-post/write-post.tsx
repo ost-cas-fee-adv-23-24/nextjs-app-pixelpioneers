@@ -9,7 +9,7 @@ import {
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { ActionType, PostFormTypeVariant } from '../post/types';
+import { ActionTypeVariant, PostFormTypeVariant } from '../post/types';
 import DisplayName from '../display-name/display-name';
 import { DisplayNameVariant } from '../display-name/types';
 import { User } from '@/src/models/user.model';
@@ -22,20 +22,30 @@ import ActionButton from './action-button';
 type WritePostProps = {
     variant: PostFormTypeVariant;
     user: User;
-    variantTypeAction: ActionType;
+    variantTypeAction: ActionTypeVariant;
 };
 
 export default function WritePost({ variant, user, variantTypeAction }: WritePostProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [image, setImage] = useState<string | undefined>(undefined);
-    const imageRef = useRef<HTMLInputElement>(null);
+    const [image, setImage] = useState<string | null>(null);
+    const imageRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
+
+    let response = null;
 
     // Create or reply post
     const formAction = async (formData: FormData) => {
-        variantTypeAction === ActionType.CREATE_POST
-            ? await createPost(formData)
-            : createReply.bind(formData, user.id);
+        if (variantTypeAction === ActionTypeVariant.CREATE_POST) {
+            response = await createPost(formData);
+            if (response) {
+                formRef.current?.reset();
+                setImage(null);
+            }
+        } else if (variantTypeAction === ActionTypeVariant.REPLY_POST) {
+            createReply.bind(formData, user.id);
+        } else {
+            return null;
+        }
     };
 
     return (
@@ -58,7 +68,7 @@ export default function WritePost({ variant, user, variantTypeAction }: WritePos
                             </div>
                             <Button
                                 onClick={() => {
-                                    setImage(undefined);
+                                    setImage(null);
                                     if (imageRef.current) {
                                         imageRef.current.value = '';
                                     }
@@ -85,7 +95,14 @@ export default function WritePost({ variant, user, variantTypeAction }: WritePos
             <section className="flex flex-row justify-between gap-s">
                 <ActionButton isOpen={isOpen} setIsOpen={setIsOpen} />
             </section>
-            <input type="file" name="media" id="media" ref={imageRef} hidden />
+            <input
+                type="file"
+                name="media"
+                id="media"
+                ref={imageRef}
+                disabled={image ? false : true}
+                hidden
+            />
             <ModalImageUpload
                 onChange={setImage}
                 inputRef={imageRef}

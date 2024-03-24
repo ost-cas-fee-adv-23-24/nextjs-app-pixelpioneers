@@ -26,7 +26,7 @@ export default function ModalImageUpload({
     isOpen,
     setIsOpen,
 }: ModalImageUploadProps) {
-    const [currentImageEvent, setCurrentImageEvent] = useState<File | undefined>(undefined);
+    const [currentImageEvent, setCurrentImageEvent] = useState<File | null>(null);
 
     return (
         <Modal
@@ -36,7 +36,6 @@ export default function ModalImageUpload({
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(currentImageEvent);
                     inputRef.current.files = dataTransfer.files;
-
                     onChange?.(URL.createObjectURL(dataTransfer.files[0]));
                 }
             }}
