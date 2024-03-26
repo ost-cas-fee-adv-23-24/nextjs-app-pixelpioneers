@@ -10,11 +10,6 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { Session } from 'next-auth';
 
-export enum LoginButtonType {
-    NORMAL = 'normal',
-    NAVIGATION = 'navigation',
-}
-
 export default function LoginButton({
     session,
     navBar = false,
