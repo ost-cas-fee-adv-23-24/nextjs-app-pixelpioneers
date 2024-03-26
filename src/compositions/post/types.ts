@@ -9,7 +9,7 @@ export enum PostFormTypeVariant {
     INLINE = 'inline',
 }
 
-export enum ActionTypeVariant {
-    CREATE_POST = 'createPost',
-    REPLY_POST = 'replyPost',
+export enum MessageVariant {
+    CREATE = 'create',
+    REPLY = 'reply',
 }

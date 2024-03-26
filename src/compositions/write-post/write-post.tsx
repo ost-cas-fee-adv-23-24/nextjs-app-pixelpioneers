@@ -9,7 +9,7 @@ import {
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { ActionTypeVariant, PostFormTypeVariant } from '../post/types';
+import { MessageVariant, PostFormTypeVariant } from '../post/types';
 import DisplayName from '../display-name/display-name';
 import { DisplayNameVariant } from '../display-name/types';
 import { User } from '@/src/models/user.model';
@@ -22,29 +22,33 @@ import ActionButton from './action-button';
 type WritePostProps = {
     variant: PostFormTypeVariant;
     user: User;
-    variantTypeAction: ActionTypeVariant;
+    messageVariant: MessageVariant;
 };
 
-export default function WritePost({ variant, user, variantTypeAction }: WritePostProps) {
+export default function WritePost({ variant, user, messageVariant }: WritePostProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
     const imageRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
 
-    let response = null;
+    const createMessage = async (formData: FormData) => {
+        let response = null;
+        response = await createPost(formData);
+        // TODO: Add Error handling
+        if (response) {
+            formRef.current?.reset();
+            setImage(null);
+        }
+    };
 
-    // Create or reply post
     const formAction = async (formData: FormData) => {
-        if (variantTypeAction === ActionTypeVariant.CREATE_POST) {
-            response = await createPost(formData);
-            if (response) {
-                formRef.current?.reset();
-                setImage(null);
-            }
-        } else if (variantTypeAction === ActionTypeVariant.REPLY_POST) {
-            createReply.bind(formData, user.id);
-        } else {
-            return null;
+        switch (messageVariant) {
+            case MessageVariant.CREATE:
+                return createMessage(formData);
+            case MessageVariant.REPLY:
+                return createReply.bind(formData, user.id);
+            default:
+                return null;
         }
     };
 
