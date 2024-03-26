@@ -3,6 +3,7 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import PostForm from '@/src/compositions/post/post-form';
 import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { getUser } from '../actions/user';
+import { MessageVariant } from '@/src/compositions/post/types';
 
 export default async function Home() {
     const session = await auth();
@@ -22,7 +23,7 @@ export default async function Home() {
             </header>
             {user && (
                 <section className="flex w-full flex-col gap-y-m px-m md:w-auto md:px-0">
-                    <PostForm user={user} />
+                    <PostForm user={user} messageVariant={MessageVariant.CREATE} />
                 </section>
             )}
         </>
