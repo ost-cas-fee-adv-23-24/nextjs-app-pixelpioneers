@@ -12,7 +12,7 @@ import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
 export default function NaviButtons({ session }: { session: Session | null }) {
     const router = useRouter();
-    const userId = session?.user?.profile.sub;
+    const userId = session?.user?.id;
     return (
         <section className="flex flex-row items-center gap-s">
             <NaviUser
