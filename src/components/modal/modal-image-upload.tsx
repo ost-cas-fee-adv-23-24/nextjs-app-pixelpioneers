@@ -17,21 +17,23 @@ type ModalImageUploadProps = {
     onChange: (image: string) => void;
     inputRef: React.RefObject<HTMLInputElement>;
     isOpen: boolean;
-    setIsOpen: (state: boolean) => void;
+    onSubmit: () => void;
+    onCancel: () => void;
 };
 
 export default function ModalImageUpload({
     onChange,
     inputRef,
     isOpen,
-    setIsOpen,
+    onSubmit,
+    onCancel,
 }: ModalImageUploadProps) {
     const [currentImageEvent, setCurrentImageEvent] = useState<File | null>(null);
 
     return (
         <Modal
             onSubmit={() => {
-                setIsOpen(false);
+                onSubmit();
                 if (currentImageEvent && inputRef.current && currentImageEvent) {
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(currentImageEvent);
@@ -39,7 +41,7 @@ export default function ModalImageUpload({
                     onChange?.(URL.createObjectURL(dataTransfer.files[0]));
                 }
             }}
-            onCancel={() => setIsOpen(false)}
+            onCancel={onCancel}
             isOpen={isOpen}
             title="Bild hochladen"
             size={ModalWidth.M}

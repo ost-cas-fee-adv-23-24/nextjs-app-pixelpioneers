@@ -7,8 +7,6 @@ import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
-import { validatePostData } from '@/src/helpers/validator';
-import { ValidationError } from '@/src/models/error.model';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
 export async function likePost(postId: string): Promise<void> {
@@ -38,6 +36,7 @@ export async function unlikePost(postId: string): Promise<void> {
 export async function createPost(formData: FormData): Promise<Post> {
     const session = await getSession();
 
+    // TODO: reactivate
     // const errors = validatePostData(formData);
 
     // if (errors) {
@@ -115,10 +114,11 @@ export async function getPosts(options?: Record<string, string[]>): Promise<Pagi
 
 export async function createReply(postId: string, formData: FormData): Promise<Reply> {
     const session = await getSession();
-    const errors = validatePostData(formData);
-    if (errors) {
-        throw new ValidationError(errors);
-    }
+    // TODO: reactivate
+    /*const errors = validatePostData(formData);
+  if (errors) {
+      throw new ValidationError(errors);
+  }*/
 
     const reply = (await request(
         getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
