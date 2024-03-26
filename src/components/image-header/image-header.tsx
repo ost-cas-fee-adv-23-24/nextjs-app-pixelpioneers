@@ -6,12 +6,18 @@ import { Avatar, AvatarSize, EditAvatar } from '@ost-cas-fee-adv-23-24/design-sy
 import { getRandomImage } from './utils';
 import { User } from '@/src/models/user.model';
 
-export default function ImageHeader({ user, activeUser }: { user: User; activeUser?: boolean }) {
+export default function ImageHeader({
+    user,
+    activeUser = false,
+}: {
+    user: User;
+    activeUser?: boolean;
+}) {
     // TODO: Need to observe why the error occurs in the console, cleanup
     const randomImage = getRandomImage(1, 6);
     const avatarAlt = user.avatarUrl ? `avatar from ${user.username}` : 'no image';
     return (
-        <div className="mb-4 relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[800px]">
+        <div className="relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
             <Image
                 src={`/wallpapers/${randomImage}.jpg`}
                 alt="Your Wallpaper"
@@ -20,7 +26,7 @@ export default function ImageHeader({ user, activeUser }: { user: User; activeUs
                 fill
                 loading="lazy"
             />
-            <div className="absolute bottom-[-70px] right-[30px]">
+            <div className="absolute bottom-[-70px] right-[30px] z-10">
                 {activeUser ? (
                     <EditAvatar
                         src={user.avatarUrl}

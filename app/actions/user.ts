@@ -1,13 +1,14 @@
 'use server';
 
-import { User } from '@/src/models/user.model';
+import { FollowType, User } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { getSession } from '@/app/actions/utils';
+import { getSession, getTag, Tag } from '@/app/actions/utils';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';
 import { ValidationError } from '@/src/models/error.model';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { revalidateTag } from 'next/cache';
 
 export async function getUser(userId: string): Promise<User> {
     // TODO: useful to get session in every server action?
@@ -18,6 +19,8 @@ export async function getUser(userId: string): Promise<User> {
             method: 'GET',
         },
         session?.accessToken,
+        [getTag(Tag.USER, userId)],
+        120,
     )) as User;
 }
 
@@ -36,7 +39,7 @@ export async function getUsers(options?: Record<string, string[]>): Promise<Pagi
             method: 'GET',
         },
         session?.accessToken,
-        ['users'],
+        [getTag(Tag.USERS)],
         120,
     )) as PaginatedResult<User>;
 }
@@ -60,31 +63,50 @@ export async function getFollowers(
             method: 'GET',
         },
         session?.accessToken,
-        undefined,
+        [getTag(Tag.FOLLOWERS, userId)],
         120,
     )) as PaginatedResult<User>;
 }
 
-export async function followUser(userId: string): Promise<void> {
-    const session = await getSession();
-    await request(
-        getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
-        { method: 'PUT' },
-        session.accessToken,
-    );
+/**
+ * get all followees of a User, pagination possible by options param
+ * The following options are available at the endpoint:
+ * - offset; number as string
+ * - limit; number as string
+ * @param userId
+ * @param options
+ */
+export async function getFollowees(
+    userId: string,
+    options?: Record<string, string[]>,
+): Promise<PaginatedResult<User>> {
+    const session = await auth();
+    return (await request(
+        getRoute(API_ROUTES.USERS_ID_FOLLOWEES, userId, options),
+        {
+            method: 'GET',
+        },
+        session?.accessToken,
+        [getTag(Tag.FOLLOWEES, userId)],
+        120,
+    )) as PaginatedResult<User>;
 }
 
-export async function unfollowUser(userId: string): Promise<void> {
+export async function followUser(userId: string, followType: FollowType): Promise<void> {
     const session = await getSession();
+    const activeUserId = session.user?.profile.sub;
     await request(
         getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
-        { method: 'DELETE' },
+        { method: followType === FollowType.FOLLOW ? 'PUT' : 'DELETE' },
         session.accessToken,
     );
+    activeUserId && revalidateTag(getTag(Tag.FOLLOWEES, activeUserId));
+    revalidateTag(getTag(Tag.FOLLOWERS, userId));
 }
 
 export async function uploadAvatar(formData: FormData): Promise<void> {
     const session = await getSession();
+    const activeUserId = session.user?.profile.sub;
     const errors = validateAvatarData(formData);
     if (errors) {
         throw new ValidationError(errors);
@@ -97,11 +119,12 @@ export async function uploadAvatar(formData: FormData): Promise<void> {
         },
         session.accessToken,
     );
-    // TODO: we could use avatarUrl
+    activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
 }
 
 export async function removeAvatar(): Promise<void> {
     const session = await getSession();
+    const activeUserId = session.user?.profile.sub;
     await request(
         getRoute(API_ROUTES.USERS_AVATAR),
         {
@@ -109,4 +132,17 @@ export async function removeAvatar(): Promise<void> {
         },
         session.accessToken,
     );
+    activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
+}
+
+export async function checkIsActiveUser(
+    userId: string,
+): Promise<{ isActiveUser: boolean; user?: User }> {
+    const session = await auth();
+    if (session?.user?.profile.sub) {
+        const activeUser = await getUser(session.user.profile.sub);
+        return { isActiveUser: activeUser.id === userId, user: activeUser };
+    }
+    // return false when no session available
+    return { isActiveUser: false };
 }

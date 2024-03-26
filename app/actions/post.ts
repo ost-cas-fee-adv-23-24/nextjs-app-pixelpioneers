@@ -5,7 +5,7 @@ import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.s
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
-import { getSession } from '@/app/actions/utils';
+import { getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { validatePostData } from '@/src/helpers/validator';
 import { ValidationError } from '@/src/models/error.model';
@@ -20,8 +20,7 @@ export async function likePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
-    // TODO: must be done in component, not server action
-    revalidateTag('posts');
+    revalidateTag(getTag(Tag.POSTS));
 }
 
 export async function unlikePost(postId: string): Promise<void> {
@@ -33,15 +32,13 @@ export async function unlikePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
-    // TODO: must be done in component, not server action
-    revalidateTag('posts');
+    revalidateTag(getTag(Tag.POSTS));
 }
 
 export async function createPost(formData: FormData): Promise<Post> {
     const session = await getSession();
     const errors = validatePostData(formData);
     if (errors) {
-        // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
         throw new ValidationError(errors);
     }
 
@@ -53,8 +50,7 @@ export async function createPost(formData: FormData): Promise<Post> {
         },
         session.accessToken,
     )) as Post;
-    // TODO: must be done in component, not server action
-    revalidateTag('posts');
+    revalidateTag(getTag(Tag.POSTS));
     return post;
 }
 
@@ -67,7 +63,7 @@ export async function getPost(postId: string): Promise<Post> {
                 method: 'GET',
             },
             session?.accessToken,
-            [`post-${postId}`],
+            [getTag(Tag.POST, postId)],
         )) as Post,
     );
 }
@@ -81,6 +77,7 @@ export async function deletePost(postId: string): Promise<void> {
         },
         session.accessToken,
     );
+    revalidateTag(getTag(Tag.POSTS));
 }
 
 /**
@@ -98,6 +95,8 @@ export async function deletePost(postId: string): Promise<void> {
  */
 export async function getPosts(options?: Record<string, string[]>): Promise<PaginatedResult<Post>> {
     const session = await auth();
+    // TODO: validate options?
+    // TODO: clean tags when options are given - ex. options as ID
     return postsReducer(
         (await request(
             getRoute(API_ROUTES.POSTS, undefined, options),
@@ -105,7 +104,7 @@ export async function getPosts(options?: Record<string, string[]>): Promise<Pagi
                 method: 'GET',
             },
             session?.accessToken,
-            ['posts'],
+            [getTag(Tag.POSTS)],
             15,
         )) as PaginatedResult<Post>,
     );
@@ -115,11 +114,10 @@ export async function createReply(postId: string, formData: FormData): Promise<R
     const session = await getSession();
     const errors = validatePostData(formData);
     if (errors) {
-        // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
         throw new ValidationError(errors);
     }
 
-    return (await request(
+    const reply = (await request(
         getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
         {
             method: 'POST',
@@ -127,6 +125,8 @@ export async function createReply(postId: string, formData: FormData): Promise<R
         },
         session.accessToken,
     )) as Reply;
+    revalidateTag(getTag(Tag.REPLIES, postId));
+    return reply;
 }
 
 /**
@@ -149,8 +149,8 @@ export async function getReplies(
                 method: 'GET',
             },
             session?.accessToken,
-            [`replies-${postId}`],
-            15,
+            [getTag(Tag.REPLIES, postId)],
+            60,
         )) as PaginatedResult<Reply>,
     );
 }

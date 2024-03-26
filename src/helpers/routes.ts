@@ -1,6 +1,7 @@
 export enum APP_ROUTES {
     POST = '/post/[id]',
-    USER = '/user/[id]',
+    USER = '/user/[id]/posts',
+    USER_LIKES = '/user/[id]/likes',
     // TODO: Followers, login & settings ?
     USER_FOLLOWERS = '/user/[id]/followers',
     SETTINGS = '/settings',
@@ -17,6 +18,7 @@ export enum API_ROUTES {
     POSTS_ID_MEDIA = '/posts/[id]/media',
     POSTS_REAL_TIME_DATA = '/posts/_sse',
     USERS_ID_FOLLOWERS = '/users/[id]/followers',
+    USERS_ID_FOLLOWEES = '/users/[id]/followees',
     USERS = '/users',
     USERS_ID = '/users/[id]',
     USERS_AVATAR = '/posts/avatar',
