@@ -37,10 +37,13 @@ export async function unlikePost(postId: string): Promise<void> {
 
 export async function createPost(formData: FormData): Promise<Post> {
     const session = await getSession();
-    const errors = validatePostData(formData);
-    if (errors) {
-        throw new ValidationError(errors);
-    }
+
+    // const errors = validatePostData(formData);
+
+    // if (errors) {
+    //      // TODO: ask about error handling, throw (with try/catch) or return (and instanceof)?
+    //      throw new ValidationError(errors);
+    // }
 
     const post = (await request(
         getRoute(API_ROUTES.POSTS),
