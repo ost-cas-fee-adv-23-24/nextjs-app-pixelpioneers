@@ -1,4 +1,4 @@
-import NextAuth, { Session } from 'next-auth';
+import NextAuth, { Session, User } from 'next-auth';
 import ZITADEL from '@auth/core/providers/zitadel';
 
 export const {
@@ -27,18 +27,19 @@ export const {
         }),
     ],
     callbacks: {
-        async jwt({ token, user, profile, account }) {
-            if (account) {
-                token.accessToken = account.access_token;
-                token.expiresAt = (account.expires_at ?? 0) * 1000;
-            }
-
+        async jwt({ token, user, account }) {
             if (user) {
                 token.user = user;
+
+                if (account) {
+                    (token.user as User).id = account.providerAccountId;
+                }
             }
 
-            if (profile) {
-                token.profile = profile;
+            if (account) {
+                token.sub = account.providerAccountId;
+                token.accessToken = account.access_token;
+                token.expiresAt = (account.expires_at ?? 0) * 1000;
             }
 
             return token;
@@ -49,9 +50,6 @@ export const {
         session({ session, token }: { session: Session; token?: any }) {
             session.accessToken = token.accessToken;
             session.user = token.user;
-            if (session.user) {
-                session.user.profile = token.profile;
-            }
             return session;
         },
     },

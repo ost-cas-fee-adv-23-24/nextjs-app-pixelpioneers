@@ -94,7 +94,7 @@ export async function getFollowees(
 
 export async function followUser(userId: string, followType: FollowType): Promise<void> {
     const session = await getSession();
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     await request(
         getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
         { method: followType === FollowType.FOLLOW ? 'PUT' : 'DELETE' },
@@ -106,7 +106,7 @@ export async function followUser(userId: string, followType: FollowType): Promis
 
 export async function uploadAvatar(formData: FormData): Promise<void> {
     const session = await getSession();
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     const errors = validateAvatarData(formData);
     if (errors) {
         throw new ValidationError(errors);
@@ -124,7 +124,7 @@ export async function uploadAvatar(formData: FormData): Promise<void> {
 
 export async function removeAvatar(): Promise<void> {
     const session = await getSession();
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     await request(
         getRoute(API_ROUTES.USERS_AVATAR),
         {
@@ -139,8 +139,8 @@ export async function checkIsActiveUser(
     userId: string,
 ): Promise<{ isActiveUser: boolean; user?: User }> {
     const session = await auth();
-    if (session?.user?.profile.sub) {
-        const activeUser = await getUser(session.user.profile.sub);
+    if (session?.user?.id) {
+        const activeUser = await getUser(session.user.id);
         return { isActiveUser: activeUser.id === userId, user: activeUser };
     }
     // return false when no session available

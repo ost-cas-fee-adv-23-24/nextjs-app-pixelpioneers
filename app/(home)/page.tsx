@@ -7,7 +7,7 @@ import { MessageVariant } from '@/src/compositions/post/types';
 
 export default async function Home() {
     const session = await auth();
-    const userId = session?.user?.profile.sub;
+    const userId = session?.user?.id;
     // TODO: Error handling
     const user = userId ? await getUser(userId) : undefined;
     return (
