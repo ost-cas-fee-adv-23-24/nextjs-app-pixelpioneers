@@ -9,11 +9,10 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 type ActionProps = {
-    isOpen: boolean;
-    setIsOpen: (state: boolean) => void;
+    onUpload: () => void;
 };
 
-export default function ActionButton({ isOpen, setIsOpen }: ActionProps) {
+export default function ActionButton({ onUpload }: ActionProps) {
     return (
         <>
             <Button
@@ -23,9 +22,7 @@ export default function ActionButton({ isOpen, setIsOpen }: ActionProps) {
                 variant={Variant.SECONDARY}
                 label="Bild hochladen"
                 fill
-                onClick={() => {
-                    setIsOpen(!isOpen);
-                }}
+                onClick={onUpload}
             />
             <Button
                 type="submit"

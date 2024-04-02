@@ -4,12 +4,7 @@ export enum PostVariant {
     DETAIL_VIEW = 'detailView',
 }
 
-export enum PostFormTypeVariant {
-    MAINFIELD = 'mainField',
-    INLINE = 'inline',
-}
-
 export enum MessageVariant {
-    CREATE = 'create',
+    POST = 'post',
     REPLY = 'reply',
 }

@@ -4,11 +4,11 @@ import { z } from 'zod';
 export const CreatePostSchema = z.union([
     z.object({
         text: z.string().nullish(),
-        media: z.string(),
+        media: z.instanceof(File),
     }),
     z.object({
         text: z.string(),
-        media: z.string().nullish(),
+        media: z.instanceof(File).nullish(),
     }),
 ]);
 
