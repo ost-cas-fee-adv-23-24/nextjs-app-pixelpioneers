@@ -10,6 +10,7 @@ const mockUserData = {
     lastName: 'string',
 };
 
+// TODO: settings
 export default async function Settings() {
     return (
         <>

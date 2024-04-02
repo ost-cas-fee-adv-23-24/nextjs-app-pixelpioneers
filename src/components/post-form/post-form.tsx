@@ -11,7 +11,7 @@ import {
     Textarea,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { MessageVariant } from './types';
+import { MessageVariant } from '../../compositions/post/types';
 import { User } from '@/src/models/user.model';
 import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
@@ -21,6 +21,7 @@ import ModalImageUpload from '@/src/components/modal/modal-image-upload';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Message } from '@/src/models/post.model';
+import { ActionResponse } from '@/src/models/action.model';
 
 export default function PostForm({
     user,
@@ -29,7 +30,7 @@ export default function PostForm({
 }: {
     user: User;
     messageVariant: MessageVariant;
-    onCreate: (formData: FormData) => Promise<Message>;
+    onCreate: (formData: FormData) => Promise<ActionResponse<Message>>;
 }) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
@@ -40,13 +41,12 @@ export default function PostForm({
     // TODO: try with https://blog.openreplay.com/server-actions-in-nextjs/
 
     const formAction = async (formData: FormData) => {
-        try {
-            await onCreate(formData);
-            formRef.current?.reset();
-            setImage(null);
-        } catch (e) {
-            // TODO: error handling
+        const createResponse = await onCreate(formData);
+        if (createResponse.isError) {
+            // TODO: show errors
         }
+        formRef.current?.reset();
+        setImage(null);
     };
 
     return (

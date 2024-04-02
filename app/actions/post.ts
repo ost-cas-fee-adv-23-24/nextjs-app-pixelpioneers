@@ -1,83 +1,95 @@
 'use server';
 
-import { Post, Reply } from '@/src/models/post.model';
+import { LikeType, Post, Reply } from '@/src/models/post.model';
 import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { PaginatedResult } from '@/src/models/paginate.model';
-import { getSession, getTag, Tag } from '@/app/actions/utils';
+import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { validatePostData } from '@/src/helpers/validator';
-import { ValidationError } from '@/src/models/error.model';
+import { ActionResponse } from '@/src/models/action.model';
 
-export async function likePost(postId: string): Promise<void> {
+export async function likePost(postId: string, likeType: LikeType): Promise<ActionResponse<void>> {
     const session = await getSession();
-    await request(
-        getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
-        {
-            method: 'PUT',
-        },
-        session.accessToken,
-    );
-    revalidateTag(getTag(Tag.POSTS));
+    const isLike = likeType === LikeType.LIKE;
+    try {
+        await request(
+            getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
+            {
+                method: isLike ? 'PUT' : 'DELETE',
+            },
+            session.accessToken,
+        );
+
+        revalidateTag(getTag(Tag.POSTS));
+        return dataResponse(undefined);
+    } catch (error) {
+        return errorResponse(error, `${isLike ? '' : 'un'}like this post`);
+    }
 }
 
-export async function unlikePost(postId: string): Promise<void> {
+export async function createPost(formData: FormData): Promise<ActionResponse<Post>> {
     const session = await getSession();
-    await request(
-        getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
-        {
-            method: 'DELETE',
-        },
-        session.accessToken,
-    );
-    revalidateTag(getTag(Tag.POSTS));
-}
-
-export async function createPost(formData: FormData): Promise<Post> {
-    const session = await getSession();
-    const errors = validatePostData(formData);
-    if (errors) {
-        throw new ValidationError(errors);
+    try {
+        validatePostData(formData);
+    } catch (error) {
+        return errorResponse(error, 'validate post data');
     }
 
-    const post = (await request(
-        getRoute(API_ROUTES.POSTS),
-        {
-            method: 'POST',
-            body: formData,
-        },
-        session.accessToken,
-    )) as Post;
-    revalidateTag(getTag(Tag.POSTS));
-    return post;
+    try {
+        const post = (await request(
+            getRoute(API_ROUTES.POSTS),
+            {
+                method: 'POST',
+                body: formData,
+            },
+            session.accessToken,
+        )) as Post;
+
+        revalidateTag(getTag(Tag.POSTS));
+        return dataResponse(post);
+    } catch (error) {
+        return errorResponse(error, 'create post');
+    }
 }
 
-export async function getPost(postId: string): Promise<Post> {
+export async function getPost(postId: string): Promise<ActionResponse<Post>> {
     const session = await auth();
-    return postReducer(
-        (await request(
+    try {
+        const post = postReducer(
+            (await request(
+                getRoute(API_ROUTES.POSTS_ID, postId),
+                {
+                    method: 'GET',
+                },
+                session?.accessToken,
+                [getTag(Tag.POST, postId)],
+            )) as Post,
+        );
+        return dataResponse(post);
+    } catch (error) {
+        return errorResponse(error, 'get post');
+    }
+}
+
+export async function deletePost(postId: string): Promise<ActionResponse<void>> {
+    const session = await getSession();
+    try {
+        await request(
             getRoute(API_ROUTES.POSTS_ID, postId),
             {
-                method: 'GET',
+                method: 'DELETE',
             },
-            session?.accessToken,
-            [getTag(Tag.POST, postId)],
-        )) as Post,
-    );
-}
+            session.accessToken,
+        );
 
-export async function deletePost(postId: string): Promise<void> {
-    const session = await getSession();
-    await request(
-        getRoute(API_ROUTES.POSTS_ID, postId),
-        {
-            method: 'DELETE',
-        },
-        session.accessToken,
-    );
-    revalidateTag(getTag(Tag.POSTS));
+        revalidateTag(getTag(Tag.POSTS));
+        return dataResponse(undefined);
+    } catch (error) {
+        return errorResponse(error, 'delete post');
+    }
 }
 
 /**
@@ -93,40 +105,55 @@ export async function deletePost(postId: string): Promise<void> {
  * - limit; number as string
  * @param options
  */
-export async function getPosts(options?: Record<string, string[]>): Promise<PaginatedResult<Post>> {
+export async function getPosts(
+    options?: Record<string, string[]>,
+): Promise<ActionResponse<PaginatedResult<Post>>> {
     const session = await auth();
-    // TODO: validate options?
     // TODO: clean tags when options are given - ex. options as ID
-    return postsReducer(
-        (await request(
-            getRoute(API_ROUTES.POSTS, undefined, options),
-            {
-                method: 'GET',
-            },
-            session?.accessToken,
-            [getTag(Tag.POSTS)],
-            15,
-        )) as PaginatedResult<Post>,
-    );
+    try {
+        const paginatedPosts = postsReducer(
+            (await request(
+                getRoute(API_ROUTES.POSTS, undefined, options),
+                {
+                    method: 'GET',
+                },
+                session?.accessToken,
+                [getTag(Tag.POSTS)],
+                15,
+            )) as PaginatedResult<Post>,
+        );
+        return dataResponse(paginatedPosts);
+    } catch (error) {
+        return errorResponse(error, 'get posts');
+    }
 }
 
-export async function createReply(postId: string, formData: FormData): Promise<Reply> {
+export async function createReply(
+    postId: string,
+    formData: FormData,
+): Promise<ActionResponse<Reply>> {
     const session = await getSession();
-    const errors = validatePostData(formData);
-    if (errors) {
-        throw new ValidationError(errors);
+    try {
+        validatePostData(formData);
+    } catch (error) {
+        return errorResponse(error, 'validate reply data');
     }
 
-    const reply = (await request(
-        getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
-        {
-            method: 'POST',
-            body: formData,
-        },
-        session.accessToken,
-    )) as Reply;
-    revalidateTag(getTag(Tag.REPLIES, postId));
-    return reply;
+    try {
+        const reply = (await request(
+            getRoute(API_ROUTES.POSTS_ID_REPLIES, postId),
+            {
+                method: 'POST',
+                body: formData,
+            },
+            session.accessToken,
+        )) as Reply;
+
+        revalidateTag(getTag(Tag.REPLIES, postId));
+        return dataResponse(reply);
+    } catch (error) {
+        return errorResponse(error, 'create reply');
+    }
 }
 
 /**
@@ -140,17 +167,22 @@ export async function createReply(postId: string, formData: FormData): Promise<R
 export async function getReplies(
     postId: string,
     options?: Record<string, string[]>,
-): Promise<PaginatedResult<Reply>> {
+): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
-    return repliesReducer(
-        (await request(
-            getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
-            {
-                method: 'GET',
-            },
-            session?.accessToken,
-            [getTag(Tag.REPLIES, postId)],
-            60,
-        )) as PaginatedResult<Reply>,
-    );
+    try {
+        const paginatedReplies = repliesReducer(
+            (await request(
+                getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
+                {
+                    method: 'GET',
+                },
+                session?.accessToken,
+                [getTag(Tag.REPLIES, postId)],
+                60,
+            )) as PaginatedResult<Reply>,
+        );
+        return dataResponse(paginatedReplies);
+    } catch (error) {
+        return errorResponse(error, 'get replies');
+    }
 }

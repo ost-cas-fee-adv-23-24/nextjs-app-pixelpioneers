@@ -38,3 +38,8 @@ export type Message = Omit<Post, 'replies'> &
     Omit<Reply, 'parentId'> &
     Partial<Pick<Post, 'replies'>> &
     Partial<Pick<Reply, 'parentId'>>;
+
+export enum LikeType {
+    LIKE = 'like',
+    UNLIKE = 'unlike',
+}
