@@ -21,22 +21,24 @@ export default async function Post({ params }: { params: { id: string } }) {
     // TODO: error handling
     const hydratedCreateReply = createReply.bind(null, post.id);
     return (
-        <Suspense fallback={<LoadingPostReplies />}>
-            <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
-                {user ? (
-                    <PostForm
-                        user={user}
-                        messageVariant={MessageVariant.REPLY}
-                        onCreate={hydratedCreateReply}
-                    />
-                ) : (
-                    <div className="flex flex-row items-center gap-xs py-l">
-                        <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
-                        <span>um einen Kommentar zu verfassen.</span>
-                    </div>
-                )}
-                <ReplyContainer paginatedReplies={replies} />
-            </PostComponent>
-        </Suspense>
+        <div className="flex w-full flex-col px-m md:w-[680px] md:px-0">
+            <Suspense fallback={<LoadingPostReplies />}>
+                <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
+                    {user ? (
+                        <PostForm
+                            user={user}
+                            messageVariant={MessageVariant.REPLY}
+                            onCreate={hydratedCreateReply}
+                        />
+                    ) : (
+                        <div className="flex flex-row items-center gap-xs py-l">
+                            <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
+                            <span>um einen Kommentar zu verfassen.</span>
+                        </div>
+                    )}
+                    <ReplyContainer paginatedReplies={replies} />
+                </PostComponent>
+            </Suspense>
+        </div>
     );
 }

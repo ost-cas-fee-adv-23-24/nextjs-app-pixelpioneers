@@ -54,7 +54,7 @@ export default function PostForm({
             className={clsx(
                 'py-l',
                 isPost
-                    ? 'relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl md:min-h-[326px] md:w-[680px]'
+                    ? 'relative my-m flex flex-col gap-y-s rounded-m bg-white px-xl md:mx-m md:min-h-[326px] md:w-[680px]'
                     : '',
             )}
         >

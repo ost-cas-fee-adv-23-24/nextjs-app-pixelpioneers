@@ -13,7 +13,7 @@ export default async function Home() {
     const user = userId ? await getUser(userId) : undefined;
     return (
         <>
-            <header className="mx-m md:mx-0 md:w-[680px]">
+            <header className="px-m md:w-[680px]">
                 <Heading variant={HeadingLevel.H2} className="text-primary-600">
                     Willkommen auf Mumble
                 </Heading>
@@ -23,7 +23,7 @@ export default async function Home() {
                 </Heading>
             </header>
             {user && (
-                <section className="flex w-full flex-col gap-y-m px-m md:w-auto md:px-0">
+                <section className="flex w-full flex-col gap-y-m px-m md:w-[680px] md:px-0">
                     <PostForm
                         user={user}
                         messageVariant={MessageVariant.POST}

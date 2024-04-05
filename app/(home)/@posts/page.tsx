@@ -9,7 +9,7 @@ export default async function Posts() {
     try {
         const paginatedPosts = await getPosts();
         return (
-            <section className="mx-m flex flex-col gap-s">
+            <section className="mx-m flex w-full flex-col gap-s px-m md:w-[680px] md:px-0">
                 {/*<LivePosts />*/}
                 {paginatedPosts.data.map((post) => (
                     <Suspense key={post.id} fallback={<LoadingPost />}>
