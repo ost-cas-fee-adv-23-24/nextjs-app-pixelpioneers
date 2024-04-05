@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Post from '@/src/compositions/post/post';
 import { ActionError } from '@/src/models/error.model';
 import { getPosts } from '@/app/actions/post';
 import { PostVariant } from '@/src/compositions/post/types';
+import LoadingPost from './loading';
 
 export default async function Posts() {
     try {
@@ -11,7 +12,9 @@ export default async function Posts() {
             <section className="mx-m flex flex-col gap-s">
                 {/*<LivePosts />*/}
                 {paginatedPosts.data.map((post) => (
-                    <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />
+                    <Suspense key={post.id} fallback={<LoadingPost />}>
+                        <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />
+                    </Suspense>
                 ))}
             </section>
         );
