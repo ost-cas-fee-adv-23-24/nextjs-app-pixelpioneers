@@ -98,7 +98,7 @@ export default function PostForm({
                             Icon={IconCancel}
                             variant={Variant.PRIMARY}
                             fill
-                            label="Bildvorschau löschen"
+                            label="Bild löschen"
                         />
                     </>
                 )}
