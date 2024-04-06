@@ -33,7 +33,7 @@ export default function Post({ message, variant, children }: PostProps) {
     };
     const detailPostClasses = clsx(
         'mx-0 w-full rounded-m px-m py-s', // mobile
-        'md:mx-m md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+        'md:mx-m md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
     const postClasses = clsx(
         'relative flex flex-col gap-s bg-white',
