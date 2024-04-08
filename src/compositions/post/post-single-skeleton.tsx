@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export default function PostSkeleton({ classNames }: { classNames: string }) {
+export default function PostSingleSkeleton({ classNames }: { classNames: string }) {
     const skeletonButton = 'h-[28px] w-1/4 rounded-m bg-slate-300 ';
     const skeletonText = 'rounded-m w-full bg-slate-300';
 

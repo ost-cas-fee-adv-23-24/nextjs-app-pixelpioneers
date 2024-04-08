@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default async function Loading() {
+export default function Loading() {
     return <>Loading Login</>;
 }

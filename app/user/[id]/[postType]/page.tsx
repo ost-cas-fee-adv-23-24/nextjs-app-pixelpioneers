@@ -1,10 +1,8 @@
-// import React, { Suspense } from 'react';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import { followUser } from '@/app/actions/user';
-// import ProfileHeader from '@/src/compositions/profile-header/profile-header';
 import { FollowingType, FollowType } from '@/src/models/user.model';
 import { getProfileHeader } from '@/app/actions/profile';
-// import Loading from './@user/loading';
+import ProfileHeader from '@/src/compositions/profile-header/profile-header';
 
 export default async function User({ params }: { params: { id: string } }) {
     // TODO: try catch, stream
@@ -20,6 +18,7 @@ export default async function User({ params }: { params: { id: string } }) {
 
     return (
         <>
+            <ProfileHeader user={user} activeUser={isActiveUser} />
             {!isActiveUser && (
                 <section className="flex w-full flex-col items-end">
                     <FollowStatus

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import PostForm from '@/src/compositions/post/post-form';
 import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
@@ -6,6 +6,7 @@ import { getUser } from '../actions/user';
 import { MessageVariant } from '@/src/compositions/post/types';
 import { createPost } from '@/app/actions/post';
 import clsx from 'clsx';
+import LoadingPost from './loading';
 
 export default async function Home() {
     const session = await auth();
@@ -25,15 +26,17 @@ export default async function Home() {
                     dicta.
                 </Heading>
             </header>
-            {user && (
-                <section className={clsx(mainContainerClasses, 'flex w-full flex-col gap-y-m')}>
-                    <PostForm
-                        user={user}
-                        messageVariant={MessageVariant.POST}
-                        onCreate={createPost}
-                    />
-                </section>
-            )}
+            <Suspense fallback={<LoadingPost />}>
+                {user && (
+                    <section className={clsx(mainContainerClasses, 'flex w-full flex-col gap-y-m')}>
+                        <PostForm
+                            user={user}
+                            messageVariant={MessageVariant.POST}
+                            onCreate={createPost}
+                        />
+                    </section>
+                )}
+            </Suspense>
         </>
     );
 }
