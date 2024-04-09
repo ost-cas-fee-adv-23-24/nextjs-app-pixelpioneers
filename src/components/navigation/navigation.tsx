@@ -1,4 +1,7 @@
-import { LogoMumbleHorizontal } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import {
+    IconMumble,
+    LogoMumbleHorizontal,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { APP_ROUTES } from '@/src/helpers/routes';
 import Link from 'next/link';
@@ -19,6 +22,9 @@ export default async function Navigation() {
                             sizeHeight="34"
                             className="hidden md:ml-[-24px] md:flex"
                         />
+                        <div className="ml-s md:hidden">
+                            <IconMumble className="h-xl w-xl fill-white" />
+                        </div>
                     </Link>
                 </section>
                 <NaviButtons session={session} />

@@ -5,15 +5,18 @@ import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixe
 import { getUser } from '../actions/user';
 import { MessageVariant } from '@/src/compositions/post/types';
 import { createPost } from '@/app/actions/post';
+import clsx from 'clsx';
 
 export default async function Home() {
     const session = await auth();
     const userId = session?.user?.profile.sub;
     // TODO: Error handling
     const user = userId ? await getUser(userId) : undefined;
+    const mainContainerClasses = 'md:w-[680px] md:px-0 px-m';
+
     return (
         <>
-            <header className="mx-m md:mx-0 md:w-[680px]">
+            <header className={clsx(mainContainerClasses)}>
                 <Heading variant={HeadingLevel.H2} className="text-primary-600">
                     Willkommen auf Mumble
                 </Heading>
@@ -23,7 +26,7 @@ export default async function Home() {
                 </Heading>
             </header>
             {user && (
-                <section className="flex w-full flex-col gap-y-m px-m md:w-auto md:px-0">
+                <section className={clsx(mainContainerClasses, 'flex w-full flex-col gap-y-m')}>
                     <PostForm
                         user={user}
                         messageVariant={MessageVariant.POST}

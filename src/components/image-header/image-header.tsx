@@ -26,7 +26,7 @@ export default function ImageHeader({
                 fill
                 loading="lazy"
             />
-            <div className="absolute bottom-[-70px] right-[30px] z-10">
+            <div className="absolute bottom-[-25px] right-[15px] z-10 md:bottom-[-70px] md:right-[30px]">
                 {activeUser ? (
                     <EditAvatar
                         src={user.avatarUrl}

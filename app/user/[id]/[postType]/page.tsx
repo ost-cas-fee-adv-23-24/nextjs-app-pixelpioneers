@@ -1,9 +1,8 @@
-import React from 'react';
 import FollowStatus from '@/src/components/follow-status/follow-status';
 import { followUser } from '@/app/actions/user';
-import ProfileHeader from '@/src/compositions/profile-header/profile-header';
 import { FollowingType, FollowType } from '@/src/models/user.model';
 import { getProfileHeader } from '@/app/actions/profile';
+import ProfileHeader from '@/src/compositions/profile-header/profile-header';
 
 export default async function User({ params }: { params: { id: string } }) {
     // TODO: try catch, stream
