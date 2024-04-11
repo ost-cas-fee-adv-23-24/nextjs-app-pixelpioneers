@@ -27,14 +27,27 @@ export enum API_ROUTES {
 export const getRoute = (
     route: APP_ROUTES | API_ROUTES,
     id = '',
-    options?: Record<string, string[]>,
+    options?: Record<string, string[] | string | number>,
 ): string => `${route.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
 
-const getRouteOptions = (options: Record<string, string[]>): string => {
+const getRouteOptions = (options: Record<string, string[] | string | number>): string => {
     let optionString = '?';
+    const expandOptions = (key: string, value: string) => {
+        optionString = `${optionString}${key}=${value}&`;
+    };
+
     Object.entries(options).map(([key, values]) => {
-        // set a key for every value, since some keys allow to have multiple values
-        values.map((value) => (optionString = `${optionString}${key}=${value}&`));
+        switch (typeof values) {
+            case 'string':
+                expandOptions(key, values);
+                break;
+            case 'number':
+                expandOptions(key, values.toString());
+                break;
+            default: // string array
+                // set a key for every value, since some keys allow to have multiple values
+                (values as string[]).map((value) => expandOptions(key, value));
+        }
     });
     return optionString;
 };

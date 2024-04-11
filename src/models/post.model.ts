@@ -1,5 +1,6 @@
 import { User } from './user.model';
 import { z } from 'zod';
+import { BaseFilterOptions } from '@/src/models/paginate.model';
 
 export const CreatePostSchema = z.union([
     z.object({
@@ -23,6 +24,14 @@ export type Post = {
     likedBySelf?: boolean;
     replies: number;
 };
+
+export type PostFilterOptions = BaseFilterOptions &
+    Partial<{
+        text: string;
+        tags: string[];
+        creators: string[];
+        likedBy: string[];
+    }>;
 
 export type PostValidationResult = { text?: string[]; media?: string[] };
 

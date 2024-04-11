@@ -1,6 +1,6 @@
 'use server';
 
-import { LikeType, Post, Reply } from '@/src/models/post.model';
+import { LikeType, Post, PostFilterOptions, Reply } from '@/src/models/post.model';
 import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
@@ -106,7 +106,7 @@ export async function deletePost(postId: string): Promise<ActionResponse<void>> 
  * @param options
  */
 export async function getPosts(
-    options?: Record<string, string[]>,
+    options?: PostFilterOptions,
 ): Promise<ActionResponse<PaginatedResult<Post>>> {
     const session = await auth();
     // TODO: clean tags when options are given - ex. options as ID

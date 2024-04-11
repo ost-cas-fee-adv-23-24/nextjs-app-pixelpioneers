@@ -4,3 +4,10 @@ export type PaginatedResult<T> = {
     next?: string;
     previous?: string;
 };
+
+export type BaseFilterOptions = Partial<{
+    newerThan: string;
+    olderThan: string;
+    limit: number;
+    offset: number;
+}>;
