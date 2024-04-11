@@ -82,18 +82,13 @@ export default function PostForm({
                                 src={image}
                                 alt="Bildvorschau"
                                 className="mx-auto rounded-m"
-                                height={200}
-                                width={200}
                                 quality={75}
+                                width={300}
+                                height={200}
                                 loading="eager"
-                                priority={false}
-                                style={{
-                                    objectFit: 'cover',
-                                    width: '100%',
-                                    height: 'auto',
-                                }}
+                                priority
                                 aria-label="Bildvorschau"
-                                sizes="(max-width: 584px) 100vw"
+                                sizes="(max-width: 300px) 100vw"
                             />
                         </div>
                         <Button

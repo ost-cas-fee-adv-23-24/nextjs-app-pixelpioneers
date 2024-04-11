@@ -80,14 +80,13 @@ export default function Post({ message, variant, children }: PostProps) {
                 <section className="relative h-auto w-full">
                     <Image
                         className="rounded-s"
-                        height={320}
-                        width={584}
                         alt={`Bild von ${message.creator.username}`}
                         src={message.mediaUrl}
                         datatype={message.mediaType}
-                        style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                         quality={75}
                         priority
+                        height={320}
+                        width={584}
                         aria-label={`Bild von ${message.creator.username}`}
                         sizes="(max-width: 584px) 100vw"
                     />

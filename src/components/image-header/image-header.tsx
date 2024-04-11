@@ -19,17 +19,11 @@ export default function ImageHeader({
             <Image
                 src={`/wallpapers/${pathToBgImage}`}
                 alt="Hintergrund Bildprofil"
-                className="cursor-pointer md:rounded-m"
-                height={320}
-                width={680}
+                className="h-auto w-auto cursor-pointer md:rounded-m"
+                fill
                 quality={75}
                 loading="eager"
-                priority={false}
-                style={{
-                    objectFit: 'cover',
-                    width: '100%',
-                    height: 'auto',
-                }}
+                priority
                 aria-label="Hintergrund Bildprofil"
                 sizes="(max-width: 680px) 100vw"
             />
