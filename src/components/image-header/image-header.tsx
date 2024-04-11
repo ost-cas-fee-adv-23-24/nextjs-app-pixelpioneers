@@ -17,12 +17,12 @@ export default function ImageHeader({
     const randomImage = getRandomImage(1, 6);
     const avatarAlt = user.avatarUrl ? `avatar from ${user.username}` : 'no image';
     return (
-        <div className="relative flex h-[200px] w-full flex-row rounded-m bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:object-contain">
+        <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
             <Image
                 src={`/wallpapers/${randomImage}.jpg`}
                 alt="Your Wallpaper"
                 sizes="(max-width: 680px) 100vw"
-                className="cursor-pointer rounded-m"
+                className="cursor-pointer md:rounded-m"
                 fill
                 loading="lazy"
             />

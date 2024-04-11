@@ -1,4 +1,3 @@
-import { ActionError } from '@/src/models/error.model';
 import { StatusCodes } from 'http-status-codes';
 
 export async function request(
@@ -28,10 +27,12 @@ export async function request(
     });
 
     if (!response) {
-        throw new ActionError('request', 'request failed, check your internet connection');
+        throw new Error(
+            `${StatusCodes.BAD_REQUEST} - request failed, check your internet connection`,
+        );
     }
     if (!response?.ok) {
-        throw new ActionError('request', `${response?.status}`);
+        throw new Error(`${response?.status || StatusCodes.BAD_REQUEST} - ${response?.statusText}`);
     }
     if (response.status === StatusCodes.NO_CONTENT) {
         // if no content is given with the succeeded request, return undefined

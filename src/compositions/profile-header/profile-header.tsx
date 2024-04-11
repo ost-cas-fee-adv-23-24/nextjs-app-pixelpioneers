@@ -13,7 +13,7 @@ export default function ProfileHeader({ user, activeUser = false }: ProfileHeade
     return (
         <section className="flex flex-col gap-m">
             <ImageHeader user={user} activeUser={activeUser} />
-            <section className="flex w-full flex-col gap-base md:w-[680px]">
+            <section className="mx-m flex flex-col gap-base md:mx-0 md:w-[680px]">
                 <DisplayName
                     user={user}
                     variant={DisplayNameVariant.PROFILE}

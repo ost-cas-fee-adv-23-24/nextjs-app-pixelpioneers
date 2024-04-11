@@ -1,12 +1,12 @@
 'use client';
-import { Message } from '@/src/models/post.model';
+import { LikeType, Message } from '@/src/models/post.model';
 import {
     CommentButton,
     LikeButton,
     ShareButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import React from 'react';
-import { likePost, unlikePost } from '@/app/actions/post';
+import { likePost } from '@/app/actions/post';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
@@ -21,9 +21,16 @@ export default function PostActions({ post, detailView }: PostActionsProps) {
                 disabled={detailView}
             />
             <LikeButton
-                onClick={async () =>
-                    post.likedBySelf ? await unlikePost(post.id) : await likePost(post.id)
-                }
+                onClick={async () => {
+                    // TODO: set tags here already? also evaluate error
+                    const response = await likePost(
+                        post.id,
+                        post.likedBySelf ? LikeType.UNLIKE : LikeType.LIKE,
+                    );
+                    if (response.isError) {
+                        console.error(response.error.message);
+                    }
+                }}
                 isLiked={post.likedBySelf || false}
                 amount={post.likes}
             />

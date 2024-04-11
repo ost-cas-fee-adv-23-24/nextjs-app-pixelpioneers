@@ -1,28 +1,27 @@
 import React from 'react';
 import Post from '@/src/compositions/post/post';
-import { ActionError } from '@/src/models/error.model';
 import { getPosts } from '@/app/actions/post';
 import { PostVariant } from '@/src/compositions/post/types';
+import ErrorPage from '@/src/compositions/error-page/error-page';
 
 export default async function Posts() {
-    try {
-        const paginatedPosts = await getPosts();
+    const postsResponse = await getPosts();
+    if (postsResponse.isError) {
         return (
-            <section className="mx-m flex w-full flex-col gap-s px-m md:w-[680px] md:px-0">
-                {/*<LivePosts />*/}
-                {paginatedPosts.data.map((post) => (
-                    <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />
-                ))}
-            </section>
+            <ErrorPage
+                errorMessage={postsResponse.error.message}
+                errorTitle="Posts konnten nicht geladen werden."
+                fullPage={false}
+            />
         );
-    } catch (error) {
-        if (error instanceof ActionError) {
-            return (
-                <>
-                    <p>{error.subject}</p>
-                    <p>{error.issue}</p>
-                </>
-            );
-        }
     }
+    const paginatedPosts = postsResponse.data;
+    return (
+        <section className="flex flex-col gap-s md:mx-m">
+            {/* TODO: <LivePosts />*/}
+            {paginatedPosts.data.map((post) => (
+                <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />
+            ))}
+        </section>
+    );
 }

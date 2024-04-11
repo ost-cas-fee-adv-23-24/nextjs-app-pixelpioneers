@@ -3,24 +3,24 @@ import { followUser } from '@/app/actions/user';
 import { FollowingType, FollowType } from '@/src/models/user.model';
 import { getProfileHeader } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile-header/profile-header';
+import { notFound } from 'next/navigation';
 
 export default async function User({ params }: { params: { id: string } }) {
-    // TODO: try catch, stream
-    const { user, followedByActiveUser, isActiveUser } = await getProfileHeader(params.id);
-
+    const profileHeaderResponse = await getProfileHeader(params.id);
+    if (profileHeaderResponse.isError) {
+        notFound();
+    }
+    const { user, followedByActiveUser, isActiveUser } = profileHeaderResponse.data;
     const hydratedFollowUser = followUser.bind(
         null,
         user.id,
         followedByActiveUser === FollowingType.FOLLOWING ? FollowType.UNFOLLOW : FollowType.FOLLOW,
     );
-
-    // TODO: redirect when likes instead of posts?
-
     return (
         <>
             <ProfileHeader user={user} activeUser={isActiveUser} />
             {!isActiveUser && (
-                <section className="flex w-full flex-col items-end">
+                <section className="mx-m flex flex-row justify-end md:mx-0">
                     <FollowStatus
                         user={user}
                         onFollow={hydratedFollowUser}

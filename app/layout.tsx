@@ -14,9 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body className="bg-secondary-100">
                 <Navigation />
-                <main className="my-l flex min-h-screen flex-col items-center justify-between">
-                    {children}
-                </main>
+                <main className="my-l flex min-h-screen flex-col items-center">{children}</main>
             </body>
         </html>
     );
