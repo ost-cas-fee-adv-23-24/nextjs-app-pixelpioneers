@@ -6,8 +6,6 @@ export type PaginatedResult<T> = {
 };
 
 export type BaseFilterOptions = Partial<{
-    newerThan: string;
-    olderThan: string;
     limit: number;
     offset: number;
 }>;

@@ -4,7 +4,7 @@ import { LikeType, Post, PostFilterOptions, Reply } from '@/src/models/post.mode
 import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { PaginatedResult } from '@/src/models/paginate.model';
+import { BaseFilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
@@ -94,15 +94,6 @@ export async function deletePost(postId: string): Promise<ActionResponse<void>> 
 
 /**
  * get all Posts, pagination and filter possible by options param
- * The following options are available at the endpoint:
- * - newerThan: post ULID; string
- * - olderThan: post ULID; string
- * - text: text to search for; string
- * - tags: tag to search for, multiple records possible; string
- * - creators: creator ID to filter for, multiple records possible; string
- * - likedBy: user ID who liked the post to filter for, multiple records possible; string
- * - offset; number as string
- * - limit; number as string
  * @param options
  */
 export async function getPosts(
@@ -158,15 +149,12 @@ export async function createReply(
 
 /**
  * get all Replies from a certain Post, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
  * @param postId
  * @param options
  */
 export async function getReplies(
     postId: string,
-    options?: Record<string, string[]>,
+    options?: BaseFilterOptions,
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {
