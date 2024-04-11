@@ -17,6 +17,6 @@ export type ProfileHeader = Profile & {
 };
 
 export type ProfilePosts = Profile & {
-    posts: PaginatedResult<Post>;
+    paginatedPosts: PaginatedResult<Post>;
     type: ProfilePostType;
 };

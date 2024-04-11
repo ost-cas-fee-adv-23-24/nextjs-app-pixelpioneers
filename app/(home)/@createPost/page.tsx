@@ -4,7 +4,7 @@ import { MessageVariant } from '@/src/compositions/post/types';
 import PostFormOrLogin from '@/src/compositions/post-form-or-login/post-form-or-login';
 import { getLoggedInUser } from '@/app/actions/utils';
 
-export default async function CreatePostPage() {
+export default async function HomeCreatePostPage() {
     return (
         <PostFormOrLogin
             messageVariant={MessageVariant.POST}

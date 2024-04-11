@@ -69,7 +69,7 @@ export async function getProfilePosts(
         user,
         isActiveUser,
         type,
-        posts:
+        paginatedPosts:
             type === ProfilePostType.CREATED_BY
                 ? userPostsHydrator(paginatedPosts, user)
                 : paginatedPosts,
