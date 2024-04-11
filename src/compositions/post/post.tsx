@@ -77,7 +77,7 @@ export default function Post({ message, variant, children }: PostProps) {
                 </Paragraph>
             )}
             {message.mediaUrl && (
-                <section className="relative h-auto w-full">
+                <section className="relative h-auto w-full object-cover transition duration-500 hover:scale-105">
                     <Image
                         className="rounded-s"
                         alt={`Bild von ${message.creator.username}`}
