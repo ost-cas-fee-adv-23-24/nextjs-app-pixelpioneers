@@ -4,11 +4,11 @@ import React from 'react';
 import ProfilePostTabs from '@/src/components/tabs-profile/profile-post-tabs';
 import { Post } from '@/src/models/post.model';
 import { PostVariant } from '@/src/compositions/post/types';
-import { default as PostComponent } from '@/src/compositions/post/post';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { ProfilePostType } from '@/src/models/profile.model';
+import MessageContainer from '@/src/compositions/post/message-container';
 
 type ProfilePostsProps = {
     user: User;
@@ -40,10 +40,7 @@ export default function ProfilePosts({
                 </section>
             )}
             <section className="flex flex-col gap-s">
-                {paginatedPosts.data.map((post) => (
-                    // TODO: handle empty post array
-                    <PostComponent key={post.id} message={post} variant={PostVariant.TIMELINE} />
-                ))}
+                <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
             </section>
         </>
     );

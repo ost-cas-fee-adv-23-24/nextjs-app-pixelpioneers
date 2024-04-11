@@ -1,3 +1,6 @@
+import { FilterOptions } from '@/src/models/paginate.model';
+import { PostFilterOptions } from '@/src/models/post.model';
+
 export enum APP_ROUTES {
     POST = '/post/[id]',
     USER = '/user/[id]/posts',
@@ -51,3 +54,19 @@ const getRouteOptions = (options: Record<string, string[] | string | number>): s
     });
     return optionString;
 };
+
+const getSingleOption = (option: string, params: URLSearchParams): string | undefined =>
+    params.get(option) === null ? undefined : (params.get(option) as string);
+
+export const getOptionsFromRoute = (params: URLSearchParams): FilterOptions => ({
+    offset: Number.parseInt(getSingleOption('offset', params) || '0'),
+    limit: Number.parseInt(getSingleOption('limit', params) || '0'),
+});
+
+export const getPostOptionsFromRoute = (params: URLSearchParams): PostFilterOptions => ({
+    ...getOptionsFromRoute(params),
+    newerThan: getSingleOption('newerThan', params),
+    olderThan: getSingleOption('olderThan', params),
+    text: getSingleOption('text', params),
+    //tags:, creators:, likedBy:,
+});

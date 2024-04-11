@@ -4,7 +4,7 @@ import { LikeType, Post, PostFilterOptions, Reply } from '@/src/models/post.mode
 import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { BaseFilterOptions, PaginatedResult } from '@/src/models/paginate.model';
+import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
@@ -154,7 +154,7 @@ export async function createReply(
  */
 export async function getReplies(
     postId: string,
-    options?: BaseFilterOptions,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {

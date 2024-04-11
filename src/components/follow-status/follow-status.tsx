@@ -36,7 +36,7 @@ export default function FollowStatus({
     return (
         <div className="flex flex-row items-center gap-m">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
-                {`Du folgst ${name} ${!isFollowing && 'nicht'}`}
+                {`Du folgst ${name} ${!isFollowing ? 'nicht' : ''}`}
             </Label>
             <form action={onFollow}>
                 <Button

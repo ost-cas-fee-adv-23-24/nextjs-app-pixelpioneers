@@ -1,10 +1,10 @@
 import React from 'react';
-import Post from '@/src/compositions/post/post';
 import { getPosts } from '@/app/actions/post';
 import { PostVariant } from '@/src/compositions/post/types';
 import ErrorPage from '@/src/compositions/error-page/error-page';
+import MessageContainer from '@/src/compositions/post/message-container';
 
-export default async function Posts() {
+export default async function PostsPage() {
     const postsResponse = await getPosts({ limit: 15 });
     if (postsResponse.isError) {
         return (
@@ -20,9 +20,7 @@ export default async function Posts() {
         <>
             <section className="flex flex-col gap-s md:mx-m">
                 {/* TODO: <LivePosts />*/}
-                {paginatedPosts.data.map((post) => (
-                    <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />
-                ))}
+                <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
             </section>
         </>
     );

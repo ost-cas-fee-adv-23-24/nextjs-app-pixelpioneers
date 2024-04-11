@@ -4,7 +4,7 @@ import { FollowType, User } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
-import { BaseFilterOptions, PaginatedResult } from '@/src/models/paginate.model';
+import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { revalidateTag } from 'next/cache';
@@ -33,7 +33,7 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
  * @param options
  */
 export async function getUsers(
-    options?: BaseFilterOptions,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -59,7 +59,7 @@ export async function getUsers(
  */
 export async function getFollowers(
     userId: string,
-    options?: BaseFilterOptions,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -85,7 +85,7 @@ export async function getFollowers(
  */
 export async function getFollowees(
     userId: string,
-    options?: BaseFilterOptions,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {

@@ -4,7 +4,11 @@ import { getProfilePosts } from '@/app/actions/profile';
 import { ProfilePostType } from '@/src/models/profile.model';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 
-export default async function UserPosts({ params }: { params: { id: string; postType: string } }) {
+export default async function UserPostsPage({
+    params,
+}: {
+    params: { id: string; postType: string };
+}) {
     const profilePostResponse = await getProfilePosts(
         params.id,
         params.postType === 'likes' ? ProfilePostType.LIKED_BY : ProfilePostType.CREATED_BY,

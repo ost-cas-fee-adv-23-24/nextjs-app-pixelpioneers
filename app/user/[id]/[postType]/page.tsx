@@ -5,7 +5,7 @@ import { getProfileHeader } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile-header/profile-header';
 import { notFound } from 'next/navigation';
 
-export default async function User({ params }: { params: { id: string } }) {
+export default async function UserPage({ params }: { params: { id: string } }) {
     const profileHeaderResponse = await getProfileHeader(params.id);
     if (profileHeaderResponse.isError) {
         notFound();

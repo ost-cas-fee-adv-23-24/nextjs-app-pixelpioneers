@@ -1,19 +1,53 @@
 'use client';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import PostMultiSkeleton from '@/src/compositions/post/post-multi-skeleton';
+import { PostVariant } from '@/src/compositions/post/types';
+import { Message } from '@/src/models/post.model';
+import {
+    Button,
+    ButtonSize,
+    IconRepost,
+    Variant,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { PaginatedResult } from '@/src/models/paginate.model';
+import { ActionResponse } from '@/src/models/action.model';
+import MessageContainer from '@/src/compositions/post/message-container';
 
-export default function InfiniteMessages(/*{ lastMessageId }: { lastMessageId: string }*/) {
-    //const [messages, setMessages] = useState<Message[]>([]);
-
+export default function InfiniteMessages({
+    loadMessages,
+    variant,
+}: {
+    loadMessages: () => ActionResponse<PaginatedResult<Message>>;
+    variant: PostVariant;
+}) {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const isPost = variant === PostVariant.INLINE;
     return (
-        <Suspense
-            fallback={
-                <PostMultiSkeleton classNames="h-[400px] w-full md:w-[720px] md:ml-[-40px]" />
-            }
-        >
-            {/*messages.map((message) => (
-                <Post key={message.id} message={message} variant={PostVariant.TIMELINE} />
-            ))*/}
-        </Suspense>
+        <>
+            <form
+                action={async () => {
+                    const messageResponse = loadMessages();
+                    if (!messageResponse.isError) {
+                        const paginatedMessages = messageResponse.data;
+                        setMessages(paginatedMessages.data);
+                    }
+                }}
+            >
+                <Button
+                    Icon={IconRepost}
+                    size={ButtonSize.L}
+                    variant={Variant.TERTIARY}
+                    label={`Weitere ${isPost ? 'Posts' : 'Antworten'} laden`}
+                    type="submit"
+                />
+            </form>
+            <Suspense
+                fallback={
+                    <PostMultiSkeleton classNames="h-[400px] w-full md:w-[720px] md:ml-[-40px]" />
+                }
+            >
+                <MessageContainer messages={messages} variant={variant} />
+            </Suspense>
+        </>
     );
 }
