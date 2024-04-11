@@ -47,7 +47,7 @@ export default function Post({ message, variant, children }: PostProps) {
         }[variant],
     );
     const avatarClasses = clsx(
-        'z-5 relative row-span-3',
+        'z-5 relative row-span-3', // mobile
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
     return (
@@ -77,16 +77,19 @@ export default function Post({ message, variant, children }: PostProps) {
                 </Paragraph>
             )}
             {message.mediaUrl && (
-                <section className="relative h-[320px] w-full">
+                <section className="relative h-auto w-full">
                     <Image
-                        // TODO: fix 320px static height, cache images?
                         className="rounded-s"
-                        alt={`image from ${message.creator.username}`}
+                        height={320}
+                        width={584}
+                        alt={`Bild von ${message.creator.username}`}
                         src={message.mediaUrl}
                         datatype={message.mediaType}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                        quality={75}
+                        priority
+                        aria-label={`Bild von ${message.creator.username}`}
                         sizes="(max-width: 584px) 100vw"
-                        fill
                     />
                 </section>
             )}
