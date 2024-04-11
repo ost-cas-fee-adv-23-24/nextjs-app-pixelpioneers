@@ -1,6 +1,5 @@
 'use client';
-import React, { Suspense, useState } from 'react';
-import PostMultiSkeleton from '@/src/compositions/post/post-multi-skeleton';
+import React, { useState } from 'react';
 import { PostVariant } from '@/src/compositions/post/types';
 import { Message } from '@/src/models/post.model';
 import {
@@ -14,32 +13,38 @@ import { ActionResponse } from '@/src/models/action.model';
 import MessageContainer from '@/src/compositions/post/message-container';
 
 type InfiniteMessagesProps = {
-    loadMessages: () => ActionResponse<PaginatedResult<Message>>;
+    loadMessages: (formData: FormData) => Promise<string>;
     variant: PostVariant;
+    lastMessageId: string;
 };
 
-export default function InfiniteMessages({ loadMessages, variant }: InfiniteMessagesProps) {
+export default function InfiniteMessages({
+    loadMessages,
+    variant,
+    lastMessageId,
+}: InfiniteMessagesProps) {
     const [messages, setMessages] = useState<Message[]>([]);
-    const isPost = variant === PostVariant.INLINE;
+    const isPost = variant !== PostVariant.INLINE;
+    const oldestMessageId = messages.length === 0 ? lastMessageId : messages.slice(-1)[0].id;
+    // TODO: fancy loading skeletons?
     return (
         <>
-            <Suspense
-                fallback={
-                    <PostMultiSkeleton classNames="h-[400px] w-full md:w-[720px] md:ml-[-40px]" />
-                }
-            >
-                <MessageContainer messages={messages} variant={variant} showNoContentInfo={false} />
-            </Suspense>
+            <MessageContainer messages={messages} variant={variant} showNoContentInfo={false} />
             <form
-                action={async () => {
-                    const messageResponse = loadMessages();
+                className="flex flex-row justify-center"
+                action={async (formData) => {
+                    const messageResponse = JSON.parse(
+                        await loadMessages(formData),
+                    ) as ActionResponse<PaginatedResult<Message>>;
                     if (!messageResponse.isError) {
                         const paginatedMessages = messageResponse.data;
                         setMessages((prevState) => [...prevState, ...paginatedMessages.data]);
                     }
                 }}
             >
+                <input name="olderThan" value={oldestMessageId} hidden readOnly />
                 <Button
+                    className="mt-s"
                     Icon={IconRepost}
                     size={ButtonSize.L}
                     variant={Variant.TERTIARY}

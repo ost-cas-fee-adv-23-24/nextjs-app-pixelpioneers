@@ -14,7 +14,7 @@ export default function MessageContainer({
     variant,
     showNoContentInfo = true,
 }: MessageContainerProps) {
-    const isPost = variant === PostVariant.INLINE;
+    const isPost = variant !== PostVariant.INLINE;
 
     if (showNoContentInfo && messages.length === 0) {
         return (

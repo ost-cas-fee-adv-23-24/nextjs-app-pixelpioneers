@@ -18,7 +18,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     const hydratedCreateReply = createReply.bind(null, post.id);
 
     // TODO: separate replies?
-    const repliesResponse = await getReplies(post.id, { limit: 10 });
+    const repliesResponse = await getReplies(post.id, { limit: 15 });
     return (
         <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
             <PostFormOrLogin

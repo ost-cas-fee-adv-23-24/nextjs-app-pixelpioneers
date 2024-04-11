@@ -57,8 +57,8 @@ export async function getProfilePosts(
 
     const postsResponse = await getPosts(
         type === ProfilePostType.CREATED_BY
-            ? { creators: [user.id], limit: 10 }
-            : { likedBy: [user.id], limit: 10 },
+            ? { creators: [user.id], limit: 15 }
+            : { likedBy: [user.id], limit: 15 },
     );
     if (postsResponse.isError) {
         return postsResponse;

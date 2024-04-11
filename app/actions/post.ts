@@ -119,6 +119,13 @@ export async function getPosts(
     }
 }
 
+export async function loadPaginatedPosts(formData: FormData): Promise<string> {
+    const olderThanData = formData.get('olderThan');
+    const olderThan = olderThanData ? olderThanData.toString() : undefined;
+    // TODO: the rest of attributes
+    return JSON.stringify(await getPosts({ olderThan, limit: 15 }));
+}
+
 export async function createReply(
     postId: string,
     formData: FormData,
