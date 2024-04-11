@@ -52,30 +52,26 @@ export default function PostForm({
     return (
         <section
             className={clsx(
-                'py-l',
                 isPost
-                    ? 'relative my-m flex flex-col gap-y-s rounded-m bg-white px-m md:min-h-[326px] md:w-[680px] md:px-xl'
-                    : '',
+                    ? 'relative flex flex-col gap-y-s bg-white px-m py-s md:min-h-[326px] md:w-[680px] md:rounded-m md:px-xl md:py-l'
+                    : 'mt-s md:mt-l',
             )}
         >
             <form ref={formRef} action={formAction} className="flex flex-col gap-y-s">
                 {isPost ? (
-                    <>
-                        <div className="z-5 absolute left-[28px] top-[-20px] md:left-[-32px] md:top-[20px]">
+                    <div className="flex flex-row gap-s">
+                        <div className="md:z-5 md:absolute md:left-[-32px] md:top-[20px]">
                             <Avatar
+                                // TODO: make size S on mobile
                                 size={AvatarSize.M}
                                 src={user.avatarUrl || ''}
                                 alt={user.username}
                             />
                         </div>
-                        <Label
-                            className="pl-xxl text-right md:pl-0 md:text-left"
-                            size={LabelSize.XL}
-                            htmlFor="text"
-                        >
-                            Hey, was gibt&apos;s Neues?
+                        <Label className="self-center" size={LabelSize.XL} htmlFor="text">
+                            {`Hey, was gibt's Neues?`}
                         </Label>
-                    </>
+                    </div>
                 ) : (
                     <DisplayName variant={DisplayNameVariant.REPLY} user={user} />
                 )}

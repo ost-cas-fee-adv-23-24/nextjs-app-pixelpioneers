@@ -32,8 +32,8 @@ export default function Post({ message, variant, children }: PostProps) {
         }
     };
     const detailPostClasses = clsx(
-        'mx-0 w-full rounded-m px-m py-s', // mobile
-        'md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+        'mx-0 w-full px-m py-s', // mobile
+        'md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
     const postClasses = clsx(
         'relative flex flex-col gap-s bg-white',
@@ -41,7 +41,7 @@ export default function Post({ message, variant, children }: PostProps) {
             inline: '',
             timeline: clsx(
                 detailPostClasses,
-                'duration-300 ease-in-out hover:ring-2 hover:ring-secondary-200',
+                'md:duration-300 md:ease-in-out md:hover:ring-2 md:hover:ring-secondary-200',
             ),
             detailView: detailPostClasses,
         }[variant],
@@ -52,20 +52,23 @@ export default function Post({ message, variant, children }: PostProps) {
     );
     return (
         <div className={postClasses}>
-            {!isVariant(PostVariant.INLINE) && (
-                <div className={avatarClasses}>
-                    <Avatar
-                        size={AvatarSize.M}
-                        alt={`avatar from ${message.creator.username}`}
-                        src={message.creator.avatarUrl}
-                    />
-                </div>
-            )}
-            <DisplayName
-                user={message.creator}
-                variant={displayNameVariant()}
-                postTimestamp={message.created}
-            />
+            <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
+                {!isVariant(PostVariant.INLINE) && (
+                    <div className={avatarClasses}>
+                        <Avatar
+                            // TODO: make size S on mobile
+                            size={AvatarSize.M}
+                            alt={`avatar from ${message.creator.username}`}
+                            src={message.creator.avatarUrl}
+                        />
+                    </div>
+                )}
+                <DisplayName
+                    user={message.creator}
+                    variant={displayNameVariant()}
+                    postTimestamp={message.created}
+                />
+            </div>
             {message.text && (
                 <Paragraph
                     size={isVariant(PostVariant.DETAIL_VIEW) ? ParagraphSize.L : ParagraphSize.M}

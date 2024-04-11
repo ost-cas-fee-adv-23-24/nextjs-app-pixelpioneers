@@ -17,7 +17,7 @@ export default async function Posts() {
     }
     const paginatedPosts = postsResponse.data;
     return (
-        <section className="mx-m flex flex-col gap-s">
+        <section className="flex flex-col gap-s md:mx-m">
             {/* TODO: <LivePosts />*/}
             {paginatedPosts.data.map((post) => (
                 <Post key={post.id} message={post} variant={PostVariant.TIMELINE} />

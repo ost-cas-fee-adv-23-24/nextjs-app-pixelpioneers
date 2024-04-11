@@ -27,7 +27,7 @@ export default function ProfilePosts({
     return (
         <>
             {activeUser && (
-                <section className="flex w-full flex-col">
+                <section className="flex flex-row justify-center md:justify-start">
                     <ProfilePostTabs
                         activeTabIndex={likedPosts ? 1 : 0}
                         onPosts={() =>

@@ -20,7 +20,7 @@ export default async function User({ params }: { params: { id: string } }) {
         <>
             <ProfileHeader user={user} activeUser={isActiveUser} />
             {!isActiveUser && (
-                <section className="flex w-full flex-col items-end">
+                <section className="mx-m flex flex-row justify-end md:mx-0">
                     <FollowStatus
                         user={user}
                         onFollow={hydratedFollowUser}

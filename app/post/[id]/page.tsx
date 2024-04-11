@@ -1,12 +1,12 @@
-import { createReply, getPost, getReplies } from "@/app/actions/post";
-import { default as PostComponent } from "@/src/compositions/post/post";
-import { MessageVariant, PostVariant } from "@/src/compositions/post/types";
-import ReplyContainer from "@/src/compositions/post/reply-container";
-import { getLoggedInUser } from "@/app/actions/utils";
-import { notFound } from "next/navigation";
-import PostFormOrLogin from "@/src/compositions/post-form-or-login/post-form-or-login";
-import { Paragraph, ParagraphSize } from "@ost-cas-fee-adv-23-24/design-system-pixelpioneers";
-import React from "react";
+import { createReply, getPost, getReplies } from '@/app/actions/post';
+import { default as PostComponent } from '@/src/compositions/post/post';
+import { MessageVariant, PostVariant } from '@/src/compositions/post/types';
+import ReplyContainer from '@/src/compositions/post/reply-container';
+import { getLoggedInUser } from '@/app/actions/utils';
+import { notFound } from 'next/navigation';
+import PostFormOrLogin from '@/src/compositions/post-form-or-login/post-form-or-login';
+import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import React from 'react';
 
 //export const dynamic = 'force-dynamic';
 export default async function Post({ params }: { params: { id: string } }) {
@@ -36,6 +36,7 @@ export default async function Post({ params }: { params: { id: string } }) {
             </PostComponent>
         );
     }
+    const paginatedReplies = repliesResponse.data;
     return (
         <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
             <PostFormOrLogin
@@ -43,7 +44,9 @@ export default async function Post({ params }: { params: { id: string } }) {
                 onCreate={hydratedCreateReply}
                 user={user}
             />
-            <ReplyContainer paginatedReplies={repliesResponse.data} />
+            {paginatedReplies.data.length > 0 && (
+                <ReplyContainer paginatedReplies={paginatedReplies} />
+            )}
         </PostComponent>
     );
 }

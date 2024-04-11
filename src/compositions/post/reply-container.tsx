@@ -10,7 +10,7 @@ type ReplyContainerProps = {
 export default function ReplyContainer({ paginatedReplies }: ReplyContainerProps) {
     const replies = paginatedReplies.data;
     return (
-        <div className="flex flex-col gap-m md:gap-l">
+        <div className="mt-s flex flex-col gap-m md:mt-l md:gap-l">
             {replies.map((reply, index) => {
                 return (
                     <div key={reply.id} className="flex flex-col gap-m md:gap-l">
