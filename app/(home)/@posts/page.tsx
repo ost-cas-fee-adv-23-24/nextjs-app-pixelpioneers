@@ -1,12 +1,13 @@
 import React from 'react';
-import { getPosts, loadPaginatedPosts } from '@/app/actions/post';
+import { getPosts, loadPaginatedMessages } from '@/app/actions/post';
 import { PostVariant } from '@/src/compositions/post/types';
 import MessageContainer from '@/src/compositions/post/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import InfiniteMessages from '@/src/compositions/post/infinite-messages';
+import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 
 export default async function HomePostsPage() {
-    const postsResponse = await getPosts({ limit: 15 });
+    const postsResponse = await getPosts({ limit: PAGINATION_LIMIT });
     if (postsResponse.isError) {
         return (
             <ErrorPage
@@ -22,11 +23,13 @@ export default async function HomePostsPage() {
             <section className="flex flex-col gap-s md:mx-m">
                 {/* TODO: <LivePosts />*/}
                 <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
-                <InfiniteMessages
-                    loadMessages={loadPaginatedPosts}
-                    variant={PostVariant.TIMELINE}
-                    lastMessageId={paginatedPosts.data.slice(-1)[0].id}
-                />
+                {paginatedPosts.next && (
+                    <InfiniteMessages
+                        loadMessages={loadPaginatedMessages}
+                        variant={PostVariant.TIMELINE}
+                        nextRoute={paginatedPosts.next}
+                    />
+                )}
             </section>
         </>
     );

@@ -7,6 +7,7 @@ import PostFormOrLogin from '@/src/compositions/post-form-or-login/post-form-or-
 import React from 'react';
 import MessageContainer from '@/src/compositions/post/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
+import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -18,7 +19,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     const hydratedCreateReply = createReply.bind(null, post.id);
 
     // TODO: separate replies?
-    const repliesResponse = await getReplies(post.id, { limit: 15 });
+    const repliesResponse = await getReplies(post.id, { limit: PAGINATION_LIMIT });
     return (
         <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
             <PostFormOrLogin

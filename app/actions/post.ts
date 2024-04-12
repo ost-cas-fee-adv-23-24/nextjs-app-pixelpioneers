@@ -1,7 +1,7 @@
 'use server';
 
-import { LikeType, Post, PostFilterOptions, Reply } from '@/src/models/post.model';
-import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
+import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/post.model';
+import { messageReducer, messagesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
@@ -58,7 +58,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
 export async function getPost(postId: string): Promise<ActionResponse<Post>> {
     const session = await auth();
     try {
-        const post = postReducer(
+        const post = messageReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID, postId),
                 {
@@ -102,7 +102,7 @@ export async function getPosts(
     const session = await auth();
     // TODO: clean tags when options are given - ex. options as ID
     try {
-        const paginatedPosts = postsReducer(
+        const paginatedPosts = messagesReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS, undefined, options),
                 {
@@ -119,11 +119,34 @@ export async function getPosts(
     }
 }
 
-export async function loadPaginatedPosts(formData: FormData): Promise<string> {
-    const olderThanData = formData.get('olderThan');
-    const olderThan = olderThanData ? olderThanData.toString() : undefined;
-    // TODO: the rest of attributes
-    return JSON.stringify(await getPosts({ olderThan, limit: 15 }));
+export async function loadPaginatedMessages(formData: FormData): Promise<string> {
+    const nextData = formData.get('next');
+    // TODO: validate url!
+    if (nextData === null) {
+        return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
+    }
+    const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
+    if (route === '') {
+        return JSON.stringify(errorResponse(new Error('invalid url'), 'get messages'));
+    }
+
+    const session = await auth();
+    try {
+        const paginatedMessages = messagesReducer(
+            (await request(
+                route,
+                {
+                    method: 'GET',
+                },
+                session?.accessToken,
+                undefined, // TODO: tags:[getTag(Tag.POSTS)],
+                undefined, // TODO: revalidate 15,
+            )) as PaginatedResult<Message>,
+        );
+        return JSON.stringify(dataResponse(paginatedMessages));
+    } catch (error) {
+        return JSON.stringify(errorResponse(error, 'get messages'));
+    }
 }
 
 export async function createReply(
@@ -165,7 +188,7 @@ export async function getReplies(
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {
-        const paginatedReplies = repliesReducer(
+        const paginatedReplies = messagesReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
                 {

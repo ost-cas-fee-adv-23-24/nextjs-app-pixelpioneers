@@ -15,43 +15,49 @@ import MessageContainer from '@/src/compositions/post/message-container';
 type InfiniteMessagesProps = {
     loadMessages: (formData: FormData) => Promise<string>;
     variant: PostVariant;
-    lastMessageId: string;
+    nextRoute: string;
 };
 
 export default function InfiniteMessages({
     loadMessages,
     variant,
-    lastMessageId,
+    nextRoute,
 }: InfiniteMessagesProps) {
     const [messages, setMessages] = useState<Message[]>([]);
+    const [next, setNext] = useState<string | undefined>(nextRoute);
     const isPost = variant !== PostVariant.INLINE;
-    const oldestMessageId = messages.length === 0 ? lastMessageId : messages.slice(-1)[0].id;
+    //const oldestMessageId = messages.length === 0 ? lastMessageId : messages.slice(-1)[0].id;
     // TODO: fancy loading skeletons?
     return (
         <>
             <MessageContainer messages={messages} variant={variant} showNoContentInfo={false} />
-            <form
-                className="flex flex-row justify-center"
-                action={async (formData) => {
-                    const messageResponse = JSON.parse(
-                        await loadMessages(formData),
-                    ) as ActionResponse<PaginatedResult<Message>>;
-                    if (!messageResponse.isError) {
-                        const paginatedMessages = messageResponse.data;
-                        setMessages((prevState) => [...prevState, ...paginatedMessages.data]);
-                    }
-                }}
-            >
-                <input name="olderThan" value={oldestMessageId} hidden readOnly />
-                <Button
-                    className="mt-s"
-                    Icon={IconRepost}
-                    size={ButtonSize.L}
-                    variant={Variant.TERTIARY}
-                    label={`Weitere ${isPost ? 'Posts' : 'Kommentare'} laden`}
-                    type="submit"
-                />
-            </form>
+            {next && (
+                <form
+                    className="flex flex-row justify-center"
+                    action={async (formData) => {
+                        const messageResponse = JSON.parse(
+                            await loadMessages(formData),
+                        ) as ActionResponse<PaginatedResult<Message>>;
+                        if (!messageResponse.isError) {
+                            const paginatedMessages = messageResponse.data;
+                            setMessages((prevState) => [...prevState, ...paginatedMessages.data]);
+                            setNext(paginatedMessages.next);
+                        } else {
+                            console.error(messageResponse.error);
+                        }
+                    }}
+                >
+                    <input name="next" value={next} hidden readOnly />
+                    <Button
+                        className="mt-s"
+                        Icon={IconRepost}
+                        size={ButtonSize.L}
+                        variant={Variant.TERTIARY}
+                        label={`Weitere ${isPost ? 'Posts' : 'Kommentare'} laden`}
+                        type="submit"
+                    />
+                </form>
+            )}
         </>
     );
 }

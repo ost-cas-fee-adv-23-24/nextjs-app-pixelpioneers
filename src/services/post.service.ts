@@ -1,47 +1,38 @@
-import { Post, Reply } from '../models/post.model';
+import { Message } from '../models/post.model';
 import { PaginatedResult } from '../models/paginate.model';
 import { decodeTime } from 'ulid';
 import { User } from '../models/user.model';
 
-export function postReducer(post: Post): Post {
-    return { ...post, created: decodeTime(post.id) };
+export function messageReducer<T extends Message>(message: T): T {
+    return { ...message, created: decodeTime(message.id) };
 }
 
-export function postsReducer(paginatedPosts: PaginatedResult<Post>): PaginatedResult<Post> {
+export function messagesReducer<T extends Message>(
+    paginatedMessages: PaginatedResult<T>,
+): PaginatedResult<T> {
     return {
-        ...paginatedPosts,
-        data: paginatedPosts.data.map((post) => postReducer(post)),
+        ...paginatedMessages,
+        data: paginatedMessages.data.map((message) => messageReducer(message)),
     };
 }
 
-export function replyReducer(reply: Reply): Reply {
-    return { ...reply, created: decodeTime(reply.id) };
-}
-
-export function repliesReducer(paginatedReplies: PaginatedResult<Reply>): PaginatedResult<Reply> {
+function userMessageHydrator<T extends Message>(message: T, user: User): T {
     return {
-        ...paginatedReplies,
-        data: paginatedReplies.data.map((reply) => replyReducer(reply)),
-    };
-}
-
-export function userPostHydrator(post: Post, user: User): Post {
-    return {
-        ...post,
+        ...message,
         creator: {
-            ...post.creator,
+            ...message.creator,
             firstname: user.firstname,
             lastname: user.lastname,
         },
     };
 }
 
-export function userPostsHydrator(
-    paginatedPosts: PaginatedResult<Post>,
+export function userMessagesHydrator<T extends Message>(
+    paginatedMessages: PaginatedResult<T>,
     user: User,
-): PaginatedResult<Post> {
+): PaginatedResult<T> {
     return {
-        ...paginatedPosts,
-        data: paginatedPosts.data.map((post) => userPostHydrator(post, user)),
+        ...paginatedMessages,
+        data: paginatedMessages.data.map((post) => userMessageHydrator(post, user)),
     };
 }
