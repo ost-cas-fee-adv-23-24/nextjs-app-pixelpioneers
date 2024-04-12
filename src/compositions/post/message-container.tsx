@@ -8,17 +8,19 @@ type MessageContainerProps = {
     messages: Message[];
     variant: PostVariant;
     showNoContentInfo?: boolean;
+    reload?: boolean;
 };
 export default function MessageContainer({
     messages,
     variant,
     showNoContentInfo = true,
+    reload = false,
 }: MessageContainerProps) {
     const isPost = variant !== PostVariant.INLINE;
 
     if (showNoContentInfo && messages.length === 0) {
         return (
-            <Paragraph size={ParagraphSize.M}>{`Keine ${
+            <Paragraph className="self-center text-secondary-400" size={ParagraphSize.M}>{`Keine ${
                 isPost ? 'Posts' : 'Kommentare'
             } vorhanden`}</Paragraph>
         );
@@ -28,7 +30,9 @@ export default function MessageContainer({
         if (variant === PostVariant.INLINE) {
             return (
                 <div key={message.id} className="flex flex-col gap-m md:gap-l">
-                    {index > 0 && <hr className="mx-[-24px] text-secondary-100 md:mx-[-48px]" />}
+                    {(reload || index > 0) && (
+                        <hr className="mx-[-24px] text-secondary-100 md:mx-[-48px]" />
+                    )}
                     <Post message={message} variant={PostVariant.INLINE} />
                 </div>
             );
