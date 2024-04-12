@@ -1,4 +1,4 @@
-import { createReply, getPost, getReplies } from '@/app/actions/post';
+import { createReply, getPost, getReplies, loadPaginatedMessages } from '@/app/actions/post';
 import { default as PostComponent } from '@/src/compositions/post/post';
 import { MessageVariant, PostVariant } from '@/src/compositions/post/types';
 import { getLoggedInUser } from '@/app/actions/utils';
@@ -8,6 +8,7 @@ import React from 'react';
 import MessageContainer from '@/src/compositions/post/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
+import InfiniteMessages from '@/src/compositions/post/infinite-messages';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -39,6 +40,13 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                         messages={repliesResponse.data.data}
                         variant={PostVariant.INLINE}
                     />
+                    {repliesResponse.data.next && (
+                        <InfiniteMessages
+                            loadMessages={loadPaginatedMessages}
+                            variant={PostVariant.INLINE}
+                            nextRoute={repliesResponse.data.next}
+                        />
+                    )}
                 </div>
             )}
         </PostComponent>

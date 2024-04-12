@@ -6,6 +6,8 @@ import ProfilePostTabs from '@/src/components/tabs-profile/profile-post-tabs';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import MessageContainer from '@/src/compositions/post/message-container';
 import { PostVariant } from '@/src/compositions/post/types';
+import InfiniteMessages from '@/src/compositions/post/infinite-messages';
+import { loadPaginatedMessages } from '@/app/actions/post';
 
 export default async function UserPostsPage({
     params,
@@ -39,6 +41,13 @@ export default async function UserPostsPage({
             )}
             <section className="flex flex-col gap-s">
                 <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
+                {paginatedPosts.next && (
+                    <InfiniteMessages
+                        loadMessages={loadPaginatedMessages}
+                        variant={PostVariant.TIMELINE}
+                        nextRoute={paginatedPosts.next}
+                    />
+                )}
             </section>
         </>
     );

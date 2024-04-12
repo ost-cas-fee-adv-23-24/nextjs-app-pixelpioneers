@@ -26,7 +26,6 @@ export default function InfiniteMessages({
     const [messages, setMessages] = useState<Message[]>([]);
     const [next, setNext] = useState<string | undefined>(nextRoute);
     const isPost = variant !== PostVariant.INLINE;
-    //const oldestMessageId = messages.length === 0 ? lastMessageId : messages.slice(-1)[0].id;
     // TODO: fancy loading skeletons?
     return (
         <>

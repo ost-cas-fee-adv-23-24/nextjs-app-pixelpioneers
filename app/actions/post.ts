@@ -121,12 +121,11 @@ export async function getPosts(
 
 export async function loadPaginatedMessages(formData: FormData): Promise<string> {
     const nextData = formData.get('next');
-    // TODO: validate url!
     if (nextData === null) {
         return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
     }
     const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
-    if (route === '') {
+    if (route === '' || !route.startsWith('/posts')) {
         return JSON.stringify(errorResponse(new Error('invalid url'), 'get messages'));
     }
 
