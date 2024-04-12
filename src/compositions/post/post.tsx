@@ -77,7 +77,7 @@ export default function Post({ message, variant, children }: PostProps) {
                 </Paragraph>
             )}
             {message.mediaUrl && (
-                <section className="relative h-auto w-full object-cover transition duration-500 hover:scale-105">
+                <section className="relative h-auto w-full transition duration-500 hover:scale-105 md:h-[320px]">
                     <Image
                         className="rounded-s"
                         alt={`Bild von ${message.creator.username}`}
@@ -89,6 +89,11 @@ export default function Post({ message, variant, children }: PostProps) {
                         width={584}
                         aria-label={`Bild von ${message.creator.username}`}
                         sizes="(max-width: 584px) 100vw"
+                        style={{
+                            objectFit: 'cover',
+                            width: '100%',
+                            height: '100%',
+                        }}
                     />
                 </section>
             )}

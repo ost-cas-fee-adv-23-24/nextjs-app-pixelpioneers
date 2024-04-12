@@ -18,14 +18,18 @@ export default function ImageHeader({
         <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
             <Image
                 src={`/wallpapers/${pathToBgImage}`}
-                alt="Hintergrund Bildprofil"
-                className="h-auto w-auto cursor-pointer md:rounded-m"
+                alt="Hintergrundbild Profil"
+                className="cursor-pointer md:rounded-m"
                 fill
                 quality={75}
                 loading="eager"
                 priority
                 aria-label="Hintergrund Bildprofil"
                 sizes="(max-width: 680px) 100vw"
+                style={{
+                    width: '100%',
+                    height: 'auto',
+                }}
             />
             <div className="absolute bottom-[-25px] right-[15px] z-10 md:bottom-[-70px] md:right-[30px]">
                 {activeUser ? (

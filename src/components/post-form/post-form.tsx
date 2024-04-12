@@ -89,6 +89,10 @@ export default function PostForm({
                                 priority
                                 aria-label="Bildvorschau"
                                 sizes="(max-width: 300px) 100vw"
+                                style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                }}
                             />
                         </div>
                         <Button
