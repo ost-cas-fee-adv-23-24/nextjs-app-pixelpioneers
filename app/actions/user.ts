@@ -119,7 +119,7 @@ export async function followUser(
 ): Promise<ActionResponse<void>> {
     const session = await getSession();
     const isFollow = followType === FollowType.FOLLOW;
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     try {
         await request(
             getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
@@ -136,7 +136,7 @@ export async function followUser(
 
 export async function uploadAvatar(formData: FormData): Promise<ActionResponse<void>> {
     const session = await getSession();
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     try {
         validateAvatarData(formData);
     } catch (error) {
@@ -161,7 +161,7 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
 
 export async function removeAvatar(): Promise<ActionResponse<void>> {
     const session = await getSession();
-    const activeUserId = session.user?.profile.sub;
+    const activeUserId = session.user?.id;
     try {
         await request(
             getRoute(API_ROUTES.USERS_AVATAR),
@@ -183,11 +183,11 @@ export async function checkIsActiveUser(
     const session = await auth();
 
     // return false when no session available
-    if (!session?.user?.profile.sub) {
+    if (!session?.user?.id) {
         return { isActiveUser: false };
     }
 
-    const activeUserResponse = await getUser(session.user.profile.sub);
+    const activeUserResponse = await getUser(session.user.id);
     if (activeUserResponse.isError) {
         return { isActiveUser: false };
     }

@@ -16,7 +16,7 @@ export async function getSession(): Promise<Session> {
 
 export async function getLoggedInUser(): Promise<User | undefined> {
     const session = await auth();
-    const userId = session?.user?.profile.sub;
+    const userId = session?.user?.id;
     let user = undefined;
     if (userId) {
         const userResponse = await getUser(userId);
