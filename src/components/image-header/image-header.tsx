@@ -30,14 +30,26 @@ export default function ImageHeader({
                     width: '100%',
                 }}
             />
-            <div className="absolute bottom-[-25px] right-[15px] z-10 md:bottom-[-70px] md:right-[30px]">
+            <div className="absolute bottom-[-25px] right-[24px] z-10 md:bottom-[-70px] md:right-[30px]">
                 {activeUser ? (
-                    <EditAvatar
-                        src={user.avatarUrl}
-                        alt={avatarAlt}
-                        size={AvatarSize.XL}
-                        onEdit={() => console.info('open pop up')}
-                    />
+                    <>
+                        <div className="hidden md:block">
+                            <EditAvatar
+                                src={user.avatarUrl}
+                                alt={avatarAlt}
+                                size={AvatarSize.XL}
+                                onEdit={() => console.info('open pop up')}
+                            />
+                        </div>
+                        <div className="block md:hidden">
+                            <EditAvatar
+                                src={user.avatarUrl}
+                                alt={avatarAlt}
+                                size={AvatarSize.L}
+                                onEdit={() => console.info('open pop up')}
+                            />
+                        </div>
+                    </>
                 ) : (
                     <Avatar src={user?.avatarUrl} alt={avatarAlt} size={AvatarSize.XL} />
                 )}
