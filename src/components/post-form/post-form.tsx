@@ -3,17 +3,12 @@
 import {
     Avatar,
     AvatarSize,
-    Button,
-    ButtonSize,
-    IconCancel,
     Label,
     LabelSize,
     Textarea,
-    Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { MessageVariant } from '../../compositions/post/types';
 import { User } from '@/src/models/user.model';
-import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import ActionButton from '@/src/compositions/write-post/action-button';
@@ -74,42 +69,6 @@ export default function PostForm({
                     </div>
                 ) : (
                     <DisplayName variant={DisplayNameVariant.REPLY} user={user} />
-                )}
-                {image && (
-                    <>
-                        <div className="w-fill relative mx-auto h-auto rounded-m bg-violet-50 p-xs">
-                            <Image
-                                src={image}
-                                alt="Bildvorschau"
-                                className="mx-auto rounded-m"
-                                quality={75}
-                                width={300}
-                                height={200}
-                                loading="eager"
-                                priority
-                                aria-label="Bildvorschau"
-                                sizes="(max-width: 300px) 100vw"
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                }}
-                            />
-                        </div>
-                        <Button
-                            onClick={() => {
-                                setImage(null);
-                                if (imageRef.current) {
-                                    imageRef.current.value = '';
-                                }
-                            }}
-                            size={ButtonSize.M}
-                            type="button"
-                            Icon={IconCancel}
-                            variant={Variant.PRIMARY}
-                            fill
-                            label="Bild löschen"
-                        />
-                    </>
                 )}
                 <Textarea
                     className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
