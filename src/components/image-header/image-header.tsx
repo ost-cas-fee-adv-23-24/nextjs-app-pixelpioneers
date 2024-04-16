@@ -28,7 +28,6 @@ export default function ImageHeader({
                 sizes="(max-width: 680px) 100vw"
                 style={{
                     width: '100%',
-                    height: 'auto',
                 }}
             />
             <div className="absolute bottom-[-25px] right-[15px] z-10 md:bottom-[-70px] md:right-[30px]">
@@ -36,6 +35,7 @@ export default function ImageHeader({
                     <EditAvatar
                         src={user.avatarUrl}
                         alt={avatarAlt}
+                        size={AvatarSize.XL}
                         onEdit={() => console.info('open pop up')}
                     />
                 ) : (
