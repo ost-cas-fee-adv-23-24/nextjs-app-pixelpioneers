@@ -24,6 +24,14 @@ export enum API_ROUTES {
     USERS_AVATAR = '/posts/avatar',
 }
 
+export enum PostEvent {
+    CREATED = 'postCreated',
+    UPDATED = 'postUpdated',
+    DELETED = 'postDeleted',
+    LIKED = 'postLiked',
+    UNLIKED = 'postUnliked',
+}
+
 export const getRoute = (
     route: APP_ROUTES | API_ROUTES,
     id = '',
@@ -51,3 +59,9 @@ const getRouteOptions = (options: Record<string, string[] | string | number>): s
     });
     return optionString;
 };
+
+export function getPostEventSource() {
+    return new EventSource(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${API_ROUTES.POSTS_REAL_TIME_DATA}`,
+    );
+}

@@ -5,6 +5,8 @@ import MessageContainer from '@/src/compositions/post/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import InfiniteMessages from '@/src/compositions/post/infinite-messages';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
+import { Stream } from '@/src/components/stream/stream';
+import { PostEvent } from '@/src/helpers/routes';
 
 export default async function HomePostsPage() {
     const postsResponse = await getPosts({ limit: PAGINATION_LIMIT });
@@ -21,7 +23,7 @@ export default async function HomePostsPage() {
     return (
         <>
             <section className="flex flex-col gap-s md:mx-m">
-                {/* TODO: <LivePosts />*/}
+                <Stream eventType={PostEvent.CREATED} />
                 <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
                 {paginatedPosts.next && (
                     <InfiniteMessages
