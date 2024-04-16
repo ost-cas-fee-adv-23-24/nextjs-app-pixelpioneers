@@ -5,7 +5,7 @@ import React from 'react';
 export default function Loading() {
     return (
         <>
-            <ProfileHeaderSkeleton classNames="h-[400px] w-full" />;
+            <ProfileHeaderSkeleton classNames="h-[400px] w-full" />
             <PostMultiSkeleton classNames="h-[300px] w-full md:w-[680px]" />
         </>
     );
