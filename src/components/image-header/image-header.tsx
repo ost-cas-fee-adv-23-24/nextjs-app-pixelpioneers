@@ -12,12 +12,11 @@ export default function ImageHeader({
     user: User;
     activeUser?: boolean;
 }) {
-    const pathToBgImage = 'my-profile.jpg';
-    const avatarAlt = user.avatarUrl ? `avatar from ${user.username}` : 'no image';
+    const avatarAlt = user.avatarUrl ? `Avatarbild von ${user.username}` : 'Kein Bild';
     return (
         <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
             <Image
-                src={`/wallpapers/${pathToBgImage}`}
+                src={`/wallpapers/my-profile.jpg`}
                 alt="Hintergrundbild Profil"
                 className="cursor-pointer md:rounded-m"
                 fill
