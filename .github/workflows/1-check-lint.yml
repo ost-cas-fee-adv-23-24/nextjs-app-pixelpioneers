@@ -17,5 +17,3 @@ jobs:
         run: npm ci
       - name: Run Lint
         run: npm run lint
-env:
-  AUTH_SECRET: "${{ github.repository }}"
