@@ -1,9 +1,9 @@
-type InfoBubbleProps = {
+type ActionBubbleProps = {
     message: string;
     onClick: () => Promise<void>;
 };
 
-export function InfoBubble({ message, onClick }: InfoBubbleProps) {
+export function ActionBubble({ message, onClick }: ActionBubbleProps) {
     return (
         <form action={onClick} className="fixed top-l z-50 flex w-[680px] justify-center">
             <button
