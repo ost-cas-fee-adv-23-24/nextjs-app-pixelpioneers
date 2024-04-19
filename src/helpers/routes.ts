@@ -6,7 +6,7 @@ export enum APP_ROUTES {
     USER_FOLLOWERS = '/user/[id]/followers',
     SETTINGS = '/settings',
     LOGIN = '/login',
-    MAIN = '/',
+    HOME = '/',
 }
 
 export enum API_ROUTES {
