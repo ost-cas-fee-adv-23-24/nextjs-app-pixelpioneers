@@ -12,26 +12,29 @@ type StreamProps = {
 };
 
 export function PostStream({ eventType, path }: StreamProps) {
-    const [post, setPost] = useState<Post>();
+    const [posts, setPosts] = useState<Post[]>([]);
+    const count = posts.length;
     useEffect(() => {
         const events = getPostEventSource();
         events.addEventListener(eventType, (event) => {
             const post = JSON.parse(event.data) as Post;
-            // TODO: only set post, if creator not logged in user
-            setPost(post);
+            // TODO: only set post, if creator is not logged in user
+            setPosts([...posts, post]);
         });
         return () => events.close();
-    }, [eventType]);
+    }, [eventType, posts]);
 
     const hydratedReloadPathData = reloadPathData.bind(null, path);
 
-    return post ? (
+    return count > 0 ? (
         <ActionBubble
-            message={`Neuer Post von ${post.creator.username}`}
+            message={
+                count === 1 ? `Neuer Post von ${posts[0].creator.username}` : `Neue Posts vorhanden`
+            }
             onClick={async () => {
                 await hydratedReloadPathData();
                 scrollToTop();
-                setPost(undefined);
+                setPosts([]);
             }}
         />
     ) : (
