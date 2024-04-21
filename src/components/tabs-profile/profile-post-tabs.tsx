@@ -4,7 +4,7 @@ import { Tabs } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { ProfilePostType } from '@/src/models/profile.model';
 import { useRouter } from 'next/navigation';
 
-type ProfilePostTabsType = {
+type ProfilePostTabsProps = {
     activeType: ProfilePostType;
     postsRoute: string;
     likesRoute: string;
@@ -14,7 +14,7 @@ export default function ProfilePostTabs({
     activeType,
     postsRoute,
     likesRoute,
-}: ProfilePostTabsType) {
+}: ProfilePostTabsProps) {
     const router = useRouter();
     const isLikedBy = activeType === ProfilePostType.LIKED_BY;
     return (

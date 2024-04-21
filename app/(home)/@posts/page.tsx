@@ -14,7 +14,7 @@ export default async function HomePostsPage() {
         return (
             <ErrorPage
                 errorMessage={postsResponse.error.message}
-                errorTitle={`Posts konnten nicht geladen werden.`}
+                errorTitle="Posts konnten nicht geladen werden."
                 fullPage={false}
             />
         );

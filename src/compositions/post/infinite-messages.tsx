@@ -36,36 +36,31 @@ export default function InfiniteMessages({
                 reload
             />
             {next && (
-                <>
-                    <form
-                        className="flex flex-row justify-center"
-                        action={async (formData) => {
-                            const messageResponse = JSON.parse(
-                                await loadMessages(formData),
-                            ) as ActionResponse<PaginatedResult<Message>>;
-                            if (!messageResponse.isError) {
-                                const paginatedMessages = messageResponse.data;
-                                setMessages((prevState) => [
-                                    ...prevState,
-                                    ...paginatedMessages.data,
-                                ]);
-                                setNext(paginatedMessages.next);
-                            } else {
-                                console.error(messageResponse.error);
-                            }
-                        }}
-                    >
-                        <input name="next" value={next} hidden readOnly />
-                        <Button
-                            className="mt-s"
-                            Icon={IconRepost}
-                            size={ButtonSize.L}
-                            variant={Variant.TERTIARY}
-                            label={`Weitere ${isPost ? 'Posts' : 'Kommentare'} laden`}
-                            type="submit"
-                        />
-                    </form>
-                </>
+                <form
+                    className="flex flex-row justify-center"
+                    action={async (formData) => {
+                        const messageResponse = JSON.parse(
+                            await loadMessages(formData),
+                        ) as ActionResponse<PaginatedResult<Message>>;
+                        if (!messageResponse.isError) {
+                            const paginatedMessages = messageResponse.data;
+                            setMessages((prevState) => [...prevState, ...paginatedMessages.data]);
+                            setNext(paginatedMessages.next);
+                        } else {
+                            console.error(messageResponse.error);
+                        }
+                    }}
+                >
+                    <input name="next" value={next} hidden readOnly />
+                    <Button
+                        className="mt-s"
+                        Icon={IconRepost}
+                        size={ButtonSize.L}
+                        variant={Variant.TERTIARY}
+                        label={`Weitere ${isPost ? 'Posts' : 'Kommentare'} laden`}
+                        type="submit"
+                    />
+                </form>
             )}
         </>
     );
