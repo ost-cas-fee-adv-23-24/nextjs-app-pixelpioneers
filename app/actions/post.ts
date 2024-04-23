@@ -1,10 +1,10 @@
 'use server';
 
-import { LikeType, Post, Reply } from '@/src/models/post.model';
-import { postReducer, postsReducer, repliesReducer } from '@/src/services/post.service';
+import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/post.model';
+import { messageReducer, messagesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { PaginatedResult } from '@/src/models/paginate.model';
+import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
@@ -58,7 +58,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
 export async function getPost(postId: string): Promise<ActionResponse<Post>> {
     const session = await auth();
     try {
-        const post = postReducer(
+        const post = messageReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID, postId),
                 {
@@ -94,24 +94,15 @@ export async function deletePost(postId: string): Promise<ActionResponse<void>> 
 
 /**
  * get all Posts, pagination and filter possible by options param
- * The following options are available at the endpoint:
- * - newerThan: post ULID; string
- * - olderThan: post ULID; string
- * - text: text to search for; string
- * - tags: tag to search for, multiple records possible; string
- * - creators: creator ID to filter for, multiple records possible; string
- * - likedBy: user ID who liked the post to filter for, multiple records possible; string
- * - offset; number as string
- * - limit; number as string
  * @param options
  */
 export async function getPosts(
-    options?: Record<string, string[]>,
+    options?: PostFilterOptions,
 ): Promise<ActionResponse<PaginatedResult<Post>>> {
     const session = await auth();
     // TODO: clean tags when options are given - ex. options as ID
     try {
-        const paginatedPosts = postsReducer(
+        const paginatedPosts = messagesReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS, undefined, options),
                 {
@@ -125,6 +116,36 @@ export async function getPosts(
         return dataResponse(paginatedPosts);
     } catch (error) {
         return errorResponse(error, 'get posts');
+    }
+}
+
+export async function loadPaginatedMessages(formData: FormData): Promise<string> {
+    const nextData = formData.get('next');
+    if (nextData === null) {
+        // TODO: strigify or Next Response?
+        return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
+    }
+    const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
+    if (route === '' || !route.startsWith('/posts')) {
+        return JSON.stringify(errorResponse(new Error('invalid url'), 'get messages'));
+    }
+
+    const session = await auth();
+    try {
+        const paginatedMessages = messagesReducer(
+            (await request(
+                route,
+                {
+                    method: 'GET',
+                },
+                session?.accessToken,
+                undefined, // TODO: tags:[getTag(Tag.POSTS)],
+                undefined, // TODO: revalidate 15,
+            )) as PaginatedResult<Message>,
+        );
+        return JSON.stringify(dataResponse(paginatedMessages));
+    } catch (error) {
+        return JSON.stringify(errorResponse(error, 'get messages'));
     }
 }
 
@@ -158,19 +179,16 @@ export async function createReply(
 
 /**
  * get all Replies from a certain Post, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
  * @param postId
  * @param options
  */
 export async function getReplies(
     postId: string,
-    options?: Record<string, string[]>,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {
-        const paginatedReplies = repliesReducer(
+        const paginatedReplies = messagesReducer(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
                 {

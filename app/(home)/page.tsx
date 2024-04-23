@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
-export default async function Home() {
+export default async function HomePage() {
     return (
         <header className="px-m md:px-0">
             <Heading variant={HeadingLevel.H2} className="text-primary-600">

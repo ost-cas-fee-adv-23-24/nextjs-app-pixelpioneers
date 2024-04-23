@@ -4,3 +4,10 @@ export type PaginatedResult<T> = {
     next?: string;
     previous?: string;
 };
+
+export type FilterOptions = Partial<{
+    limit: number;
+    offset: number;
+}>;
+
+export const PAGINATION_LIMIT = 15;

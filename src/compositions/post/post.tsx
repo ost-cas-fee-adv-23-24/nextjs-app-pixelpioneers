@@ -71,6 +71,8 @@ export default function Post({ message, variant, children }: PostProps) {
             </div>
             {message.text && (
                 <Paragraph
+                    // TODO: set in design system
+                    className="break-words"
                     size={isVariant(PostVariant.DETAIL_VIEW) ? ParagraphSize.L : ParagraphSize.M}
                 >
                     {message.text}

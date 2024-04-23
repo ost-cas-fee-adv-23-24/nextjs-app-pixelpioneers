@@ -4,7 +4,7 @@ import { FollowType, User } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
-import { PaginatedResult } from '@/src/models/paginate.model';
+import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { revalidateTag } from 'next/cache';
@@ -30,13 +30,10 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
 
 /**
  * get all Users, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
  * @param options
  */
 export async function getUsers(
-    options?: Record<string, string[]>,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -57,15 +54,12 @@ export async function getUsers(
 
 /**
  * get all followers of a User, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
  * @param userId
  * @param options
  */
 export async function getFollowers(
     userId: string,
-    options?: Record<string, string[]>,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -86,15 +80,12 @@ export async function getFollowers(
 
 /**
  * get all followees of a User, pagination possible by options param
- * The following options are available at the endpoint:
- * - offset; number as string
- * - limit; number as string
  * @param userId
  * @param options
  */
 export async function getFollowees(
     userId: string,
-    options?: Record<string, string[]>,
+    options?: FilterOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {

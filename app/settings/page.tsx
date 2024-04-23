@@ -11,7 +11,7 @@ const mockUserData = {
 };
 
 // TODO: settings
-export default async function Settings() {
+export default async function SettingsPage() {
     return (
         <>
             Page: Settings

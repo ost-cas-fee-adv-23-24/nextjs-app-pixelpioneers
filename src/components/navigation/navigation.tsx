@@ -14,7 +14,7 @@ export default async function Navigation() {
         <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
             <div className="flex w-[680px] flex-row justify-between">
                 <section className="flex items-center">
-                    <Link href={APP_ROUTES.MAIN}>
+                    <Link href={APP_ROUTES.HOME}>
                         <LogoMumbleHorizontal
                             titleClasses="fill-white"
                             iconClasses="fill-white"

@@ -4,11 +4,12 @@ import { checkIsActiveUser, getFollowees, getUser } from '@/app/actions/user';
 import { getPosts } from '@/app/actions/post';
 import { ProfileHeader, ProfilePosts, ProfilePostType } from '@/src/models/profile.model';
 import { FollowingType } from '@/src/models/user.model';
-import { userPostsHydrator } from '@/src/services/post.service';
+import { userMessagesHydrator } from '@/src/services/post.service';
 import { redirect } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { ActionResponse } from '@/src/models/action.model';
 import { dataResponse } from '@/app/actions/utils';
+import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 
 export async function getProfileHeader(userId: string): Promise<ActionResponse<ProfileHeader>> {
     const userResponse = await getUser(userId);
@@ -56,7 +57,9 @@ export async function getProfilePosts(
     }
 
     const postsResponse = await getPosts(
-        type === ProfilePostType.CREATED_BY ? { creators: [user.id] } : { likedBy: [user.id] },
+        type === ProfilePostType.CREATED_BY
+            ? { creators: [user.id], limit: PAGINATION_LIMIT }
+            : { likedBy: [user.id], limit: PAGINATION_LIMIT },
     );
     if (postsResponse.isError) {
         return postsResponse;
@@ -67,9 +70,9 @@ export async function getProfilePosts(
         user,
         isActiveUser,
         type,
-        posts:
+        paginatedPosts:
             type === ProfilePostType.CREATED_BY
-                ? userPostsHydrator(paginatedPosts, user)
+                ? userMessagesHydrator(paginatedPosts, user)
                 : paginatedPosts,
     });
 }

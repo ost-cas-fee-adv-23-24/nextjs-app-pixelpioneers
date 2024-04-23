@@ -1,5 +1,6 @@
 import { User } from './user.model';
 import { z } from 'zod';
+import { FilterOptions } from '@/src/models/paginate.model';
 
 export const CreatePostSchema = z.union([
     z.object({
@@ -23,6 +24,26 @@ export type Post = {
     likedBySelf?: boolean;
     replies: number;
 };
+
+/**
+ * - newerThan: post ID
+ * - olderThan: post ID
+ * - text: text to search for
+ * - tags: tag to search for, multiple records possible
+ * - creators: creator ID to filter for, multiple records possible
+ * - likedBy: user ID who liked the post to filter for, multiple records possible
+ * - offset; pagination
+ * - limit; pagination
+ */
+export type PostFilterOptions = FilterOptions &
+    Partial<{
+        newerThan: string;
+        olderThan: string;
+        text: string;
+        tags: string[];
+        creators: string[];
+        likedBy: string[];
+    }>;
 
 export type PostValidationResult = { text?: string[]; media?: string[] };
 
