@@ -1,0 +1,32 @@
+[
+  {
+    "id": "base",
+    "routes": [
+      "add-headers:enabled",
+      "get-posts:success",
+      "get-users:success",
+      "get-replies:success"
+    ]
+  },
+  {
+    "id": "no-headers",
+    "from": "base",
+    "routes": ["add-headers:disabled"]
+  },
+  {
+    "id": "all-posts",
+    "from": "base",
+    "routes": ["get-posts:all"]
+  },
+
+  {
+    "id": "all-replies",
+    "from": "base",
+    "routes": ["get-replies:all"]
+  },
+  {
+    "id": "all-users",
+    "from": "base",
+    "routes": ["get-users:all"]
+  }
+]
