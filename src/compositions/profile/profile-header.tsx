@@ -7,17 +7,17 @@ import React from 'react';
 
 type ProfileHeaderProps = {
     user: User;
-    activeUser?: boolean;
+    isActiveUser?: boolean;
 };
-export default function ProfileHeader({ user, activeUser = false }: ProfileHeaderProps) {
+export default function ProfileHeader({ user, isActiveUser = false }: ProfileHeaderProps) {
     return (
         <section className="flex flex-col gap-m">
-            <ImageHeader user={user} activeUser={activeUser} />
+            <ImageHeader user={user} isActiveUser={isActiveUser} />
             <section className="mx-m flex flex-col gap-base md:mx-0 md:w-[680px]">
                 <DisplayName
                     user={user}
                     variant={DisplayNameVariant.PROFILE}
-                    activeUser={activeUser}
+                    isActiveUser={isActiveUser}
                 />
                 <Paragraph
                     className="w-fill text-slate-400"

@@ -122,7 +122,7 @@ export async function getPosts(
 export async function loadPaginatedMessages(formData: FormData): Promise<string> {
     const nextData = formData.get('next');
     if (nextData === null) {
-        // TODO: strigify or Next Response?
+        // TODO: stringify or Next Response?
         return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
     }
     const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];

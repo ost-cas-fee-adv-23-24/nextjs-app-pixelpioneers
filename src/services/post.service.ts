@@ -27,6 +27,7 @@ function userMessageHydrator<T extends Message>(message: T, user: User): T {
     };
 }
 
+// TODO: still used?
 export function userMessagesHydrator<T extends Message>(
     paginatedMessages: PaginatedResult<T>,
     user: User,

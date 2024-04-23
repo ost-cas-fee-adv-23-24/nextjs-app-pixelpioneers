@@ -7,9 +7,9 @@ import { User } from '@/src/models/user.model';
 
 type ImageHeaderProps = {
     user: User;
-    activeUser?: boolean;
+    isActiveUser?: boolean;
 };
-export default function ImageHeader({ user, activeUser = false }: ImageHeaderProps) {
+export default function ImageHeader({ user, isActiveUser = false }: ImageHeaderProps) {
     const avatarAlt = user.avatarUrl ? `Avatarbild von ${user.username}` : 'Kein Bild';
     return (
         <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
@@ -28,7 +28,7 @@ export default function ImageHeader({ user, activeUser = false }: ImageHeaderPro
                 }}
             />
             <div className="absolute bottom-[-25px] right-[24px] z-10 md:bottom-[-70px] md:right-[30px]">
-                {activeUser ? (
+                {isActiveUser ? (
                     <>
                         <div className="hidden md:block">
                             <EditAvatar

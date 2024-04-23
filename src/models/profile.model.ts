@@ -18,5 +18,4 @@ export type ProfileHeader = Profile & {
 
 export type ProfilePosts = Profile & {
     paginatedPosts: PaginatedResult<Post>;
-    type: ProfilePostType;
 };

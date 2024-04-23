@@ -2,7 +2,7 @@ import FollowStatus from '@/src/components/follow-status/follow-status';
 import { followUser } from '@/app/actions/user';
 import { FollowingType, FollowType } from '@/src/models/user.model';
 import { getProfileHeader } from '@/app/actions/profile';
-import ProfileHeader from '@/src/compositions/profile-header/profile-header';
+import ProfileHeader from '@/src/compositions/profile/profile-header';
 import { notFound } from 'next/navigation';
 
 export default async function UserPage({ params }: { params: { id: string } }) {
@@ -18,7 +18,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
     );
     return (
         <>
-            <ProfileHeader user={user} activeUser={isActiveUser} />
+            <ProfileHeader user={user} isActiveUser={isActiveUser} />
             {/* TODO: separate in own file */}
             {!isActiveUser && (
                 <section className="mx-m flex flex-row justify-end md:mx-0">

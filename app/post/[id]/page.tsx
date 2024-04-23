@@ -1,9 +1,9 @@
-import { createReply, getPost, getReplies, loadPaginatedMessages } from '@/app/actions/post';
+import { createReply, getPost, getReplies } from '@/app/actions/post';
 import Message from '@/src/compositions/message/message';
 import { MessageDisplayVariant, MessageVariant } from '@/src/compositions/message/types';
 import { getLoggedInUser } from '@/app/actions/utils';
 import { notFound } from 'next/navigation';
-import MessageFormLogin from '@/src/compositions/message-form-login/message-form-login';
+import MessageFormLogin from '@/src/compositions/message/message-form-login';
 import React from 'react';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
@@ -42,7 +42,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                     />
                     {repliesResponse.data.next && (
                         <MessageLoader
-                            onLoad={loadPaginatedMessages}
                             displayVariant={MessageDisplayVariant.INLINE}
                             nextRoute={repliesResponse.data.next}
                         />

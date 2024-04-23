@@ -11,14 +11,14 @@ import {
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { ActionResponse } from '@/src/models/action.model';
 import MessageContainer from '@/src/compositions/message/message-container';
+import { loadPaginatedMessages } from '@/app/actions/post';
 
 type MessageLoaderProps = {
-    onLoad: (formData: FormData) => Promise<string>;
     displayVariant: MessageDisplayVariant;
     nextRoute: string;
 };
 
-export default function MessageLoader({ onLoad, displayVariant, nextRoute }: MessageLoaderProps) {
+export default function MessageLoader({ displayVariant, nextRoute }: MessageLoaderProps) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [next, setNext] = useState<string | undefined>(nextRoute);
     const isPost = displayVariant !== MessageDisplayVariant.INLINE;
@@ -36,7 +36,7 @@ export default function MessageLoader({ onLoad, displayVariant, nextRoute }: Mes
                     className="flex flex-row justify-center"
                     action={async (formData) => {
                         const messageResponse = JSON.parse(
-                            await onLoad(formData),
+                            await loadPaginatedMessages(formData),
                         ) as ActionResponse<PaginatedResult<Message>>;
                         if (!messageResponse.isError) {
                             const paginatedMessages = messageResponse.data;

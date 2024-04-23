@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPosts, loadPaginatedMessages } from '@/app/actions/post';
+import { getPosts } from '@/app/actions/post';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
@@ -30,7 +30,6 @@ export default async function HomePostsPage() {
                 />
                 {paginatedPosts.next && (
                     <MessageLoader
-                        onLoad={loadPaginatedMessages}
                         displayVariant={MessageDisplayVariant.TIMELINE}
                         nextRoute={paginatedPosts.next}
                     />

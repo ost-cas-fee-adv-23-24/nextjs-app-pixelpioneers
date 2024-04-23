@@ -2,16 +2,13 @@
 
 import { Tabs } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { ProfilePostType } from '@/src/models/profile.model';
-import { useRouter } from 'next/navigation';
 
 type ProfileTabsProps = {
     activeType: ProfilePostType;
-    postsRoute: string;
-    likesRoute: string;
+    onChangeTabs: () => void;
 };
 
-export default function ProfileTabs({ activeType, postsRoute, likesRoute }: ProfileTabsProps) {
-    const router = useRouter();
+export default function ProfileTabs({ activeType, onChangeTabs }: ProfileTabsProps) {
     const isLikedBy = activeType === ProfilePostType.LIKED_BY;
     return (
         <Tabs
@@ -19,11 +16,11 @@ export default function ProfileTabs({ activeType, postsRoute, likesRoute }: Prof
             tabs={[
                 {
                     label: 'Deine Mumbles',
-                    onClick: () => isLikedBy && router.push(postsRoute),
+                    onClick: () => isLikedBy && onChangeTabs(),
                 },
                 {
                     label: 'Deine Likes',
-                    onClick: () => !isLikedBy && router.push(likesRoute),
+                    onClick: () => !isLikedBy && onChangeTabs,
                 },
             ]}
         ></Tabs>

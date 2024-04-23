@@ -1,5 +1,5 @@
 import MessageMultiSkeleton from '@/src/compositions/message/message-multi-skeleton';
-import ProfileHeaderSkeleton from '@/src/compositions/profile-header/profile-header-skeleton';
+import ProfileHeaderSkeleton from '@/src/compositions/profile/profile-header-skeleton';
 import React from 'react';
 
 export default function Loading() {
