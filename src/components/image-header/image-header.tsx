@@ -12,12 +12,11 @@ export default function ImageHeader({
     user: User;
     activeUser?: boolean;
 }) {
-    const pathToBgImage = 'my-profile.jpg';
-    const avatarAlt = user.avatarUrl ? `avatar from ${user.username}` : 'no image';
+    const avatarAlt = user.avatarUrl ? `Avatarbild von ${user.username}` : 'Kein Bild';
     return (
         <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
             <Image
-                src={`/wallpapers/${pathToBgImage}`}
+                src={`/wallpapers/my-profile.jpg`}
                 alt="Hintergrundbild Profil"
                 className="cursor-pointer md:rounded-m"
                 fill
@@ -28,16 +27,28 @@ export default function ImageHeader({
                 sizes="(max-width: 680px) 100vw"
                 style={{
                     width: '100%',
-                    height: 'auto',
                 }}
             />
-            <div className="absolute bottom-[-25px] right-[15px] z-10 md:bottom-[-70px] md:right-[30px]">
+            <div className="absolute bottom-[-25px] right-[24px] z-10 md:bottom-[-70px] md:right-[30px]">
                 {activeUser ? (
-                    <EditAvatar
-                        src={user.avatarUrl}
-                        alt={avatarAlt}
-                        onEdit={() => console.info('open pop up')}
-                    />
+                    <>
+                        <div className="hidden md:block">
+                            <EditAvatar
+                                src={user.avatarUrl}
+                                alt={avatarAlt}
+                                size={AvatarSize.XL}
+                                onEdit={() => console.info('open pop up')}
+                            />
+                        </div>
+                        <div className="block md:hidden">
+                            <EditAvatar
+                                src={user.avatarUrl}
+                                alt={avatarAlt}
+                                size={AvatarSize.L}
+                                onEdit={() => console.info('open pop up')}
+                            />
+                        </div>
+                    </>
                 ) : (
                     <Avatar src={user?.avatarUrl} alt={avatarAlt} size={AvatarSize.XL} />
                 )}
