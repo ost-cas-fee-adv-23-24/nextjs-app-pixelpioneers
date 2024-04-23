@@ -1,4 +1,4 @@
-import { CreatePostSchema, PostValidationResult } from '@/src/models/post.model';
+import { CreatePostSchema, PostValidationResult } from '@/src/models/message.model';
 import { AvatarValidationResult, UpdateAvatarSchema } from '@/src/models/user.model';
 import { ValidationError } from '@/src/models/error.model';
 

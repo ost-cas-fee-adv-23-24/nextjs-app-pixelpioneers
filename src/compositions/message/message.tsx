@@ -1,4 +1,4 @@
-import { Message } from '@/src/models/post.model';
+import { Message } from '@/src/models/message.model';
 import React, { ReactNode } from 'react';
 import {
     Avatar,
@@ -7,25 +7,26 @@ import {
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
-import PostActions from '@/src/compositions/post/post-actions';
+import MessageActions from '@/src/compositions/message/message-actions';
 import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
-import { PostVariant } from '@/src/compositions/post/types';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
 
-type PostProps = {
+type MessageProps = {
     message: Message;
-    variant: PostVariant;
+    displayVariant: MessageDisplayVariant;
     children?: ReactNode;
 };
 
-export default function Post({ message, variant, children }: PostProps) {
-    const isVariant = (variantToCheck: PostVariant): boolean => variant === variantToCheck;
+export default function Message({ message, displayVariant, children }: MessageProps) {
+    const isVariant = (variantToCheck: MessageDisplayVariant): boolean =>
+        displayVariant === variantToCheck;
     const displayNameVariant = (): DisplayNameVariant => {
-        switch (variant) {
-            case PostVariant.DETAIL_VIEW:
+        switch (displayVariant) {
+            case MessageDisplayVariant.DETAIL_VIEW:
                 return DisplayNameVariant.POST_DETAIL_VIEW;
-            case PostVariant.TIMELINE:
+            case MessageDisplayVariant.TIMELINE:
                 return DisplayNameVariant.POST_TIMELINE;
             default:
                 return DisplayNameVariant.REPLY;
@@ -44,7 +45,7 @@ export default function Post({ message, variant, children }: PostProps) {
                 'md:duration-300 md:ease-in-out md:hover:ring-2 md:hover:ring-secondary-200',
             ),
             detailView: detailPostClasses,
-        }[variant],
+        }[displayVariant],
     );
     const avatarClasses = clsx(
         'z-5 relative row-span-3', // mobile
@@ -53,7 +54,7 @@ export default function Post({ message, variant, children }: PostProps) {
     return (
         <div className={postClasses}>
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
-                {!isVariant(PostVariant.INLINE) && (
+                {!isVariant(MessageDisplayVariant.INLINE) && (
                     <div className={avatarClasses}>
                         <Avatar
                             // TODO: make size S on mobile
@@ -73,7 +74,11 @@ export default function Post({ message, variant, children }: PostProps) {
                 <Paragraph
                     // TODO: set in design system
                     className="break-words"
-                    size={isVariant(PostVariant.DETAIL_VIEW) ? ParagraphSize.L : ParagraphSize.M}
+                    size={
+                        isVariant(MessageDisplayVariant.DETAIL_VIEW)
+                            ? ParagraphSize.L
+                            : ParagraphSize.M
+                    }
                 >
                     {message.text}
                 </Paragraph>
@@ -99,10 +104,13 @@ export default function Post({ message, variant, children }: PostProps) {
                     />
                 </section>
             )}
-            {!isVariant(PostVariant.INLINE) && (
-                <PostActions post={message} detailView={isVariant(PostVariant.DETAIL_VIEW)} />
+            {!isVariant(MessageDisplayVariant.INLINE) && (
+                <MessageActions
+                    post={message}
+                    detailView={isVariant(MessageDisplayVariant.DETAIL_VIEW)}
+                />
             )}
-            {isVariant(PostVariant.DETAIL_VIEW) && children}
+            {isVariant(MessageDisplayVariant.DETAIL_VIEW) && children}
         </div>
     );
 }

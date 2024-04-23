@@ -1,6 +1,6 @@
 import React from 'react';
-import PostSingleSkeleton from '@/src/compositions/post/post-single-skeleton';
+import MessageSingleSkeleton from '@/src/compositions/message/message-single-skeleton';
 
 export default function LoadingForm() {
-    return <PostSingleSkeleton classNames="h-[400px] w-full md:w-[720px] md:ml-[-40px]" />;
+    return <MessageSingleSkeleton className="h-[400px] w-full md:ml-[-40px] md:w-[720px]" />;
 }

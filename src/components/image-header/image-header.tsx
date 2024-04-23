@@ -5,13 +5,11 @@ import Image from 'next/image';
 import { Avatar, AvatarSize, EditAvatar } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { User } from '@/src/models/user.model';
 
-export default function ImageHeader({
-    user,
-    activeUser = false,
-}: {
+type ImageHeaderProps = {
     user: User;
     activeUser?: boolean;
-}) {
+};
+export default function ImageHeader({ user, activeUser = false }: ImageHeaderProps) {
     const avatarAlt = user.avatarUrl ? `Avatarbild von ${user.username}` : 'Kein Bild';
     return (
         <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">

@@ -10,7 +10,9 @@ import { Session } from 'next-auth';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
-export default function NaviButtons({ session }: { session: Session | null }) {
+type NaviButtonsProps = { session: Session | null };
+
+export default function NaviButtons({ session }: NaviButtonsProps) {
     const router = useRouter();
     const userId = session?.user?.profile.sub;
     return (

@@ -24,6 +24,7 @@ export default function ProfileHeader({ user, activeUser = false }: ProfileHeade
                     size={ParagraphSize.M}
                     title={'Über mich'}
                 >
+                    {/* TODO: set different text */}
                     Ostschweizer mit Leidenschaft für Fussball, designaffin, nie ohne Bart,
                     Weinliebhaber, leichte Tendenz zu Football Manager-Sucht, kocht gerne indisch,
                     baut seit neustem Duplotürme und Brio-Bahnanlagen.

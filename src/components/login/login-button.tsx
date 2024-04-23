@@ -10,17 +10,20 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { Session } from 'next-auth';
 
+type LoginButtonProps = {
+    session: Session | null;
+    navBar?: boolean;
+    loginLabel?: string;
+    logoutLabel?: string;
+};
+
 export default function LoginButton({
     session,
     navBar = false,
     loginLabel = 'Log in',
     logoutLabel = 'Log out',
-}: {
-    session: Session | null;
-    navBar?: boolean;
-    loginLabel?: string;
-    logoutLabel?: string;
-}) {
+}: LoginButtonProps) {
+    // TODO: session really needed, or just loggedIn flag ?
     const label = session ? logoutLabel : loginLabel;
     const onClick = () => (session ? signOut() : signIn('zitadel'));
     if (navBar) {

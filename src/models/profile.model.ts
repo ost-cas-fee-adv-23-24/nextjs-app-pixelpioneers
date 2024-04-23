@@ -1,5 +1,5 @@
 import { PaginatedResult } from '@/src/models/paginate.model';
-import { Post } from '@/src/models/post.model';
+import { Post } from '@/src/models/message.model';
 import { FollowingType, User } from './user.model';
 
 export enum ProfilePostType {

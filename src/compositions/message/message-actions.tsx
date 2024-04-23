@@ -1,5 +1,5 @@
 'use client';
-import { LikeType, Message } from '@/src/models/post.model';
+import { LikeType, Message } from '@/src/models/message.model';
 import {
     CommentButton,
     LikeButton,
@@ -10,8 +10,8 @@ import { likePost } from '@/app/actions/post';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 
-type PostActionsProps = { post: Message; detailView?: boolean };
-export default function PostActions({ post, detailView }: PostActionsProps) {
+type MessageActionsProps = { post: Message; detailView?: boolean };
+export default function MessageActions({ post, detailView }: MessageActionsProps) {
     const router = useRouter();
     return (
         <section className="ml-[-12px] flex flex-row justify-between md:justify-start md:gap-x-l">

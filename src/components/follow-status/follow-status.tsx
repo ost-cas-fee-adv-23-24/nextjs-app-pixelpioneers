@@ -13,15 +13,12 @@ import {
 import LoginButton from '@/src/components/login/login-button';
 import { ActionResponse } from '@/src/models/action.model';
 
-export default function FollowStatus({
-    user,
-    onFollow,
-    followedByActiveUser,
-}: {
+type FollowStatusProps = {
     user: User;
     onFollow: () => Promise<ActionResponse<void>>;
     followedByActiveUser: FollowingType;
-}) {
+};
+export default function FollowStatus({ user, onFollow, followedByActiveUser }: FollowStatusProps) {
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
     const isFollowing = followedByActiveUser === FollowingType.FOLLOWING;
     if (followedByActiveUser === FollowingType.NOT_LOGGED_IN) {

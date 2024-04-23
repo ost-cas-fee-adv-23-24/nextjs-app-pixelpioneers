@@ -1,17 +1,17 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { getPostEventSource, PostEvent } from '@/src/helpers/routes';
-import { ActionBubble } from '@/src/components/info-bubble/action-bubble';
-import { Post } from '@/src/models/post.model';
+import { ActionBubble } from '@/src/components/action-bubble/action-bubble';
+import { Post } from '@/src/models/message.model';
 import { reloadPathData } from '@/app/actions/caching';
 import { scrollToTop } from '@/src/helpers/scrollToTop';
 
-type StreamProps = {
+type PostStreamProps = {
     eventType: PostEvent;
     path: string;
 };
 
-export function PostStream({ eventType, path }: StreamProps) {
+export function PostStream({ eventType, path }: PostStreamProps) {
     const [posts, setPosts] = useState<Post[]>([]);
     const count = posts.length;
     useEffect(() => {

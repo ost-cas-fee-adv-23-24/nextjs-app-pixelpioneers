@@ -1,4 +1,4 @@
-import { Message } from '../models/post.model';
+import { Message } from '../models/message.model';
 import { PaginatedResult } from '../models/paginate.model';
 import { decodeTime } from 'ulid';
 import { User } from '../models/user.model';

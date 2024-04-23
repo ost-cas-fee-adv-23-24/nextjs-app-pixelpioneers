@@ -1,6 +1,6 @@
 'use server';
 
-import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/post.model';
+import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/message.model';
 import { messageReducer, messagesReducer } from '@/src/services/post.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
