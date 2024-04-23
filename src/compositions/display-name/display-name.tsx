@@ -38,6 +38,7 @@ export default function DisplayName({
     joinedTimestamp,
     activeUser,
 }: DisplayNameProps) {
+    // TODO: client component or rather server component with client button group inside ?
     const router = useRouter();
     const userFullName = () =>
         user.firstname ? `${user.firstname} ${user.lastname}` : 'Mumble User';

@@ -1,4 +1,4 @@
-export enum PostVariant {
+export enum MessageDisplayVariant {
     INLINE = 'inline',
     TIMELINE = 'timeline',
     DETAIL_VIEW = 'detailView',

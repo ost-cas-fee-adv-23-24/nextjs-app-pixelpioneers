@@ -1,14 +1,14 @@
 import { createReply, getPost, getReplies, loadPaginatedMessages } from '@/app/actions/post';
-import { default as PostComponent } from '@/src/compositions/post/post';
-import { MessageVariant, PostVariant } from '@/src/compositions/post/types';
+import Message from '@/src/compositions/message/message';
+import { MessageDisplayVariant, MessageVariant } from '@/src/compositions/message/types';
 import { getLoggedInUser } from '@/app/actions/utils';
 import { notFound } from 'next/navigation';
-import PostFormOrLogin from '@/src/compositions/post-form-or-login/post-form-or-login';
+import MessageFormLogin from '@/src/compositions/message-form-login/message-form-login';
 import React from 'react';
-import MessageContainer from '@/src/compositions/post/message-container';
+import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
-import InfiniteMessages from '@/src/compositions/post/infinite-messages';
+import MessageLoader from '@/src/compositions/message/message-loader';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -22,8 +22,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     // TODO: separate replies?
     const repliesResponse = await getReplies(post.id, { limit: PAGINATION_LIMIT });
     return (
-        <PostComponent message={post} variant={PostVariant.DETAIL_VIEW}>
-            <PostFormOrLogin
+        <Message message={post} displayVariant={MessageDisplayVariant.DETAIL_VIEW}>
+            <MessageFormLogin
                 messageVariant={MessageVariant.REPLY}
                 onCreate={hydratedCreateReply}
                 user={user}
@@ -38,17 +38,17 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                 <div className="mt-s flex flex-col gap-m md:mt-l md:gap-l">
                     <MessageContainer
                         messages={repliesResponse.data.data}
-                        variant={PostVariant.INLINE}
+                        displayVariant={MessageDisplayVariant.INLINE}
                     />
                     {repliesResponse.data.next && (
-                        <InfiniteMessages
-                            loadMessages={loadPaginatedMessages}
-                            variant={PostVariant.INLINE}
+                        <MessageLoader
+                            onLoad={loadPaginatedMessages}
+                            displayVariant={MessageDisplayVariant.INLINE}
                             nextRoute={repliesResponse.data.next}
                         />
                     )}
                 </div>
             )}
-        </PostComponent>
+        </Message>
     );
 }

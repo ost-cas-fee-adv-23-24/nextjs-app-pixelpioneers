@@ -1,22 +1,22 @@
-import { Message } from '@/src/models/post.model';
-import { PostVariant } from '@/src/compositions/post/types';
-import Post from './post';
+import { Message } from '@/src/models/message.model';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
+import { default as MessageComponent } from './message';
 import React from 'react';
 import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
 type MessageContainerProps = {
     messages: Message[];
-    variant: PostVariant;
+    displayVariant: MessageDisplayVariant;
     showNoContentInfo?: boolean;
     reload?: boolean;
 };
 export default function MessageContainer({
     messages,
-    variant,
+    displayVariant,
     showNoContentInfo = true,
     reload = false,
 }: MessageContainerProps) {
-    const isPost = variant !== PostVariant.INLINE;
+    const isPost = displayVariant !== MessageDisplayVariant.INLINE;
 
     if (showNoContentInfo && messages.length === 0) {
         return (
@@ -27,16 +27,21 @@ export default function MessageContainer({
     }
 
     return messages.map((message, index) => {
-        if (variant === PostVariant.INLINE) {
+        if (displayVariant === MessageDisplayVariant.INLINE) {
             return (
                 <div key={message.id} className="flex flex-col gap-m md:gap-l">
                     {(reload || index > 0) && (
                         <hr className="mx-[-24px] text-secondary-100 md:mx-[-48px]" />
                     )}
-                    <Post message={message} variant={PostVariant.INLINE} />
+                    <MessageComponent
+                        message={message}
+                        displayVariant={MessageDisplayVariant.INLINE}
+                    />
                 </div>
             );
         }
-        return <Post key={message.id} message={message} variant={variant} />;
+        return (
+            <MessageComponent key={message.id} message={message} displayVariant={displayVariant} />
+        );
     });
 }

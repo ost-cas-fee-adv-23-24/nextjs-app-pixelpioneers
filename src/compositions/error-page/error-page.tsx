@@ -15,6 +15,14 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { ComponentType } from 'react';
 
+type ErrorPageProps = {
+    errorTitle?: string;
+    errorMessage: string;
+    buttonLabel?: string;
+    onButtonClick?: () => void;
+    buttonIcon?: ComponentType<IconProps>;
+    fullPage?: boolean;
+};
 export default function ErrorPage({
     errorTitle,
     errorMessage,
@@ -22,14 +30,7 @@ export default function ErrorPage({
     onButtonClick,
     buttonIcon,
     fullPage = true,
-}: {
-    errorTitle?: string;
-    errorMessage: string;
-    buttonLabel?: string;
-    onButtonClick?: () => void;
-    buttonIcon?: ComponentType<IconProps>;
-    fullPage?: boolean;
-}) {
+}: ErrorPageProps) {
     return (
         <div className="flex flex-col items-center gap-s">
             <IconCancel size={IconSize.L} className="fill-tertiary-600" />

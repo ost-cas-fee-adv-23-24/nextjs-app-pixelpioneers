@@ -10,6 +10,7 @@ export type ErrorResponse = {
     isError: true;
 };
 
+// TODO: use
 export enum RevalidationTime {
     INSTANT = 0,
     SHORT = 15,

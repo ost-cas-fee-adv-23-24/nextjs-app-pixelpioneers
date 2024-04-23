@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 
 export default function UserSkeleton() {
+    // TODO: use
     const skeletonText = 'w-full rounded-m bg-slate-300';
 
     return (

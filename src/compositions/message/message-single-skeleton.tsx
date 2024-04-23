@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export default function PostSingleSkeleton({ classNames }: { classNames: string }) {
+export default function MessageSingleSkeleton({ className }: { className: string }) {
     const skeletonButton = 'h-[28px] w-1/4 rounded-m bg-slate-300 ';
     const skeletonText = 'rounded-m w-full bg-slate-300';
 
     return (
-        <section className={clsx(classNames, 'flex justify-around md:content-center')}>
+        <section className={clsx(className, 'flex justify-around md:content-center')}>
             <div className="flex w-full animate-pulse flex-row items-start  space-x-m rounded-m border-slate-300 p-m">
                 <div className="h-[50px] w-[50px] flex-none rounded-full bg-slate-300 "></div>
                 <div className="flex w-full flex-col space-y-m">

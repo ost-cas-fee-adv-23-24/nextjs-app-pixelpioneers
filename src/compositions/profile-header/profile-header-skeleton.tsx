@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export default function ProfileHeaderSkeleton({ classNames }: { classNames: string }) {
+export default function ProfileHeaderSkeleton({ className }: { className: string }) {
     const skeletonButton = 'h-[28px] w-full rounded-m bg-slate-300 ';
     const skeletonText = 'rounded-m bg-slate-300';
 
     return (
-        <section className={clsx(classNames, 'flex justify-around md:content-center')}>
+        <section className={clsx(className, 'flex justify-around md:content-center')}>
             <div className="flex h-full w-full animate-pulse flex-col items-start space-x-m rounded-m border-slate-300 p-m">
                 <div className="flex w-full flex-col space-y-m">
                     <div className={clsx(skeletonText, 'h-[44px] w-full')}></div>

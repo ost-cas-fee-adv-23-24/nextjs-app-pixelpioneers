@@ -1,9 +1,9 @@
 import React from 'react';
 import { getPosts, loadPaginatedMessages } from '@/app/actions/post';
-import { PostVariant } from '@/src/compositions/post/types';
-import MessageContainer from '@/src/compositions/post/message-container';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
+import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
-import InfiniteMessages from '@/src/compositions/post/infinite-messages';
+import MessageLoader from '@/src/compositions/message/message-loader';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import { PostStream } from '@/src/components/post-stream/post-stream';
 import { APP_ROUTES, getRoute, PostEvent } from '@/src/helpers/routes';
@@ -24,11 +24,14 @@ export default async function HomePostsPage() {
         <>
             <section className="flex flex-col gap-s md:mx-m">
                 <PostStream eventType={PostEvent.CREATED} path={getRoute(APP_ROUTES.HOME)} />
-                <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
+                <MessageContainer
+                    messages={paginatedPosts.data}
+                    displayVariant={MessageDisplayVariant.TIMELINE}
+                />
                 {paginatedPosts.next && (
-                    <InfiniteMessages
-                        loadMessages={loadPaginatedMessages}
-                        variant={PostVariant.TIMELINE}
+                    <MessageLoader
+                        onLoad={loadPaginatedMessages}
+                        displayVariant={MessageDisplayVariant.TIMELINE}
                         nextRoute={paginatedPosts.next}
                     />
                 )}

@@ -8,11 +8,11 @@ import {
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 
-type ActionProps = {
+type MessageFormActionsProps = {
     onUpload: () => void;
 };
 
-export default function ActionButton({ onUpload }: ActionProps) {
+export default function MessageFormActions({ onUpload }: MessageFormActionsProps) {
     return (
         <>
             <Button

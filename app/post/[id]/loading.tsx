@@ -1,6 +1,6 @@
-import PostMultiSkeleton from '@/src/compositions/post/post-multi-skeleton';
+import MessageMultiSkeleton from '@/src/compositions/message/message-multi-skeleton';
 import React from 'react';
 
 export default function LoadingPostReplies() {
-    return <PostMultiSkeleton classNames="h-[300px] w-full md:w-[680px]" />;
+    return <MessageMultiSkeleton classNames="h-[300px] w-full md:w-[680px]" />;
 }

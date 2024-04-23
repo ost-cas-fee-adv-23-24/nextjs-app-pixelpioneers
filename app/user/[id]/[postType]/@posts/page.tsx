@@ -2,11 +2,11 @@ import React from 'react';
 import { getProfilePosts } from '@/app/actions/profile';
 import { ProfilePostType } from '@/src/models/profile.model';
 import ErrorPage from '@/src/compositions/error-page/error-page';
-import ProfilePostTabs from '@/src/components/tabs-profile/profile-post-tabs';
+import ProfileTabs from '@/src/components/profile-tabs/profile-tabs';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
-import MessageContainer from '@/src/compositions/post/message-container';
-import { PostVariant } from '@/src/compositions/post/types';
-import InfiniteMessages from '@/src/compositions/post/infinite-messages';
+import MessageContainer from '@/src/compositions/message/message-container';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
+import MessageLoader from '@/src/compositions/message/message-loader';
 import { loadPaginatedMessages } from '@/app/actions/post';
 
 export default async function UserPostsPage({
@@ -32,7 +32,7 @@ export default async function UserPostsPage({
         <>
             {isActiveUser && (
                 <section className="flex flex-row justify-center md:justify-start">
-                    <ProfilePostTabs
+                    <ProfileTabs
                         activeType={type}
                         postsRoute={getRoute(APP_ROUTES.USER, user.id)}
                         likesRoute={getRoute(APP_ROUTES.USER_LIKES, user.id)}
@@ -40,11 +40,14 @@ export default async function UserPostsPage({
                 </section>
             )}
             <section className="flex flex-col gap-s">
-                <MessageContainer messages={paginatedPosts.data} variant={PostVariant.TIMELINE} />
+                <MessageContainer
+                    messages={paginatedPosts.data}
+                    displayVariant={MessageDisplayVariant.TIMELINE}
+                />
                 {paginatedPosts.next && (
-                    <InfiniteMessages
-                        loadMessages={loadPaginatedMessages}
-                        variant={PostVariant.TIMELINE}
+                    <MessageLoader
+                        onLoad={loadPaginatedMessages}
+                        displayVariant={MessageDisplayVariant.TIMELINE}
                         nextRoute={paginatedPosts.next}
                     />
                 )}
