@@ -19,6 +19,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
     return (
         <>
             <ProfileHeader user={user} activeUser={isActiveUser} />
+            {/* TODO: separate in own file */}
             {!isActiveUser && (
                 <section className="mx-m flex flex-row justify-end md:mx-0">
                     <FollowStatus
