@@ -1,6 +1,6 @@
 const replies = require('../fixtures/replies');
 
-[
+module.exports = [
     {
         id: 'get-replies',
         url: '/api/replies',

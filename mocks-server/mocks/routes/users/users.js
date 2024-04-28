@@ -1,6 +1,6 @@
 const users = require('../fixtures/users');
 
-[
+module.exports = [
     {
         id: 'get-users',
         url: '/api/users',
