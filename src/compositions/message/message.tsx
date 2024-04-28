@@ -1,4 +1,4 @@
-import { Message } from '@/src/models/message.model';
+import type { Message } from '@/src/models/message.model';
 import React, { ReactNode } from 'react';
 import {
     AvatarSize,
@@ -90,6 +90,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                                     ? ParagraphSize.L
                                     : ParagraphSize.M
                             }
+                            data-testid="testPostData"
                         >
                             {message.text}
                         </Paragraph>

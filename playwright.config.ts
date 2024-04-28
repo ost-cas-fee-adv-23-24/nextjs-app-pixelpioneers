@@ -24,17 +24,18 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
-        baseURL: 'http://127.0.0.1:3100/api',
+        baseURL: 'http://127.0.0.1:3000',
 
-        // All requests we send go to this API endpoint.
-        // baseURL: 'http://localhost:3100/api',
         extraHTTPHeaders: {
             // Add authorization token to all requests.
             // Assuming personal access token available in the environment.
-            // Authorization: `token ${process.env.API_TOKEN}`,
+            Authorization: `token ${process.env.API_TOKEN}`,
         },
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
+        contextOptions: {
+            ignoreHTTPSErrors: true,
+        },
     },
 
     /* Configure projects for major browsers */
@@ -43,43 +44,17 @@ export default defineConfig({
             name: 'chromium',
             use: { ...devices['Desktop Chrome'] },
         },
-
-        // {
-        //     name: 'firefox',
-        //     use: { ...devices['Desktop Firefox'] },
-        // },
-
-        // {
-        //     name: 'webkit',
-        //     use: { ...devices['Desktop Safari'] },
-        // },
-
-        /* Test against mobile viewports. */
-        // {
-        //   name: 'Mobile Chrome',
-        //   use: { ...devices['Pixel 5'] },
-        // },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: { ...devices['iPhone 12'] },
-        // },
-
-        /* Test against branded browsers. */
-        // {
-        //   name: 'Microsoft Edge',
-        //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-        // },
-        // {
-        //   name: 'Google Chrome',
-        //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-        // },
     ],
 
     /* Run your local dev server before starting the tests */
     webServer: {
         command: 'npm run dev',
-        ...require('dotenv').config({ path: '.env.test' }).parsed,
-        url: 'http:/127.0.0.1:3000',
+        url: 'http://127.0.0.1:3000',
+        timeout: 120 * 1000,
         reuseExistingServer: !process.env.CI,
+        env: {
+            ...process.env,
+            ...require('dotenv').config({ path: '.env.test' }).parsed,
+        },
     },
 });

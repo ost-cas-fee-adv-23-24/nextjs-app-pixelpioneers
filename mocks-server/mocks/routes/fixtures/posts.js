@@ -1,4 +1,4 @@
-module.exports = [
+[
     {
         count: 15,
         data: [

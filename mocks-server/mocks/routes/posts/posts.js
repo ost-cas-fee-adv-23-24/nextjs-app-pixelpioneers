@@ -1,6 +1,6 @@
 const posts = require('../fixtures/posts');
 
-module.exports = [
+[
     {
         id: 'get-posts',
         url: '/api/posts',
