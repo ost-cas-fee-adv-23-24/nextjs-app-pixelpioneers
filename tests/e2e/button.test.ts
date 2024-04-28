@@ -1,7 +1,11 @@
 import { expect, test } from '@playwright/test';
 
 test('check if button is here', async ({ page }) => {
-    await page.route('http://localhost:3100/api/posts', async (route) => {
+    await page.goto('http://localhost:3000');
+});
+
+test('check check if button is here', async ({ page }) => {
+    await page.route('http://localhost:3100/api/posts?limit=15', async (route) => {
         const request = route.request();
         const postData = await request.postDataJSON();
 

@@ -1,12 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
@@ -41,20 +35,27 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         {
-            name: 'chromium',
+            name: 'chromium --incognito',
             use: { ...devices['Desktop Chrome'] },
         },
+        // {
+        //     name: 'firefox',
+        //     use: { ...devices['Desktop Firefox'] },
+        // },
     ],
 
     /* Run your local dev server before starting the tests */
-    webServer: {
-        command: 'npm run dev',
-        url: 'http://127.0.0.1:3000',
-        timeout: 120 * 1000,
-        reuseExistingServer: !process.env.CI,
-        env: {
-            ...process.env,
-            ...require('dotenv').config({ path: '.env.test' }).parsed,
+    webServer: [
+        {
+            command: 'npm run dev',
+            url: 'http://127.0.0.1:3000',
+            timeout: 120 * 1000,
+            reuseExistingServer: !process.env.CI,
+            env: {
+                ...process.env,
+                ...require('dotenv').config({ path: '.env.test' }).parsed,
+                API_SERVER: 'http://localhost:3100/api', // URL of your mock server
+            },
         },
-    },
+    ],
 });
