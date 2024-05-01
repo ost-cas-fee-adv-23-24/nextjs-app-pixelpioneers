@@ -5,10 +5,9 @@ import { getLoggedInUser } from '@/app/actions/utils';
 import { notFound } from 'next/navigation';
 import MessageFormLogin from '@/src/compositions/message/message-form-login';
 import React from 'react';
-import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
-import MessageLoader from '@/src/compositions/message/message-loader';
+import StatedMessageContainer from '@/src/compositions/message/stated-message-container';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -36,16 +35,10 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                 />
             ) : (
                 <div className="mt-s flex flex-col gap-m md:mt-l md:gap-l">
-                    <MessageContainer
-                        messages={repliesResponse.data.data}
+                    <StatedMessageContainer
+                        paginatedMessages={repliesResponse.data}
                         displayVariant={MessageDisplayVariant.INLINE}
                     />
-                    {repliesResponse.data.next && (
-                        <MessageLoader
-                            displayVariant={MessageDisplayVariant.INLINE}
-                            nextRoute={repliesResponse.data.next}
-                        />
-                    )}
                 </div>
             )}
         </Message>

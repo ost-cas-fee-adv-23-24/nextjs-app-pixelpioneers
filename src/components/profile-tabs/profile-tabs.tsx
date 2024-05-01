@@ -16,11 +16,11 @@ export default function ProfileTabs({ activeType, onChangeTabs }: ProfileTabsPro
             tabs={[
                 {
                     label: 'Deine Mumbles',
-                    onClick: () => isLikedBy && onChangeTabs(),
+                    onClick: onChangeTabs,
                 },
                 {
                     label: 'Deine Likes',
-                    onClick: () => !isLikedBy && onChangeTabs,
+                    onClick: onChangeTabs,
                 },
             ]}
         ></Tabs>

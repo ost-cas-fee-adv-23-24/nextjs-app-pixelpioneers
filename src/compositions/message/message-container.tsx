@@ -1,24 +1,36 @@
+'use client';
+
 import { Message } from '@/src/models/message.model';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { default as MessageComponent } from './message';
 import React from 'react';
-import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import {
+    Button,
+    ButtonSize,
+    IconRepost,
+    Paragraph,
+    ParagraphSize,
+    Variant,
+} from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+import { loadPaginatedMessages } from '@/app/actions/post';
+import { ActionResponse } from '@/src/models/action.model';
+import { PaginatedResult } from '@/src/models/paginate.model';
 
 type MessageContainerProps = {
     messages: Message[];
     displayVariant: MessageDisplayVariant;
-    showNoContentInfo?: boolean;
-    reload?: boolean;
+    onLoad: (paginatedMessages: PaginatedResult<Message>) => void;
+    nextUrl?: string;
 };
 export default function MessageContainer({
     messages,
     displayVariant,
-    showNoContentInfo = true,
-    reload = false,
+    onLoad,
+    nextUrl,
 }: MessageContainerProps) {
     const isPost = displayVariant !== MessageDisplayVariant.INLINE;
 
-    if (showNoContentInfo && messages.length === 0) {
+    if (messages.length === 0) {
         return (
             <Paragraph className="self-center text-secondary-400" size={ParagraphSize.M}>{`Keine ${
                 isPost ? 'Posts' : 'Kommentare'
@@ -26,22 +38,55 @@ export default function MessageContainer({
         );
     }
 
-    return messages.map((message, index) => {
-        if (displayVariant === MessageDisplayVariant.INLINE) {
-            return (
-                <div key={message.id} className="flex flex-col gap-m md:gap-l">
-                    {(reload || index > 0) && (
-                        <hr className="mx-[-24px] text-secondary-100 md:mx-[-48px]" />
-                    )}
+    return (
+        <>
+            {messages.map((message, index) => {
+                if (displayVariant === MessageDisplayVariant.INLINE) {
+                    return (
+                        <div key={message.id} className="flex flex-col gap-m md:gap-l">
+                            {index > 0 && (
+                                <hr className="mx-[-24px] text-secondary-100 md:mx-[-48px]" />
+                            )}
+                            <MessageComponent
+                                message={message}
+                                displayVariant={MessageDisplayVariant.INLINE}
+                            />
+                        </div>
+                    );
+                }
+                return (
                     <MessageComponent
+                        key={message.id}
                         message={message}
-                        displayVariant={MessageDisplayVariant.INLINE}
+                        displayVariant={displayVariant}
                     />
-                </div>
-            );
-        }
-        return (
-            <MessageComponent key={message.id} message={message} displayVariant={displayVariant} />
-        );
-    });
+                );
+            })}
+            {nextUrl && (
+                <form
+                    className="flex flex-row justify-center"
+                    action={async (formData) => {
+                        const messageResponse = JSON.parse(
+                            await loadPaginatedMessages(formData),
+                        ) as ActionResponse<PaginatedResult<Message>>;
+                        if (!messageResponse.isError) {
+                            onLoad(messageResponse.data);
+                        } else {
+                            console.error(messageResponse.error);
+                        }
+                    }}
+                >
+                    <input name="next" value={nextUrl} hidden readOnly />
+                    <Button
+                        className="mt-s"
+                        Icon={IconRepost}
+                        size={ButtonSize.L}
+                        variant={Variant.TERTIARY}
+                        label={`Weitere ${isPost ? 'Posts' : 'Kommentare'} laden`}
+                        type="submit"
+                    />
+                </form>
+            )}
+        </>
+    );
 }
