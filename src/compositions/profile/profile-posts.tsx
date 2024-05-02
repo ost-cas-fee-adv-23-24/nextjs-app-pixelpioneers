@@ -8,6 +8,7 @@ import { ProfilePostType } from '@/src/models/profile.model';
 import { User } from '@/src/models/user.model';
 import { getPosts } from '@/app/actions/post';
 import MessageContainer from '@/src/compositions/message/message-container';
+import ErrorPage from '@/src/compositions/error-page/error-page';
 
 type ProfilePostsProps = {
     isActiveUser?: boolean;
@@ -19,6 +20,7 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
     const [activeType, setActiveType] = useState(ProfilePostType.CREATED_BY);
     const [posts, setPosts] = useState<Message[]>(paginatedPosts.data);
     const [nextUrl, setNextUrl] = useState(paginatedPosts.next);
+    const [error, setError] = useState<Error | undefined>();
 
     useEffect(() => {
         const loadProfilePosts = async () => {
@@ -28,9 +30,11 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
                 limit: PAGINATION_LIMIT,
             });
             if (postsResponse.isError) {
+                setError(postsResponse.error);
                 setPosts([]);
                 return;
             }
+            setError(undefined);
             setPosts(postsResponse.data.data);
             setNextUrl(postsResponse.data.next);
         };
@@ -54,15 +58,23 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
                 </section>
             )}
             <section className="flex flex-col gap-s">
-                <MessageContainer
-                    messages={posts}
-                    onLoad={(paginatedMessages) => {
-                        setPosts((prevState) => [...prevState, ...paginatedMessages.data]);
-                        setNextUrl(paginatedMessages.next);
-                    }}
-                    displayVariant={MessageDisplayVariant.TIMELINE}
-                    nextUrl={nextUrl}
-                />
+                {error ? (
+                    <ErrorPage
+                        errorMessage={error.message}
+                        errorTitle={`Posts konnten nicht geladen werden.`}
+                        fullPage={false}
+                    />
+                ) : (
+                    <MessageContainer
+                        messages={posts}
+                        onLoad={(paginatedMessages) => {
+                            setPosts((prevState) => [...prevState, ...paginatedMessages.data]);
+                            setNextUrl(paginatedMessages.next);
+                        }}
+                        displayVariant={MessageDisplayVariant.TIMELINE}
+                        nextUrl={nextUrl}
+                    />
+                )}
             </section>
         </>
     );
