@@ -46,7 +46,8 @@ export default defineConfig({
             command: 'npm run dev:testmock',
             url: 'http://127.0.0.1:3000',
             timeout: 120 * 1000,
-            reuseExistingServer: !process.env.CI,
+            //reuseExistingServer: !process.env.CI,
+            reuseExistingServer: true,
             env: {
                 ...process.env,
                 NEXT_PUBLIC_API_BASE_URL:
