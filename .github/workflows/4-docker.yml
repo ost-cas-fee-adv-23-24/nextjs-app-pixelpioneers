@@ -1,0 +1,22 @@
+name: Docker
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          cd mocks-server
+          docker build -t mock:test .
+
+      - name: Run Docker container
+        run: |
+          cd mocks-server
+          docker run -ti -p 3100:3100 -p 3110:3110 mock:test
