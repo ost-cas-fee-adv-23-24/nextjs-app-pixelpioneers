@@ -9,8 +9,8 @@ import { User } from '@/src/models/user.model';
 import { getPosts } from '@/app/actions/post';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
-import { profilePostsReducer } from '@/src/compositions/profile/profile-posts-reducer';
-import { ProfilePostsActionType } from '@/src/compositions/profile/types';
+import { profileReducer } from '@/src/compositions/profile/profile-reducer';
+import { ProfileActionType } from '@/src/compositions/profile/types';
 
 type ProfilePostsProps = {
     isActiveUser?: boolean;
@@ -19,7 +19,7 @@ type ProfilePostsProps = {
 };
 
 export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: ProfilePostsProps) {
-    const [state, dispatch] = useReducer(profilePostsReducer, {
+    const [state, dispatch] = useReducer(profileReducer, {
         activeType: ProfilePostType.CREATED_BY,
         posts: paginatedPosts.data,
         nextUrl: paginatedPosts.next,
@@ -34,11 +34,11 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
                 limit: PAGINATION_LIMIT,
             });
             if (postsResponse.isError) {
-                dispatch({ type: ProfilePostsActionType.POSTS_ERROR, error: postsResponse.error });
+                dispatch({ type: ProfileActionType.POSTS_ERROR, error: postsResponse.error });
                 return;
             }
             dispatch({
-                type: ProfilePostsActionType.POSTS_LOADED,
+                type: ProfileActionType.POSTS_LOADED,
                 posts: postsResponse.data.data,
                 nextUrl: postsResponse.data.next,
             });
@@ -54,7 +54,7 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
                         activeType={state.activeType}
                         onChangeTabs={() => {
                             dispatch({
-                                type: ProfilePostsActionType.CHANGE_ACTIVE_TYPE,
+                                type: ProfileActionType.CHANGE_ACTIVE_TYPE,
                                 activeType:
                                     state.activeType === ProfilePostType.LIKED_BY
                                         ? ProfilePostType.CREATED_BY
@@ -76,7 +76,7 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
                         messages={state.posts}
                         onLoad={(paginatedMessages) => {
                             dispatch({
-                                type: ProfilePostsActionType.POSTS_RELOADED,
+                                type: ProfileActionType.POSTS_RELOADED,
                                 posts: paginatedMessages.data,
                                 nextUrl: paginatedMessages.next,
                             });

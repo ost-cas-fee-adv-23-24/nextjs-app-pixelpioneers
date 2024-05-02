@@ -1,21 +1,14 @@
-import {
-    ProfilePostsAction,
-    ProfilePostsActionType,
-    ProfilePostsState,
-} from '@/src/compositions/profile/types';
+import { ProfileAction, ProfileActionType, ProfileState } from '@/src/compositions/profile/types';
 
-export function profilePostsReducer(
-    state: ProfilePostsState,
-    action: ProfilePostsAction,
-): ProfilePostsState {
+export function profileReducer(state: ProfileState, action: ProfileAction): ProfileState {
     switch (action.type) {
-        case ProfilePostsActionType.CHANGE_ACTIVE_TYPE: {
+        case ProfileActionType.CHANGE_ACTIVE_TYPE: {
             return {
                 ...state,
                 activeType: action.activeType,
             };
         }
-        case ProfilePostsActionType.POSTS_LOADED: {
+        case ProfileActionType.POSTS_LOADED: {
             return {
                 ...state,
                 posts: action.posts,
@@ -23,7 +16,7 @@ export function profilePostsReducer(
                 error: undefined,
             };
         }
-        case ProfilePostsActionType.POSTS_ERROR: {
+        case ProfileActionType.POSTS_ERROR: {
             return {
                 ...state,
                 posts: [],
@@ -31,7 +24,7 @@ export function profilePostsReducer(
                 error: action.error,
             };
         }
-        case ProfilePostsActionType.POSTS_RELOADED: {
+        case ProfileActionType.POSTS_RELOADED: {
             return {
                 ...state,
                 posts: [...state.posts, ...action.posts],
