@@ -27,7 +27,9 @@ jobs:
           docker run -d -p 3100:3100 -p 3110:3110 mock:test
           sleep 10
       - name: Run Mocks mocks-server
-        run: npm run dev:testmock
+        run: |
+          npm run dev:testmock &
+          sleep 10
       - name: Run Playwright tests
         run: npm run test:pw
         env:
