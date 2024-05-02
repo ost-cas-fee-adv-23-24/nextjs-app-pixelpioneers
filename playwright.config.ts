@@ -35,26 +35,22 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         {
-            name: 'chromium --incognito',
+            name: 'chromium',
             use: { ...devices['Desktop Chrome'] },
         },
-        // {
-        //     name: 'firefox',
-        //     use: { ...devices['Desktop Firefox'] },
-        // },
     ],
 
     /* Run your local dev server before starting the tests */
     webServer: [
         {
-            command: 'npm run dev',
+            command: 'npm run dev:testmock',
             url: 'http://127.0.0.1:3000',
             timeout: 120 * 1000,
             reuseExistingServer: !process.env.CI,
             env: {
                 ...process.env,
-                ...require('dotenv').config({ path: '.env.test' }).parsed,
-                API_SERVER: 'http://localhost:3100/api', // URL of your mock server
+                NEXT_PUBLIC_API_BASE_URL:
+                    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000',
             },
         },
     ],

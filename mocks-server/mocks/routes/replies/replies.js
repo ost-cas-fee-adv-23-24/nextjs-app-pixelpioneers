@@ -1,9 +1,9 @@
-const replies = require('../fixtures/replies');
+const reply = require('../../01HVTHCF8B2KHT0FBG04QAGTHR');
 
 module.exports = [
     {
-        id: 'get-replies',
-        url: '/api/replies',
+        id: 'get-reply-1',
+        url: '/api/posts/:id/replies',
         method: 'GET',
         variants: [
             {
@@ -11,7 +11,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: replies,
+                    body: reply,
                 },
             },
             {
@@ -19,7 +19,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: replies,
+                    body: reply,
                 },
             },
             {

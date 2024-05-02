@@ -1,4 +1,4 @@
-const posts = require('../fixtures/posts');
+const posts = require('../../posts');
 
 module.exports = [
     {

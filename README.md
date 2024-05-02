@@ -247,6 +247,10 @@ Don't forget to give the project a star! ⭐️ Thanks! 🙏
 <a href='https://github.com/Nigothazine' spellcheck='false'><img src="https://avatars.githubusercontent.com/u/29041124?v=4" width="50;" alt="Nico"/></a>
 <a href='https://github.com/aceres' spellcheck='false'><img src="https://avatars.githubusercontent.com/u/1326993?v=4" width="50;" alt="André"/></a>
 
+## Test Mocking
+
+See the setup of Mocks Server in /docs/mocks-server-setup.md and getting started quite there: mocks-server-getting-started.md.
+
 ## Licence
 
 Distributed under the MIT License. See `LICENSE` for more information.

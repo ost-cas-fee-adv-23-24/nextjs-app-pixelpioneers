@@ -26,6 +26,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:testmock": "NODE_ENV=test next dev",
     "lint": "next lint",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",

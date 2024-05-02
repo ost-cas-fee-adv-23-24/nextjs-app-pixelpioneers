@@ -35,6 +35,7 @@ export default function MessageActions({ message, displayVariant }: MessageActio
                     displayVariant !== MessageDisplayVariant.INLINE &&
                     router.push(getRoute(APP_ROUTES.POST, message.id))
                 }
+                data-testid="testCommentButton"
             />
             <LikeButton
                 onClick={async () => {
