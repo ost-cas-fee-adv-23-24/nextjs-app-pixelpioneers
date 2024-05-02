@@ -19,6 +19,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: npm run test:pw
+        env:
+          ZITADEL_ISSUER: ${{ secrets.ZITADEL_ISSUER }}
+          ZITADEL_AUTHORIZATION_ENDPOINT: ${{ secrets.ZITADEL_AUTHORIZATION_ENDPOINT }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
