@@ -22,6 +22,7 @@ test('Check there is a specific info text existed with no logged in ', async ({ 
 });
 
 // TODO: Need to check how to solve with login
+// Need to have test user
 test.skip('should click the login button ', async ({ page }) => {
     await page.goto(urlTestApp);
 
