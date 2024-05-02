@@ -5,20 +5,20 @@ import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { PaginatedResult, PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import { Post } from '@/src/models/message.model';
 import { ProfilePostType } from '@/src/models/profile.model';
-import { User } from '@/src/models/user.model';
-import { getPosts } from '@/app/actions/post';
+import { UserState } from '@/src/models/user.model';
+import { getPosts } from '@/app/actions/message';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { profileReducer } from '@/src/compositions/profile/profile-reducer';
 import { ProfileActionType } from '@/src/compositions/profile/types';
 
 type ProfilePostsProps = {
-    isActiveUser?: boolean;
+    userState: UserState;
     paginatedPosts: PaginatedResult<Post>;
-    user: User;
+    userId: string;
 };
 
-export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: ProfilePostsProps) {
+export default function ProfilePosts({ userState, paginatedPosts, userId }: ProfilePostsProps) {
     const [state, dispatch] = useReducer(profileReducer, {
         activeType: ProfilePostType.CREATED_BY,
         posts: paginatedPosts.data,
@@ -29,8 +29,8 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
     useEffect(() => {
         const loadProfilePosts = async () => {
             const postsResponse = await getPosts({
-                creators: state.activeType === ProfilePostType.LIKED_BY ? undefined : [user.id],
-                likedBy: state.activeType === ProfilePostType.LIKED_BY ? [user.id] : undefined,
+                creators: state.activeType === ProfilePostType.LIKED_BY ? undefined : [userId],
+                likedBy: state.activeType === ProfilePostType.LIKED_BY ? [userId] : undefined,
                 limit: PAGINATION_LIMIT,
             });
             if (postsResponse.isError) {
@@ -44,11 +44,11 @@ export default function ProfilePosts({ isActiveUser, paginatedPosts, user }: Pro
             });
         };
         loadProfilePosts().catch(console.error);
-    }, [state.activeType, user]);
+    }, [state.activeType, userId]);
 
     return (
         <>
-            {isActiveUser && (
+            {userState === UserState.IS_ACTIVE_USER && (
                 <section className="flex flex-row justify-center md:justify-start">
                     <ProfileTabs
                         activeType={state.activeType}

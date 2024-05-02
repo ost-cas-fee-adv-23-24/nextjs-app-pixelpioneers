@@ -1,4 +1,4 @@
-import { createReply, getPost, getReplies } from '@/app/actions/post';
+import { createReply, getPost, getReplies } from '@/app/actions/message';
 import Message from '@/src/compositions/message/message';
 import { MessageDisplayVariant, MessageVariant } from '@/src/compositions/message/types';
 import { getLoggedInUser } from '@/app/actions/utils';

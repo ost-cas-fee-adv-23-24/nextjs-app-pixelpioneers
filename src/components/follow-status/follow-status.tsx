@@ -1,5 +1,5 @@
 'use client';
-import { FollowingType, User } from '@/src/models/user.model';
+import { User } from '@/src/models/user.model';
 import {
     Button,
     ButtonSize,
@@ -10,32 +10,49 @@ import {
     LabelType,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import LoginButton from '@/src/components/login/login-button';
-import { ActionResponse } from '@/src/models/action.model';
+import React, { useEffect, useState } from 'react';
+import { getProfileFollowingStatus } from '@/app/actions/profile';
 
 type FollowStatusProps = {
     user: User;
-    onFollow: () => Promise<ActionResponse<void>>;
-    followedByActiveUser: FollowingType;
 };
-export default function FollowStatus({ user, onFollow, followedByActiveUser }: FollowStatusProps) {
+export default function FollowStatus({ user }: FollowStatusProps) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    useEffect(() => {
+        const loadFollowingInfo = async () => {
+            const isFollowingResponse = await getProfileFollowingStatus(user.id);
+            if (isFollowingResponse.isError) {
+                // TODO: handle error
+                return false;
+            }
+            return isFollowingResponse.data.isFollowing;
+        };
+        loadFollowingInfo()
+            .then((following) => setIsFollowing(following))
+            .finally(() => setIsLoading(false));
+    }, [user]);
+
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
-    const isFollowing = followedByActiveUser === FollowingType.FOLLOWING;
-    if (followedByActiveUser === FollowingType.NOT_LOGGED_IN) {
-        return (
-            <div className="flex flex-row items-center gap-xs">
-                <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
-                <span>um {user.username} zu folgen.</span>
-            </div>
-        );
-    }
     // TODO: handle errors for onFollow
-    return (
+    return isLoading ? (
+        <>es ladet hallo</>
+    ) : (
         <div className="flex flex-row items-center gap-m">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
                 {`Du folgst ${name} ${!isFollowing ? 'nicht' : ''}`}
             </Label>
-            <form action={onFollow}>
+            <form
+                action={
+                    async (/*formData*/) => {
+                        setIsFollowing(!isFollowing);
+                        //await followUser(formData);
+                    }
+                }
+            >
+                <input name="userId" value={user.id} hidden readOnly />
+                <input name="isFollowing" value={String(isFollowing)} hidden readOnly />
                 <Button
                     type="submit"
                     Icon={isFollowing ? IconCancel : IconCheckmark}

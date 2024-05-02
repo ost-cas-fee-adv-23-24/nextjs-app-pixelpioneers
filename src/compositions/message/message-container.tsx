@@ -1,5 +1,3 @@
-'use client';
-
 import { Message } from '@/src/models/message.model';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { default as MessageComponent } from './message';
@@ -12,7 +10,7 @@ import {
     ParagraphSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { loadPaginatedMessages } from '@/app/actions/post';
+import { loadPaginatedMessages } from '@/app/actions/message';
 import { ActionResponse } from '@/src/models/action.model';
 import { PaginatedResult } from '@/src/models/paginate.model';
 
@@ -72,6 +70,7 @@ export default function MessageContainer({
                         if (!messageResponse.isError) {
                             onLoad(messageResponse.data);
                         } else {
+                            // TODO: show error state
                             console.error(messageResponse.error);
                         }
                     }}

@@ -1,6 +1,6 @@
 'use server';
 
-import { FollowType, User } from '@/src/models/user.model';
+import { FollowType, User, UserState } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
@@ -168,20 +168,17 @@ export async function removeAvatar(): Promise<ActionResponse<void>> {
     }
 }
 
-export async function checkIsActiveUser(
-    userId: string,
-): Promise<{ isActiveUser: boolean; user?: User }> {
+export async function checkIsActiveUser(userId: string): Promise<UserState> {
     const session = await auth();
 
-    // return false when no session available
     if (!session?.user?.profile.sub) {
-        return { isActiveUser: false };
+        return UserState.LOGGED_OUT;
     }
 
     const activeUserResponse = await getUser(session.user.profile.sub);
     if (activeUserResponse.isError) {
-        return { isActiveUser: false };
+        return UserState.LOGGED_IN;
     }
     const activeUser = activeUserResponse.data;
-    return { isActiveUser: activeUser.id === userId, user: activeUser };
+    return activeUser.id === userId ? UserState.IS_ACTIVE_USER : UserState.LOGGED_IN;
 }

@@ -1,33 +1,30 @@
 import FollowStatus from '@/src/components/follow-status/follow-status';
-import { followUser } from '@/app/actions/user';
-import { FollowingType, FollowType } from '@/src/models/user.model';
-import { getProfileHeader } from '@/app/actions/profile';
+import { UserState } from '@/src/models/user.model';
+import { getProfile } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile/profile-header';
 import { notFound } from 'next/navigation';
+import LoginButton from '@/src/components/login/login-button';
 
 export default async function UserPage({ params }: { params: { id: string } }) {
-    const profileHeaderResponse = await getProfileHeader(params.id);
+    const profileHeaderResponse = await getProfile(params.id);
     if (profileHeaderResponse.isError) {
         notFound();
     }
-    const { user, followedByActiveUser, isActiveUser } = profileHeaderResponse.data;
-    const hydratedFollowUser = followUser.bind(
-        null,
-        user.id,
-        followedByActiveUser === FollowingType.FOLLOWING ? FollowType.UNFOLLOW : FollowType.FOLLOW,
-    );
+    const { user, userState } = profileHeaderResponse.data;
+    const isActiveUser = userState === UserState.IS_ACTIVE_USER;
     return (
         <>
             <ProfileHeader user={user} isActiveUser={isActiveUser} />
-            {/* TODO: separate in own file */}
-            {!isActiveUser && (
+            {userState === UserState.LOGGED_IN && (
                 <section className="mx-m flex flex-row justify-end md:mx-0">
-                    <FollowStatus
-                        user={user}
-                        onFollow={hydratedFollowUser}
-                        followedByActiveUser={followedByActiveUser}
-                    />
+                    <FollowStatus user={user} />
                 </section>
+            )}
+            {userState === UserState.LOGGED_OUT && (
+                <div className="flex flex-row items-center gap-xs">
+                    <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
+                    <span>um {user.username} zu folgen.</span>
+                </div>
             )}
         </>
     );

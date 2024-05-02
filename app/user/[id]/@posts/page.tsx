@@ -4,13 +4,10 @@ import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import ProfilePosts from '@/src/compositions/profile/profile-posts';
 
-export default async function UserPostsPage({
-    params,
-}: {
-    params: { id: string; postType: string };
-}) {
-    const profilePostResponse = await getProfilePosts(params.id, {
-        creators: [params.id],
+export default async function UserPostsPage({ params }: { params: { id: string } }) {
+    const userId = params.id;
+    const profilePostResponse = await getProfilePosts(userId, {
+        creators: [userId],
         limit: PAGINATION_LIMIT,
     });
     if (profilePostResponse.isError) {
@@ -22,6 +19,6 @@ export default async function UserPostsPage({
             />
         );
     }
-    const { paginatedPosts, user, isActiveUser } = profilePostResponse.data;
-    return <ProfilePosts isActiveUser={isActiveUser} paginatedPosts={paginatedPosts} user={user} />;
+    const { paginatedPosts, userState } = profilePostResponse.data;
+    return <ProfilePosts userState={userState} paginatedPosts={paginatedPosts} userId={userId} />;
 }

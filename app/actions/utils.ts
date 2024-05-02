@@ -41,6 +41,7 @@ export function getTag(tag: Tag, id = ''): string {
     return tag.replace('[id]', id);
 }
 
+// TODO: simplify
 export function errorResponse(error: Error | unknown, genericInfo: string): ErrorResponse {
     const errorObject =
         error instanceof Error

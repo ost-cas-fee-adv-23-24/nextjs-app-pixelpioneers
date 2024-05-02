@@ -1,7 +1,7 @@
 'use server';
 
 import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/message.model';
-import { messageReducer, messagesReducer } from '@/src/services/post.service';
+import { messageHydrator, messagesHydrator } from '@/src/services/message.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
@@ -58,7 +58,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
 export async function getPost(postId: string): Promise<ActionResponse<Post>> {
     const session = await auth();
     try {
-        const post = messageReducer(
+        const post = messageHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID, postId),
                 {
@@ -102,7 +102,7 @@ export async function getPosts(
     const session = await auth();
     // TODO: clean tags when options are given - ex. options as ID
     try {
-        const paginatedPosts = messagesReducer(
+        const paginatedPosts = messagesHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS, undefined, options),
                 {
@@ -132,7 +132,7 @@ export async function loadPaginatedMessages(formData: FormData): Promise<string>
 
     const session = await auth();
     try {
-        const paginatedMessages = messagesReducer(
+        const paginatedMessages = messagesHydrator(
             (await request(
                 route,
                 {
@@ -188,7 +188,7 @@ export async function getReplies(
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {
-        const paginatedReplies = messagesReducer(
+        const paginatedReplies = messagesHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
                 {

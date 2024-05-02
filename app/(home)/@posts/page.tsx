@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPosts } from '@/app/actions/post';
+import { getPosts } from '@/app/actions/message';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
