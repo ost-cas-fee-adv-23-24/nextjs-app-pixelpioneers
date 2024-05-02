@@ -19,4 +19,4 @@ jobs:
       - name: Run Docker container
         run: |
           cd mocks-server
-          docker run -p 3100:3100 -p 3110:3110 mock:test
+          docker run -d -p 3100:3100 -p 3110:3110 mock:test
