@@ -17,10 +17,6 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Server Mock
-        run: |
-          npm run dev:testmock &
-          sleep 10
       - name: Run Playwright tests
         run: npm run test:pw
       - uses: actions/upload-artifact@v3
