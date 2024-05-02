@@ -17,6 +17,14 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Build Docker image
+        run: |
+          cd mocks-server
+          docker build -t mock:test .
+      - name: Run Docker container
+        run: |
+          cd mocks-server
+          docker run -d -p 3100:3100 -p 3110:3110 mock:test
       - name: Run Playwright tests
         run: npm run test:pw
         env:
