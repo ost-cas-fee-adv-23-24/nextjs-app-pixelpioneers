@@ -9,7 +9,7 @@ import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/acti
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { validatePostData } from '@/src/helpers/validator';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, RevalidationTime } from '@/src/models/action.model';
 
 export async function likePost(postId: string, likeType: LikeType): Promise<ActionResponse<void>> {
     const session = await getSession();
@@ -110,7 +110,7 @@ export async function getPosts(
                 },
                 session?.accessToken,
                 [getTag(Tag.POSTS)],
-                15,
+                RevalidationTime.SHORT,
             )) as PaginatedResult<Post>,
         );
         return dataResponse(paginatedPosts);
@@ -196,7 +196,7 @@ export async function getReplies(
                 },
                 session?.accessToken,
                 [getTag(Tag.REPLIES, postId)],
-                60,
+                RevalidationTime.MEDIUM,
             )) as PaginatedResult<Reply>,
         );
         return dataResponse(paginatedReplies);
