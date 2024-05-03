@@ -32,19 +32,19 @@ export default function Message({ message, displayVariant, children }: MessagePr
                 return DisplayNameVariant.REPLY;
         }
     };
-    const detailPostClasses = clsx(
-        'mx-0 w-full px-m py-s', // mobile
+    const detailMessageClasses = clsx(
+        'mx-0 w-screen px-m py-s', // mobile
         'md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
-    const postClasses = clsx(
+    const messageClasses = clsx(
         'relative flex flex-col gap-s bg-white',
         {
             inline: '',
             timeline: clsx(
-                detailPostClasses,
+                detailMessageClasses,
                 'md:duration-300 md:ease-in-out md:hover:ring-2 md:hover:ring-secondary-200',
             ),
-            detailView: detailPostClasses,
+            detailView: detailMessageClasses,
         }[displayVariant],
     );
     const avatarClasses = clsx(
@@ -52,7 +52,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
     return (
-        <div className={postClasses}>
+        <div className={messageClasses}>
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
                 {!isVariant(MessageDisplayVariant.INLINE) && (
                     <div className={avatarClasses}>

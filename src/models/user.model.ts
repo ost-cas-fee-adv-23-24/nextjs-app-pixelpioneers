@@ -16,7 +16,12 @@ export enum FollowType {
 export enum FollowingType {
     FOLLOWING = 'following',
     NOT_FOLLOWING = 'notFollowing',
-    NOT_LOGGED_IN = 'notLoggedIn',
+}
+
+export enum UserState {
+    LOGGED_IN = 'loggedIn',
+    LOGGED_OUT = 'loggedOut',
+    IS_ACTIVE_USER = 'isActiveUser',
 }
 
 export const UpdateAvatarSchema = z.object({

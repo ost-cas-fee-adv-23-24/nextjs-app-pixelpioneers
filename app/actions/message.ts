@@ -1,7 +1,7 @@
 'use server';
 
 import { LikeType, Message, Post, PostFilterOptions, Reply } from '@/src/models/message.model';
-import { messageReducer, messagesReducer } from '@/src/services/post.service';
+import { messageHydrator, messagesHydrator } from '@/src/services/message.service';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
@@ -9,7 +9,7 @@ import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/acti
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { validatePostData } from '@/src/helpers/validator';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, RevalidationTime } from '@/src/models/action.model';
 
 export async function likePost(postId: string, likeType: LikeType): Promise<ActionResponse<void>> {
     const session = await getSession();
@@ -58,7 +58,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
 export async function getPost(postId: string): Promise<ActionResponse<Post>> {
     const session = await auth();
     try {
-        const post = messageReducer(
+        const post = messageHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID, postId),
                 {
@@ -102,7 +102,7 @@ export async function getPosts(
     const session = await auth();
     // TODO: clean tags when options are given - ex. options as ID
     try {
-        const paginatedPosts = messagesReducer(
+        const paginatedPosts = messagesHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS, undefined, options),
                 {
@@ -110,7 +110,7 @@ export async function getPosts(
                 },
                 session?.accessToken,
                 [getTag(Tag.POSTS)],
-                15,
+                RevalidationTime.SHORT,
             )) as PaginatedResult<Post>,
         );
         return dataResponse(paginatedPosts);
@@ -122,7 +122,7 @@ export async function getPosts(
 export async function loadPaginatedMessages(formData: FormData): Promise<string> {
     const nextData = formData.get('next');
     if (nextData === null) {
-        // TODO: strigify or Next Response?
+        // TODO: stringify or Next Response?
         return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
     }
     const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
@@ -132,7 +132,7 @@ export async function loadPaginatedMessages(formData: FormData): Promise<string>
 
     const session = await auth();
     try {
-        const paginatedMessages = messagesReducer(
+        const paginatedMessages = messagesHydrator(
             (await request(
                 route,
                 {
@@ -188,7 +188,7 @@ export async function getReplies(
 ): Promise<ActionResponse<PaginatedResult<Reply>>> {
     const session = await auth();
     try {
-        const paginatedReplies = messagesReducer(
+        const paginatedReplies = messagesHydrator(
             (await request(
                 getRoute(API_ROUTES.POSTS_ID_REPLIES, postId, options),
                 {
@@ -196,7 +196,7 @@ export async function getReplies(
                 },
                 session?.accessToken,
                 [getTag(Tag.REPLIES, postId)],
-                60,
+                RevalidationTime.MEDIUM,
             )) as PaginatedResult<Reply>,
         );
         return dataResponse(paginatedReplies);

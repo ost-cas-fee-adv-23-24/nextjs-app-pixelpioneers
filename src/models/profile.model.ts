@@ -1,6 +1,6 @@
 import { PaginatedResult } from '@/src/models/paginate.model';
 import { Post } from '@/src/models/message.model';
-import { FollowingType, User } from './user.model';
+import { User, UserState } from './user.model';
 
 export enum ProfilePostType {
     CREATED_BY = 'createdBy',
@@ -9,14 +9,14 @@ export enum ProfilePostType {
 
 export type Profile = {
     user: User;
-    isActiveUser?: boolean;
+    userState: UserState;
 };
 
-export type ProfileHeader = Profile & {
-    followedByActiveUser: FollowingType;
+export type ProfileFollowing = {
+    isFollowing: boolean;
 };
 
-export type ProfilePosts = Profile & {
+export type ProfilePosts = {
+    userState: UserState;
     paginatedPosts: PaginatedResult<Post>;
-    type: ProfilePostType;
 };

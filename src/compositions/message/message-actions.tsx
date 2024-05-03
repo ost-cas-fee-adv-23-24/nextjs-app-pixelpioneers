@@ -6,7 +6,7 @@ import {
     ShareButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import React from 'react';
-import { likePost } from '@/app/actions/post';
+import { likePost } from '@/app/actions/message';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 

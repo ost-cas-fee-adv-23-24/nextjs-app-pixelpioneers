@@ -27,7 +27,7 @@ type DisplayNameProps = {
     postTimestamp?: number;
     location?: string;
     joinedTimestamp?: number;
-    activeUser?: boolean;
+    isActiveUser?: boolean;
 };
 
 export default function DisplayName({
@@ -36,7 +36,7 @@ export default function DisplayName({
     postTimestamp,
     location,
     joinedTimestamp,
-    activeUser,
+    isActiveUser,
 }: DisplayNameProps) {
     // TODO: client component or rather server component with client button group inside ?
     const router = useRouter();
@@ -72,7 +72,7 @@ export default function DisplayName({
                             {userFullName()}
                         </Label>
                     )}
-                    {variant === DisplayNameVariant.PROFILE && activeUser && (
+                    {variant === DisplayNameVariant.PROFILE && isActiveUser && (
                         <button onClick={() => alert('settings') /* TODO: open settings */}>
                             <IconSettingsAnimated className="fill-primary-600" />
                         </button>
