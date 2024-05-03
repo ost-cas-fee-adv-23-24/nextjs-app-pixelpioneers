@@ -17,6 +17,7 @@ import { ActionResponse } from '@/src/models/action.model';
 import FollowSkeleton from '@/src/compositions/follow/follow-skeleton';
 import { followReducer } from '@/src/compositions/follow/follow-reducer';
 import { FollowActionType } from '@/src/compositions/follow/types';
+import ErrorPage from '../error-page/error-page';
 
 type FollowProps = {
     user: User;
@@ -30,10 +31,13 @@ export default function Follow({ user }: FollowProps) {
 
     useEffect(() => {
         if (!state.isSubmitting) {
-            const loadFollowingInfo = async () => {
+            const loadFollowingInfo = async (): Promise<boolean> => {
                 const isFollowingResponse = await getProfileFollowingStatus(user.id);
                 if (isFollowingResponse.isError) {
-                    // TODO: handle error ?
+                    dispatch({
+                        type: FollowActionType.ERROR,
+                        error: isFollowingResponse.error,
+                    });
                     return false;
                 }
                 return isFollowingResponse.data.isFollowing;
@@ -45,7 +49,14 @@ export default function Follow({ user }: FollowProps) {
     }, [state.isSubmitting, user]);
 
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
-    return state.isLoading ? (
+
+    return state.error ? (
+        <ErrorPage
+            errorMessage={state.error.message}
+            errorTitle={'Folgen-Status konnte nicht geladen werden.'}
+            fullPage={false}
+        />
+    ) : state.isLoading ? (
         <FollowSkeleton />
     ) : (
         <div className="flex flex-row items-center gap-m">
@@ -58,13 +69,18 @@ export default function Follow({ user }: FollowProps) {
                         type: FollowActionType.SUBMITTING,
                         isFollowing: !state.isFollowing,
                     });
-                    // TODO: handle errors for onFollow
+
                     const followUserResponse = JSON.parse(
                         await followUser(formData),
                     ) as ActionResponse<undefined>;
+
                     if (followUserResponse.isError) {
-                        // TODO: set error
+                        dispatch({
+                            type: FollowActionType.ERROR,
+                            error: followUserResponse.error,
+                        });
                     }
+
                     dispatch({ type: FollowActionType.SUBMITTED });
                 }}
             >

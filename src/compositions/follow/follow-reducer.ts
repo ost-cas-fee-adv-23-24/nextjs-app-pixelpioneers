@@ -22,5 +22,14 @@ export function followReducer(state: FollowState, action: FollowAction): FollowS
                 isSubmitting: false,
             };
         }
+        case FollowActionType.ERROR: {
+            return {
+                ...state,
+                error: action.error,
+            };
+        }
+        default: {
+            return state;
+        }
     }
 }
