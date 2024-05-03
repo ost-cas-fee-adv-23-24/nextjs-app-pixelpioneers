@@ -1,25 +1,19 @@
 import { expect, test } from '@playwright/test';
-import { urlTestApp } from '../utils';
 
-// TODO: Need to check how to solve with login
-test.skip('should jump to the detail reply page ', async ({ page }) => {
-    await page.goto(urlTestApp);
+// TODO: Need to invest about jumping from list to view
+test.describe('should have the list of posts and jump to reply detail of any specific post ', () => {
+    test('should jump to the detail reply page ', async ({ page }) => {
+        await page.goto('/');
 
-    // Check if the element textarea exists (after logged in)
-    const commentButton = await page.$$('[data-testid="testCommentButton"]');
+        const commentButton = await page.$$('[data-testid="testCommentButton"]');
 
-    if (commentButton.length >= 2) {
-        await commentButton[14].click();
+        if (commentButton.length >= 2) {
+            await commentButton[14].click();
+        } else {
+            console.info('Less than 2 Comment Button found!');
+        }
 
-        // Wait for the page to load after the click
-        await page.waitForLoadState();
-    } else {
-        console.info('Less than 2 Comment Button found!');
-    }
-
-    await page.waitForLoadState();
-    const currentUrl = page.url();
-    const expectedUrl = `${urlTestApp}/post/01HVTHCF8B2KHT0FBG04QAGTHR`;
-
-    expect(currentUrl).toEqual(expectedUrl);
+        await page.waitForURL('http://localhost:3000/post/01HVTHCF8B2KHT0FBG04QAGTHR');
+        await expect(page).toHaveURL('http://localhost:3000/post/01HVTHCF8B2KHT0FBG04QAGTHR');
+    });
 });
