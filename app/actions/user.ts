@@ -1,6 +1,6 @@
 'use server';
 
-import { FollowType, User, UserState } from '@/src/models/user.model';
+import { User, UserState } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
@@ -104,24 +104,33 @@ export async function getFollowees(
     }
 }
 
-export async function followUser(
-    userId: string,
-    followType: FollowType,
-): Promise<ActionResponse<void>> {
+export async function followUser(formData: FormData): Promise<string> {
+    const userId = formData.get('userId');
+    const isFollowingString = formData.get('isFollowing');
+
+    if (
+        typeof userId !== 'string' ||
+        (isFollowingString !== 'true' && isFollowingString !== 'false')
+    ) {
+        // TODO: stringify or Next Response?
+        return JSON.stringify(errorResponse(new Error('bad request'), 'follow user'));
+    }
+    const isFollowing = new RegExp('true').test(isFollowingString);
+
     const session = await getSession();
-    const isFollow = followType === FollowType.FOLLOW;
     const activeUserId = session.user?.profile.sub;
+
     try {
         await request(
             getRoute(API_ROUTES.USERS_ID_FOLLOWERS, userId),
-            { method: isFollow ? 'PUT' : 'DELETE' },
+            { method: isFollowing ? 'DELETE' : 'PUT' },
             session.accessToken,
         );
         activeUserId && revalidateTag(getTag(Tag.FOLLOWEES, activeUserId));
         revalidateTag(getTag(Tag.FOLLOWERS, userId));
-        return dataResponse(undefined);
+        return JSON.stringify(dataResponse(undefined));
     } catch (error) {
-        return errorResponse(error, `${isFollow ? '' : 'un'}follow user`);
+        return JSON.stringify(errorResponse(error, `${isFollowing ? 'un' : ''}follow user`));
     }
 }
 
