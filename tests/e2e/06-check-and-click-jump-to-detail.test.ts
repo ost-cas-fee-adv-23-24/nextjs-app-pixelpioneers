@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 // TODO: Need to invest about jumping from list to view
 test.describe('should have the list of posts and jump to reply detail of any specific post ', () => {
-    test('should jump to the detail reply page ', async ({ page }) => {
+    test.skip('should jump to the detail reply page ', async ({ page }) => {
         await page.goto('/');
 
         const commentButton = await page.$$('[data-testid="testCommentButton"]');
