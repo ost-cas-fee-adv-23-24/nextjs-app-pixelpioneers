@@ -22,7 +22,4 @@ export type ProfileAction =
           posts: Message[];
           nextUrl?: string;
       }
-    | {
-          type: ProfileActionType.POSTS_ERROR;
-          error: Error;
-      };
+    | { type: ProfileActionType.POSTS_ERROR; error: Error };

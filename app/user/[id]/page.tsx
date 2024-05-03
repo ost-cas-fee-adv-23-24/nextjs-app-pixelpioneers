@@ -1,4 +1,4 @@
-import FollowStatus from '@/src/components/follow-status/follow-status';
+import Follow from '@/src/compositions/follow/follow';
 import { UserState } from '@/src/models/user.model';
 import { getProfile } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile/profile-header';
@@ -17,7 +17,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
             <ProfileHeader user={user} isActiveUser={isActiveUser} />
             {userState === UserState.LOGGED_IN && (
                 <section className="mx-m flex flex-row justify-end md:mx-0">
-                    <FollowStatus user={user} />
+                    <Follow user={user} />
                 </section>
             )}
             {userState === UserState.LOGGED_OUT && (

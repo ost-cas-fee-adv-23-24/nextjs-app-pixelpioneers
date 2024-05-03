@@ -10,21 +10,26 @@ import {
     LabelType,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { getProfileFollowingStatus } from '@/app/actions/profile';
 import { followUser } from '@/app/actions/user';
 import { ActionResponse } from '@/src/models/action.model';
+import FollowSkeleton from '@/src/compositions/follow/follow-skeleton';
+import { followReducer } from '@/src/compositions/follow/follow-reducer';
+import { FollowActionType } from '@/src/compositions/follow/types';
 
-type FollowStatusProps = {
+type FollowProps = {
     user: User;
 };
-export default function FollowStatus({ user }: FollowStatusProps) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isFollowing, setIsFollowing] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
+export default function Follow({ user }: FollowProps) {
+    const [state, dispatch] = useReducer(followReducer, {
+        isLoading: true,
+        isFollowing: false,
+        isSubmitting: false,
+    });
 
     useEffect(() => {
-        if (!submitting) {
+        if (!state.isSubmitting) {
             const loadFollowingInfo = async () => {
                 const isFollowingResponse = await getProfileFollowingStatus(user.id);
                 if (isFollowingResponse.isError) {
@@ -33,25 +38,26 @@ export default function FollowStatus({ user }: FollowStatusProps) {
                 }
                 return isFollowingResponse.data.isFollowing;
             };
-            loadFollowingInfo()
-                .then((following) => setIsFollowing(following))
-                .finally(() => setIsLoading(false));
+            loadFollowingInfo().then((following) =>
+                dispatch({ type: FollowActionType.FOLLOWEES_LOADED, isFollowing: following }),
+            );
         }
-    }, [submitting, user]);
+    }, [state.isSubmitting, user]);
 
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
-    return isLoading ? (
-        // TODO: loading
-        <>es ladet hallo</>
+    return state.isLoading ? (
+        <FollowSkeleton />
     ) : (
         <div className="flex flex-row items-center gap-m">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
-                {`Du folgst ${name} ${isFollowing ? '' : 'nicht'}`}
+                {`Du folgst ${name} ${state.isFollowing ? '' : 'nicht'}`}
             </Label>
             <form
                 action={async (formData) => {
-                    setSubmitting(true);
-                    setIsFollowing(!isFollowing);
+                    dispatch({
+                        type: FollowActionType.SUBMITTING,
+                        isFollowing: !state.isFollowing,
+                    });
                     // TODO: handle errors for onFollow
                     const followUserResponse = JSON.parse(
                         await followUser(formData),
@@ -59,17 +65,17 @@ export default function FollowStatus({ user }: FollowStatusProps) {
                     if (followUserResponse.isError) {
                         // TODO: set error
                     }
-                    setSubmitting(false);
+                    dispatch({ type: FollowActionType.SUBMITTED });
                 }}
             >
                 <input name="userId" value={user.id} hidden readOnly />
-                <input name="isFollowing" value={String(isFollowing)} hidden readOnly />
+                <input name="isFollowing" value={String(state.isFollowing)} hidden readOnly />
                 <Button
                     type="submit"
-                    Icon={isFollowing ? IconCancel : IconCheckmark}
+                    Icon={state.isFollowing ? IconCancel : IconCheckmark}
                     size={ButtonSize.M}
                     variant={Variant.SECONDARY}
-                    label={isFollowing ? 'Unfollow' : 'Follow'}
+                    label={state.isFollowing ? 'Unfollow' : 'Follow'}
                 />
             </form>
         </div>
