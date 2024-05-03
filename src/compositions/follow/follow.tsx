@@ -26,11 +26,11 @@ export default function Follow({ user }: FollowProps) {
     const [state, dispatch] = useReducer(followReducer, {
         isLoading: true,
         isFollowing: false,
-        isSubmitting: false,
+        isSubmittingFollow: false,
     });
 
     useEffect(() => {
-        if (!state.isSubmitting) {
+        if (!state.isSubmittingFollow) {
             const loadFollowingInfo = async (): Promise<boolean> => {
                 const isFollowingResponse = await getProfileFollowingStatus(user.id);
                 if (isFollowingResponse.isError) {
@@ -46,7 +46,7 @@ export default function Follow({ user }: FollowProps) {
                 dispatch({ type: FollowActionType.FOLLOWEES_LOADED, isFollowing: following }),
             );
         }
-    }, [state.isSubmitting, user]);
+    }, [state.isSubmittingFollow, user]);
 
     const name = user.firstname ? `${user.firstname} ${user.lastname}` : user.username;
 
@@ -66,7 +66,7 @@ export default function Follow({ user }: FollowProps) {
             <form
                 action={async (formData) => {
                     dispatch({
-                        type: FollowActionType.SUBMITTING,
+                        type: FollowActionType.SUBMITTING_FOLLOW,
                         isFollowing: !state.isFollowing,
                     });
 
@@ -81,7 +81,7 @@ export default function Follow({ user }: FollowProps) {
                         });
                     }
 
-                    dispatch({ type: FollowActionType.SUBMITTED });
+                    dispatch({ type: FollowActionType.SUBMITTED_FOLLOW });
                 }}
             >
                 <input name="userId" value={user.id} hidden readOnly />

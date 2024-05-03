@@ -9,17 +9,17 @@ export function followReducer(state: FollowState, action: FollowAction): FollowS
                 isLoading: false,
             };
         }
-        case FollowActionType.SUBMITTING: {
+        case FollowActionType.SUBMITTING_FOLLOW: {
             return {
                 ...state,
                 isFollowing: action.isFollowing,
-                isSubmitting: true,
+                isSubmittingFollow: true,
             };
         }
-        case FollowActionType.SUBMITTED: {
+        case FollowActionType.SUBMITTED_FOLLOW: {
             return {
                 ...state,
-                isSubmitting: false,
+                isSubmittingFollow: false,
             };
         }
         case FollowActionType.ERROR: {

@@ -112,7 +112,8 @@ export async function followUser(formData: FormData): Promise<string> {
 
     if (
         typeof userId !== 'string' ||
-        (isFollowingString !== 'true' && isFollowingString !== 'false')
+        typeof isFollowingString !== 'string' ||
+        !['true', 'false'].includes(isFollowingString)
     ) {
         // TODO: stringify or Next Response?
         return JSON.stringify(errorResponse(new Error('bad request'), 'follow user'));

@@ -1,21 +1,21 @@
 export type FollowState = {
     isLoading: boolean;
     isFollowing: boolean;
-    isSubmitting: boolean;
+    isSubmittingFollow: boolean;
     error?: Error;
 };
 
 export enum FollowActionType {
-    SUBMITTING = 'submitting',
-    SUBMITTED = 'submitted',
+    SUBMITTING_FOLLOW = 'submittingFollow',
+    SUBMITTED_FOLLOW = 'submittedFollow',
     FOLLOWEES_LOADED = 'followeesLoaded',
     ERROR = 'error',
 }
 
 export type FollowAction =
     | {
-          type: FollowActionType.SUBMITTING | FollowActionType.FOLLOWEES_LOADED;
+          type: FollowActionType.SUBMITTING_FOLLOW | FollowActionType.FOLLOWEES_LOADED;
           isFollowing: boolean;
       }
-    | { type: FollowActionType.SUBMITTED }
+    | { type: FollowActionType.SUBMITTED_FOLLOW }
     | { type: FollowActionType.ERROR; error: Error };
