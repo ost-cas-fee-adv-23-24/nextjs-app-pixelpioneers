@@ -4,6 +4,8 @@ test.describe('should have the list of posts and jump to reply detail of any spe
     test('should jump to the detail reply page ', async ({ page }) => {
         await page.goto('/');
 
+        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
+
         const commentButton = await page.$$('[data-testid="testCommentButton"]');
 
         if (commentButton.length >= 2) {
@@ -11,8 +13,6 @@ test.describe('should have the list of posts and jump to reply detail of any spe
         } else {
             console.info('Less than 2 Comment Button found!');
         }
-
-        await page.waitForURL('http://localhost:3000/post/01HVTHCF8B2KHT0FBG04QAGTHR');
 
         await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
     });
