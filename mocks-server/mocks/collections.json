@@ -4,6 +4,7 @@
     "routes": [
       "add-headers:enabled",
       "get-posts:success",
+      "get-post-id:success",
       "get-reply-1:success",
       "get-user-andre:success",
       "get-users:success"

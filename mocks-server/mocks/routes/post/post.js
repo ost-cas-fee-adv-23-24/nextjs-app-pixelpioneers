@@ -1,9 +1,9 @@
-const replyId = require('../../reply');
+const postId = require('../../post');
 
 module.exports = [
     {
-        id: 'get-reply-1',
-        url: '/api/posts/:id/replies',
+        id: 'get-post-id',
+        url: '/api/posts/:id',
         method: 'GET',
         variants: [
             {
@@ -11,7 +11,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: replyId,
+                    body: postId,
                 },
             },
             {
@@ -19,7 +19,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: replyId,
+                    body: postId,
                 },
             },
             {
