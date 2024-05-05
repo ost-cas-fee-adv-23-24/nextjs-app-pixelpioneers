@@ -13,6 +13,7 @@ test.describe('should have the list of posts and jump to reply detail of any spe
         }
 
         await page.waitForURL('http://localhost:3000/post/01HVTHCF8B2KHT0FBG04QAGTHR');
-        await expect(page).toHaveURL('http://localhost:3000/post/01HVTHCF8B2KHT0FBG04QAGTHR');
+
+        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
     });
 });
