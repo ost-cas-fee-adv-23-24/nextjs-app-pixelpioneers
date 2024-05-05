@@ -4,7 +4,7 @@ test.describe('should have the list of posts and jump to reply detail of any spe
     test('should jump to the detail reply page ', async ({ page }) => {
         await page.goto('/');
 
-        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
+        await expect(page.getByText('Wau Wau')).toBeVisible();
 
         const commentButton = await page.$$('[data-testid="testCommentButton"]');
 
