@@ -18,7 +18,7 @@ export default function Navigation() {
     const userId = session?.user?.profile.sub;
     return (
         <nav className="hidden h-[80px] w-full content-center items-center justify-around bg-primary-600 md:flex">
-            <div className="mx-0 flex w-[680px] flex-row justify-between">
+            <div className="mx-0 flex w-container flex-row justify-between">
                 <section className="flex items-center">
                     <Link href={APP_ROUTES.HOME}>
                         <LogoMumbleHorizontal

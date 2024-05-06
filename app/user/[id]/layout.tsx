@@ -8,7 +8,7 @@ export default function UserLayout({
     posts: React.ReactNode;
 }) {
     return (
-        <section className="flex w-full flex-col gap-l md:w-[680px]">
+        <section className="flex w-full flex-col gap-l md:w-container">
             {children}
             {posts}
         </section>

@@ -45,7 +45,7 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
         <section
             className={clsx(
                 isPost
-                    ? 'relative flex flex-col gap-y-s bg-white px-m py-s md:min-h-[326px] md:w-[680px] md:rounded-m md:px-xl md:py-l'
+                    ? 'relative flex flex-col gap-y-s bg-white px-m py-s md:min-h-[326px] md:w-container md:rounded-m md:px-xl md:py-l'
                     : 'mt-s md:mt-l',
             )}
         >

@@ -22,7 +22,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
             )}
             {userState === UserState.LOGGED_OUT && (
                 <div className="flex flex-row items-center gap-xs">
-                    <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
+                    <LoginButton isLoggedIn={false} loginLabel="Logge dich jetzt ein" />
                     <span>um {user.username} zu folgen.</span>
                 </div>
             )}

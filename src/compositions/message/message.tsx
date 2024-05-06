@@ -34,7 +34,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
     };
     const detailMessageClasses = clsx(
         'mx-0 w-screen px-m py-s', // mobile
-        'md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+        'md:w-container md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
     const messageClasses = clsx(
         'relative flex flex-col gap-s bg-white',
@@ -84,7 +84,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                 </Paragraph>
             )}
             {message.mediaUrl && (
-                <section className="relative h-auto w-full transition duration-500 hover:scale-105 md:h-[320px]">
+                <section className="relative h-auto w-full transition duration-500 md:h-[320px]">
                     <Image
                         className="rounded-s"
                         alt={`Bild von ${message.creator.username}`}

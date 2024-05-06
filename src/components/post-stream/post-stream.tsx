@@ -5,6 +5,7 @@ import { ActionBubble } from '@/src/components/action-bubble/action-bubble';
 import { Post } from '@/src/models/message.model';
 import { reloadPathData } from '@/app/actions/caching';
 import { scrollToTop } from '@/src/helpers/scrollToTop';
+import { useSession } from 'next-auth/react';
 
 type PostStreamProps = {
     eventType: PostEvent;
@@ -14,15 +15,20 @@ type PostStreamProps = {
 export function PostStream({ eventType, path }: PostStreamProps) {
     const [posts, setPosts] = useState<Post[]>([]);
     const count = posts.length;
+
+    const { data: session } = useSession();
+    const userId = session?.user?.profile.sub;
+
     useEffect(() => {
         const events = getPostEventSource();
         events.addEventListener(eventType, (event) => {
             const post = JSON.parse(event.data) as Post;
-            // TODO: only set post, if creator is not logged in user
-            setPosts([...posts, post]);
+            if (post.creator.id !== userId) {
+                setPosts([...posts, post]);
+            }
         });
         return () => events.close();
-    }, [eventType, posts]);
+    }, [eventType, posts, userId]);
 
     const hydratedReloadPathData = reloadPathData.bind(null, path);
 

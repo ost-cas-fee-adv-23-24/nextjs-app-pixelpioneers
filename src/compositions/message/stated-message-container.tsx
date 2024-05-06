@@ -2,7 +2,7 @@
 
 import { Message } from '@/src/models/message.model';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PaginatedResult } from '@/src/models/paginate.model';
 import MessageContainer from '@/src/compositions/message/message-container';
 
@@ -16,6 +16,12 @@ export default function StatedMessageContainer({
 }: StatedMessageContainerProps) {
     const [messages, setMessages] = useState<Message[]>(paginatedMessages.data);
     const [nextUrl, setNextUrl] = useState<string | undefined>(paginatedMessages.next);
+
+    useEffect(() => {
+        // reload when new messages from revalidating tags/paths load
+        setMessages(paginatedMessages.data);
+        setNextUrl(paginatedMessages.next);
+    }, [paginatedMessages]);
 
     return (
         <MessageContainer

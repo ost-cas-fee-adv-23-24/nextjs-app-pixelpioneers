@@ -6,7 +6,7 @@ export default function Loading() {
     return (
         <>
             <ProfileHeaderSkeleton className="h-[400px] w-full" />
-            <MessageMultiSkeleton classNames="h-[300px] w-full md:w-[680px]" />
+            <MessageMultiSkeleton classNames="h-[300px] w-full md:w-container" />
         </>
     );
 }

@@ -1,3 +1,5 @@
+import { Paragraph, ParagraphSize } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
+
 type ActionBubbleProps = {
     message: string;
     onClick: () => Promise<void>;
@@ -5,12 +7,15 @@ type ActionBubbleProps = {
 
 export function ActionBubble({ message, onClick }: ActionBubbleProps) {
     return (
-        <form action={onClick} className="fixed top-l z-50 flex w-[680px] justify-center">
+        <form
+            action={onClick}
+            className="fixed top-2xl z-50 flex w-screen justify-center md:top-7xl md:w-container"
+        >
             <button
-                className="rounded-[20px] bg-secondary-800 px-m py-xs text-secondary-200"
+                className="shadow-xls rounded-[20px] bg-secondary-800 px-m py-xs text-secondary-100 opacity-95"
                 type="submit"
             >
-                {message}
+                <Paragraph size={ParagraphSize.M}>{message}</Paragraph>
             </button>
         </form>
     );

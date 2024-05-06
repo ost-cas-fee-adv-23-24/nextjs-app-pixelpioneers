@@ -12,7 +12,7 @@ type ImageHeaderProps = {
 export default function ImageHeader({ user, isActiveUser = false }: ImageHeaderProps) {
     const avatarAlt = user.avatarUrl ? `Avatarbild von ${user.username}` : 'Kein Bild';
     return (
-        <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-[680px] md:rounded-m md:object-contain">
+        <div className="relative flex h-[200px] w-full flex-row bg-primary-600 object-cover md:h-[320px] md:w-container md:rounded-m md:object-contain">
             <Image
                 src={`/wallpapers/my-profile.jpg`}
                 alt="Hintergrundbild Profil"
