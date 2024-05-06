@@ -83,7 +83,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                 {message.text && (
                     <Paragraph
                         // TODO: set in design system
-                        className="break-words"
+                        className="break-words text-secondary-900"
                         size={
                             isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                 ? ParagraphSize.L

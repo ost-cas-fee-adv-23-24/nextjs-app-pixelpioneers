@@ -17,7 +17,7 @@ export default function Navigation() {
     const router = useRouter();
     const userId = session?.user?.profile.sub;
     return (
-        <nav className="sticky top-0 z-30 hidden h-[80px] w-full content-center items-center justify-around bg-primary-600 md:flex">
+        <nav className="z-30 hidden h-[80px] w-full items-center justify-around bg-primary-600 md:flex">
             <div className="mx-0 flex w-container flex-row justify-between">
                 <section className="flex items-center">
                     <Link href={APP_ROUTES.HOME}>

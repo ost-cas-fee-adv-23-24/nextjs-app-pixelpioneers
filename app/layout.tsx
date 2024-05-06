@@ -23,19 +23,19 @@ const poppins = Poppins({
     variable: '--font-poppins',
     subsets: ['latin-ext'],
     weight: ['500', '600', '700'],
+    fallback: ['arial', 'sans-serif'],
+    adjustFontFallback: false,
 });
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
     const session = await auth();
     return (
         <html lang="en" dir="ltr">
-            <body className={clsx('bg-secondary-100', poppins.className)}>
+            <body className={clsx('min-h-screen bg-secondary-100', poppins.className)}>
                 <SessionProvider session={session}>
                     <MobileHeader />
                     <Navigation />
-                    <main className="mb-l flex min-h-screen flex-col items-center md:mt-l">
-                        {children}
-                    </main>
+                    <main className="mb-l flex flex-col items-center md:mt-l">{children}</main>
                     <MobileNavigation />
                 </SessionProvider>
             </body>

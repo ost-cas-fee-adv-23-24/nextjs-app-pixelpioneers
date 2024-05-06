@@ -60,7 +60,11 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                                 alt={user.username}
                             />
                         </div>
-                        <Label className="self-center" size={LabelSize.XL} htmlFor="text">
+                        <Label
+                            className="self-center text-secondary-900"
+                            size={LabelSize.XL}
+                            htmlFor="text"
+                        >
                             {`Hey, was gibt's Neues?`}
                         </Label>
                     </div>

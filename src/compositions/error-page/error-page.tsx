@@ -32,7 +32,7 @@ export default function ErrorPage({
     fullPage = true,
 }: ErrorPageProps) {
     return (
-        <div className="flex flex-col items-center gap-s">
+        <section className="flex flex-col items-center gap-s">
             <IconCancel size={IconSize.L} className="fill-tertiary-600" />
             {fullPage && (
                 <Heading
@@ -42,7 +42,7 @@ export default function ErrorPage({
                     Oh nein! Da ist wohl etwas schief gelaufen...
                 </Heading>
             )}
-            <section className="flex flex-col items-center gap-xs">
+            <div className="flex flex-col items-center gap-xs">
                 {errorTitle && (
                     <Paragraph className="text-secondary-600" size={ParagraphSize.M}>
                         {errorTitle}
@@ -51,7 +51,7 @@ export default function ErrorPage({
                 <Paragraph className="text-secondary-600" size={ParagraphSize.M}>
                     {errorMessage}
                 </Paragraph>
-            </section>
+            </div>
             {fullPage && (
                 <div className="mt-2xl">
                     <Button
@@ -63,6 +63,6 @@ export default function ErrorPage({
                     />
                 </div>
             )}
-        </div>
+        </section>
     );
 }

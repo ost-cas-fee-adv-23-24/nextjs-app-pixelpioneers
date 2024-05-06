@@ -68,10 +68,16 @@ export default function DisplayName({
             <div className="flex flex-col gap-xs">
                 <div className="flex w-full flex-wrap place-items-baseline items-center gap-xs">
                     {variant === DisplayNameVariant.PROFILE ? (
-                        <Heading variant={HeadingLevel.H3}>{userFullName()}</Heading>
+                        <Heading variant={HeadingLevel.H3} className="text-secondary-900">
+                            {userFullName()}
+                        </Heading>
                     ) : (
                         <Link href={getRoute(APP_ROUTES.USER, user.id)}>
-                            <Label size={labelSize()} type={LabelType.SPAN}>
+                            <Label
+                                className="text-secondary-900"
+                                size={labelSize()}
+                                type={LabelType.SPAN}
+                            >
                                 {userFullName()}
                             </Label>
                         </Link>
