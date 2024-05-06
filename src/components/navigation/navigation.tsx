@@ -1,18 +1,24 @@
+'use client';
 import {
-    IconMumble,
+    ButtonSize,
+    IconSettingsAnimated,
     LogoMumbleHorizontal,
+    NaviButton,
+    NaviUser,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { APP_ROUTES } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import Link from 'next/link';
-import NaviButtons from '@/src/components/navigation/navi-buttons';
+import { useSession } from 'next-auth/react';
+import LoginButton from '@/src/components/login/login-button';
+import { useRouter } from 'next/navigation';
 
-export default async function Navigation() {
-    // TODO: is this the best way, calling session in every component?
-    const session = await auth();
+export default function Navigation() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const userId = session?.user?.profile.sub;
     return (
-        <nav className="flex h-[80px] w-full items-center justify-around bg-primary-600 md:content-center">
-            <div className="flex w-[680px] flex-row justify-between">
+        <nav className="hidden h-[80px] w-full content-center items-center justify-around bg-primary-600 md:flex">
+            <div className="mx-0 flex w-[680px] flex-row justify-between">
                 <section className="flex items-center">
                     <Link href={APP_ROUTES.HOME}>
                         <LogoMumbleHorizontal
@@ -20,14 +26,24 @@ export default async function Navigation() {
                             iconClasses="fill-white"
                             sizeWidth="235"
                             sizeHeight="34"
-                            className="hidden md:ml-[-24px] md:flex"
+                            className="ml-[-24px] flex"
                         />
-                        <div className="ml-s md:hidden">
-                            <IconMumble className="h-xl w-xl fill-white" />
-                        </div>
                     </Link>
                 </section>
-                <NaviButtons session={session} />
+                <section className="flex flex-row items-center gap-s">
+                    <NaviUser
+                        onClick={() => userId && router.push(getRoute(APP_ROUTES.USER, userId))}
+                        avatarSrc={session?.user?.image || ''}
+                        avatarAlt={session?.user?.name || ''}
+                        disabled={!userId}
+                    />
+                    <NaviButton
+                        size={ButtonSize.L}
+                        label={'Settings'}
+                        Icon={IconSettingsAnimated}
+                    />
+                    <LoginButton isLoggedIn={status === 'authenticated'} navBar={true} />
+                </section>
             </div>
         </nav>
     );

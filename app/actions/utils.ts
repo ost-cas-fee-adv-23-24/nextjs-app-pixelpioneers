@@ -9,6 +9,7 @@ import { getUser } from '@/app/actions/user';
 export async function getSession(): Promise<Session> {
     const session = await auth();
     if (session === null || session.accessToken === undefined) {
+        // TODO: set up login
         redirect(getRoute(APP_ROUTES.LOGIN));
     }
     return session;

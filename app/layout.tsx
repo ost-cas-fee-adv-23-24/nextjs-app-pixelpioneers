@@ -2,6 +2,9 @@ import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
 import Navigation from '@/src/components/navigation/navigation';
+import MobileNavigation from '@/src/components/navigation/mobile-navigation';
+import MobileHeader from '@/src/components/header/mobile-header';
+import { SessionProvider } from 'next-auth/react';
 
 // TODO: how does this work?
 export const metadata: Metadata = {
@@ -13,8 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className="bg-secondary-100">
-                <Navigation />
-                <main className="my-l flex min-h-screen flex-col items-center">{children}</main>
+                <SessionProvider>
+                    <MobileHeader />
+                    <Navigation />
+                    <main className="mb-l flex min-h-screen flex-col items-center md:mt-l">
+                        {children}
+                    </main>
+                    <MobileNavigation />
+                </SessionProvider>
             </body>
         </html>
     );
