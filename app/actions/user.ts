@@ -24,7 +24,7 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
         )) as User;
         return dataResponse(user);
     } catch (error) {
-        return errorResponse(error, 'get user');
+        return errorResponse('get user');
     }
 }
 
@@ -49,7 +49,7 @@ export async function getUsers(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedUsers);
     } catch (error) {
-        return errorResponse(error, 'get users');
+        return errorResponse('get users');
     }
 }
 
@@ -76,7 +76,7 @@ export async function getFollowers(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowers);
     } catch (error) {
-        return errorResponse(error, 'get followers');
+        return errorResponse('get followers');
     }
 }
 
@@ -102,7 +102,7 @@ export async function getFollowees(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowees);
     } catch (error) {
-        return errorResponse(error, 'get followees');
+        return errorResponse('get followees');
     }
 }
 
@@ -115,8 +115,7 @@ export async function followUser(formData: FormData): Promise<string> {
         typeof isFollowingString !== 'string' ||
         !['true', 'false'].includes(isFollowingString)
     ) {
-        // TODO: stringify or Next Response?
-        return JSON.stringify(errorResponse(new Error('bad request'), 'follow user'));
+        return JSON.stringify('follow user');
     }
     const isFollowing = new RegExp('true').test(isFollowingString);
 
@@ -133,7 +132,7 @@ export async function followUser(formData: FormData): Promise<string> {
         revalidateTag(getTag(Tag.FOLLOWERS, userId));
         return JSON.stringify(dataResponse(undefined));
     } catch (error) {
-        return JSON.stringify(errorResponse(error, `${isFollowing ? 'un' : ''}follow user`));
+        return JSON.stringify(errorResponse(`${isFollowing ? 'un' : ''}follow user`));
     }
 }
 
@@ -144,7 +143,7 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
     try {
         validateAvatarData(formData);
     } catch (error) {
-        return errorResponse(error, 'validate avatar data');
+        return errorResponse('validate avatar data', error);
     }
 
     try {
@@ -159,7 +158,7 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
         activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse(error, 'upload avatar');
+        return errorResponse('upload avatar');
     }
 }
 
@@ -178,7 +177,7 @@ export async function removeAvatar(): Promise<ActionResponse<void>> {
         activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse(error, 'upload avatar');
+        return errorResponse('remove avatar');
     }
 }
 

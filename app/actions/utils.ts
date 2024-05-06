@@ -43,17 +43,9 @@ export function getTag(tag: Tag, id = ''): string {
 }
 
 // TODO: simplify
-export function errorResponse(error: Error | unknown, genericInfo: string): ErrorResponse {
-    const errorObject =
-        error instanceof Error
-            ? error
-            : {
-                  name: genericInfo,
-                  message: `an error occurred during ${genericInfo}`,
-              };
-
+export function errorResponse(task: string, error?: Error | unknown): ErrorResponse {
     return {
-        error: errorObject,
+        error: error instanceof Error ? error : new Error(`an error occurred during ${task}`),
         isError: true,
     };
 }

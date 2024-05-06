@@ -14,7 +14,6 @@ const TRANSFORM_FORMAT_LIMIT = 14;
 export const timeFromNow = (eventTimestamp: number): string => {
     const now = dayjs();
     const timeOfEvent = dayjs(eventTimestamp);
-    // TODO: compare with server time instead of now
     const differenceInDays = now.diff(timeOfEvent, 'days');
     return differenceInDays > TRANSFORM_FORMAT_LIMIT
         ? timeOfEvent.locale(LOCALE_DE).format(DD_MM_YYYY_FORMAT)

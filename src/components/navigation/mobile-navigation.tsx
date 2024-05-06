@@ -12,7 +12,7 @@ export default function MobileNavigation() {
     const router = useRouter();
     const userId = session?.user?.profile.sub;
     return (
-        <div className="absolute sticky bottom-0 z-50 md:hidden">
+        <div className="sticky bottom-0 z-30 md:hidden">
             <nav className="flex bg-primary-600">
                 <section className="mx-m flex h-[70px] w-full flex-row items-center justify-between">
                     <div className="flex w-7xl justify-start">
