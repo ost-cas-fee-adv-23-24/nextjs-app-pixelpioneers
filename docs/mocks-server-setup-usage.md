@@ -67,6 +67,9 @@ More info see there: [mocks-server: Organizing files](https://www.mocks-server.o
 15. Test Mock Data via API Browser or via CURL (Terminal)
 
 Via Browser:
+
+Same examples:
+
 `http://localhost:3100/api/posts`
 
 `http://localhost:3100/api/posts/01HVTHCF8B2KHT0FBG04QAGTHR/replies`
@@ -76,9 +79,12 @@ Via Browser:
 `http://127.0.0.1:3100/api/users/245809311459051537`
 
 Via Terminal: (CURL)
+
+Some examples:
+
 `curl http://localhost:3100/api/posts`
 
-`curl http://localhost:3100/posts/01HVTHCF8B2KHT0FBG04QAGTHR/replies`
+`curl http://localhost:3100/api/posts/01HVTHCF8B2KHT0FBG04QAGTHR/replies`
 
 `curl http://127.0.0.1:3100/api/users`
 

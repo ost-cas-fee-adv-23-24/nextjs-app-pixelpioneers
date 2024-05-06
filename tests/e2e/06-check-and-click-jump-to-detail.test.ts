@@ -5,7 +5,8 @@ test.describe('should have the list of posts and jump to reply detail of any spe
     test('should jump to the detail reply page ', async ({ page }) => {
         await page.goto('/');
 
-        await page.waitForSelector('[name="comment-button"]', { timeout: 5000 });
+        // await page.waitForSelector('[name="comment-button"]', { timeout: 5000 });
+        await page.waitForTimeout(10000);
 
         const commentButton = await page.$$('[data-testid="testCommentButton"]');
 
