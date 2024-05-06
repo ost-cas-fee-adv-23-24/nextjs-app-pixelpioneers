@@ -4,7 +4,7 @@ module.exports = {
             delay: 1000,
         },
         collections: {
-            selected: 'base',
+            selected: 'reply-1',
         },
     },
 };

@@ -1,10 +1,10 @@
-const reply_1 = require('../../reply_1');
-const reply_2 = require('../../reply_2');
+const post_1 = require('../../post_1');
+const post_2 = require('../../post_2');
 
 module.exports = [
     {
-        id: 'get-reply_1',
-        url: '/api/posts/:id/replies',
+        id: 'get-post_1',
+        url: '/api/posts/:id',
         method: 'GET',
         variants: [
             {
@@ -12,7 +12,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: reply_1,
+                    body: post_1,
                 },
             },
             {
@@ -20,7 +20,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: reply_1,
+                    body: post_1,
                 },
             },
             {
@@ -36,8 +36,8 @@ module.exports = [
         ],
     },
     {
-        id: 'get-reply_2',
-        url: '/api/posts/:id/replies',
+        id: 'get-post_2',
+        url: '/api/posts/:id',
         method: 'GET',
         variants: [
             {
@@ -45,7 +45,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: reply_2,
+                    body: post_2,
                 },
             },
             {
@@ -53,7 +53,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: reply_2,
+                    body: post_2,
                 },
             },
             {

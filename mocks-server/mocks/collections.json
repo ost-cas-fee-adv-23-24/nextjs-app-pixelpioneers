@@ -4,9 +4,7 @@
     "routes": [
       "add-headers:enabled",
       "get-posts:success",
-      "get-post-id:success",
-      "get-reply-1:success",
-      "get-user-andre:success",
+      "get-user_andre:success",
       "get-users:success"
     ]
   },
@@ -21,18 +19,13 @@
     "routes": ["get-posts:success"]
   },
   {
-    "id": "all-replies",
+    "id": "reply-1",
     "from": "base",
-    "routes": ["get-reply-1:success"]
+    "routes": ["get-post_1:success", "get-reply_1:success"]
   },
   {
-    "id": "all-andre",
+    "id": "reply-2",
     "from": "base",
-    "routes": ["get-user-andre:success"]
-  },
-  {
-    "id": "all-users",
-    "from": "base",
-    "routes": ["get-users:all"]
+    "routes": ["get-post_2:success", "get-reply_2:success"]
   }
 ]
