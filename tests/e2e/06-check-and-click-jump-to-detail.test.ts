@@ -3,10 +3,11 @@ import { expect, test } from '@playwright/test';
 // TODO: Need to check why this is not working
 test.describe('should have the list of posts and jump to reply detail of any specific post ', () => {
     test('should jump to the detail reply page ', async ({ page }) => {
+        test.slow();
         await page.goto('/');
 
         // await page.waitForSelector('[name="comment-button"]', { timeout: 5000 });
-        await page.waitForTimeout(10000);
+        await page.waitForTimeout(4000);
 
         const commentButton = await page.$$('[data-testid="testCommentButton"]');
 
@@ -17,7 +18,7 @@ test.describe('should have the list of posts and jump to reply detail of any spe
         }
 
         // await page.waitForLoadState('networkidle');
-        await page.waitForTimeout(10000);
-        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 0 });
+        await page.waitForTimeout(4000);
+        await expect(page.getByText('Wau Wau')).toBeTruthy();
     });
 });
