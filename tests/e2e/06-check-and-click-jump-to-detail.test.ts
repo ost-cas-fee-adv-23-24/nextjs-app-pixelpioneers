@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 // TODO: Need to check why this is not working
 test.describe('should have the list of posts and jump to reply detail of any specific post ', () => {
-    test.skip('should jump to the detail reply page ', async ({ page }) => {
+    test.only('should jump to the detail reply page ', async ({ page }) => {
         await page.goto('/');
 
         await page.waitForSelector('[name="comment-button"]', { timeout: 5000 });
@@ -15,6 +15,7 @@ test.describe('should have the list of posts and jump to reply detail of any spe
             console.info('Less than 2 Comment Button found!');
         }
 
+        await page.waitForLoadState('networkidle');
         await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
     });
 });
