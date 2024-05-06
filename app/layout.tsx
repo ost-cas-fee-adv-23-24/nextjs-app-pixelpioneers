@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 <SessionProvider session={session}>
                     <MobileHeader />
                     <Navigation />
-                    <main className="mb-l flex flex-col items-center md:mt-l">{children}</main>
+                    <main className="mb-[100px] flex flex-col items-center md:m-l">{children}</main>
                     <MobileNavigation />
                 </SessionProvider>
             </body>

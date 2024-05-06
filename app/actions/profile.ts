@@ -1,8 +1,13 @@
 'use server';
 
-import { checkIsActiveUser, getFollowees, getUser } from '@/app/actions/user';
+import { checkIsActiveUser, getFollowees, getUser, getUsers } from '@/app/actions/user';
 import { getPosts } from '@/app/actions/message';
-import { Profile, ProfileFollowing, ProfilePosts } from '@/src/models/profile.model';
+import {
+    Profile,
+    ProfileFollowing,
+    ProfilePosts,
+    ProfileRecommendations,
+} from '@/src/models/profile.model';
 import { User } from '@/src/models/user.model';
 import { ActionResponse } from '@/src/models/action.model';
 import { dataResponse } from '@/app/actions/utils';
@@ -70,4 +75,23 @@ export async function getProfilePosts(
         userState: await checkIsActiveUser(userId),
         paginatedPosts,
     });
+}
+
+export async function getProfileRecommendations(
+    userId: string,
+): Promise<ActionResponse<ProfileRecommendations>> {
+    const postsResponse = await getPosts({ limit: 6 });
+    if (postsResponse.isError) {
+        return postsResponse;
+    }
+    const paginatedPosts = postsResponse.data;
+
+    const userResponse = await getUsers({ limit: 6 });
+    if (userResponse.isError) {
+        return userResponse;
+    }
+    const paginatedUsers = userResponse.data;
+    const users = paginatedUsers.data.filter((user) => userId !== user.id);
+
+    return dataResponse({ users, paginatedPosts });
 }

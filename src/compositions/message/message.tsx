@@ -36,7 +36,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
         }
     };
     const detailMessageClasses = clsx(
-        'mx-0 w-screen px-m py-s', // mobile
+        'mx-0 w-full px-m py-s', // mobile
         'md:w-container md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
     const messageClasses = clsx(
