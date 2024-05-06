@@ -1,3 +1,4 @@
+'use client';
 import { Message } from '@/src/models/message.model';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { default as MessageComponent } from './message';

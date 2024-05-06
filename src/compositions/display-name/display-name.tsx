@@ -20,6 +20,7 @@ import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { useRouter } from 'next/navigation';
 import { timeFromNow } from '@/src/services/time.service';
+import Link from 'next/link';
 
 type DisplayNameProps = {
     user: User;
@@ -38,7 +39,6 @@ export default function DisplayName({
     joinedTimestamp,
     isActiveUser,
 }: DisplayNameProps) {
-    // TODO: client component or rather server component with client button group inside ?
     const router = useRouter();
     const userFullName = () =>
         user.firstname ? `${user.firstname} ${user.lastname}` : 'Mumble User';
@@ -54,13 +54,15 @@ export default function DisplayName({
     };
     return (
         <section className="relative flex flex-row">
-            {variant === DisplayNameVariant.REPLY && user?.avatarUrl && (
+            {variant === DisplayNameVariant.REPLY && (
                 <div className="relative pr-xs">
-                    <Avatar
-                        size={AvatarSize.S}
-                        alt={`avatar from ${user.username}`}
-                        src={user.avatarUrl}
-                    />
+                    <Link href={getRoute(APP_ROUTES.USER, user.id)}>
+                        <Avatar
+                            size={AvatarSize.S}
+                            alt={`avatar from ${user.username}`}
+                            src={user.avatarUrl}
+                        />
+                    </Link>
                 </div>
             )}
             <div className="flex flex-col gap-xs">
@@ -68,9 +70,11 @@ export default function DisplayName({
                     {variant === DisplayNameVariant.PROFILE ? (
                         <Heading variant={HeadingLevel.H3}>{userFullName()}</Heading>
                     ) : (
-                        <Label size={labelSize()} type={LabelType.SPAN}>
-                            {userFullName()}
-                        </Label>
+                        <Link href={getRoute(APP_ROUTES.USER, user.id)}>
+                            <Label size={labelSize()} type={LabelType.SPAN}>
+                                {userFullName()}
+                            </Label>
+                        </Link>
                     )}
                     {variant === DisplayNameVariant.PROFILE && isActiveUser && (
                         <button onClick={() => alert('settings') /* TODO: open settings */}>
@@ -90,6 +94,8 @@ export default function DisplayName({
                             label={timeFromNow(postTimestamp)}
                             variant={Variant.SECONDARY}
                             Icon={IconTime}
+                            // since timestamps will have time differences from server to client
+                            suppressHydrationWarning
                         />
                     )}
                     {location && (

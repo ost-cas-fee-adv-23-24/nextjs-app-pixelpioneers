@@ -35,7 +35,7 @@ export default function ImageHeader({ user, isActiveUser = false }: ImageHeaderP
                                 src={user.avatarUrl}
                                 alt={avatarAlt}
                                 size={AvatarSize.XL}
-                                onEdit={() => console.info('open pop up')}
+                                onEdit={/*TODO: open pop up */ () => console.info('open pop up')}
                             />
                         </div>
                         <div className="block md:hidden">
@@ -43,7 +43,7 @@ export default function ImageHeader({ user, isActiveUser = false }: ImageHeaderP
                                 src={user.avatarUrl}
                                 alt={avatarAlt}
                                 size={AvatarSize.L}
-                                onEdit={() => console.info('open pop up')}
+                                onEdit={/*TODO: open pop up */ () => console.info('open pop up')}
                             />
                         </div>
                     </>
