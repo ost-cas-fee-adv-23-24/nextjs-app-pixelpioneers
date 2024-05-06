@@ -5,7 +5,9 @@
       "add-headers:enabled",
       "get-posts:success",
       "get-user_andre:success",
-      "get-users:success"
+      "get-users:success",
+      "get-followees_andre:success",
+      "get-followers_andre:success"
     ]
   },
   {
