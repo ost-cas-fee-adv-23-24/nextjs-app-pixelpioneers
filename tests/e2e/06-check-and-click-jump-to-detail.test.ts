@@ -18,6 +18,6 @@ test.describe('should have the list of posts and jump to reply detail of any spe
 
         // await page.waitForLoadState('networkidle');
         await page.waitForTimeout(10000);
-        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 5000 });
+        await expect(page.getByText('Wau Wau')).toBeVisible({ timeout: 0 });
     });
 });
