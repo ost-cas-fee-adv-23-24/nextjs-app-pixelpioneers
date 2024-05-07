@@ -1,13 +1,18 @@
 import { test as setup, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 
-if (!process.env.CI) dotenv.config({ path: '.env.test' });
+dotenv.config({ path: '.env.test' });
 
 const authFile = 'playwright/.auth/user.json';
 const urlRegex =
     /https:\/\/cas-fee-adv-ed1ide\.zitadel\.cloud\/ui\/login\/login\?authRequestID=\d+/;
 
 setup('authenticate', async ({ page }) => {
+    /* eslint-disable no-console */
+    console.log('process.env.TEST_USERNAME', process.env.TEST_USERNAME);
+    console.log('process.env.TEST_PASSWORD', process.env.TEST_PASSWORD);
+    /* eslint-enable no-console */
+
     setup.slow();
     await page.goto('/');
 
