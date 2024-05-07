@@ -18,16 +18,18 @@ setup('authenticate', async ({ page }) => {
 
     await page.click('button >> text=Log in');
 
-    if (!process.env.TEST_USERNAME || !process.env.TEST_PASSWORD) {
-        throw new Error('Environment variables are missing for e2e!');
-    }
+    // if (!process.env.TEST_USERNAME || !process.env.TEST_PASSWORD) {
+    //     throw new Error('Environment variables are missing for e2e!');
+    // }
 
     await page.getByLabel('Login').click();
     await page.waitForURL(urlRegex);
-    await page.getByPlaceholder('username@domain').fill(process.env.TEST_USERNAME);
+    // await page.getByPlaceholder('username@domain').fill(process.env.TEST_USERNAME);
+    await page.getByPlaceholder('username@domain').fill('nicolutz99@gmail.com');
     await page.getByRole('button', { name: 'Next' }).click();
     await page.getByLabel('Password').click();
-    await page.getByLabel('Password').fill(process.env.TEST_PASSWORD);
+    // await page.getByLabel('Password').fill(process.env.TEST_PASSWORD);
+    await page.getByLabel('Password').fill('Testing123!');
     await page.getByRole('button', { name: 'Next' }).click();
 
     // TODO: Need to check again - what the cleanest way
