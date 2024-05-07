@@ -20,7 +20,7 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
             },
             session?.accessToken,
             [getTag(Tag.USER, userId)],
-            RevalidationTime.MEDIUM,
+            RevalidationTime.LONG,
         )) as User;
         return dataResponse(user);
     } catch (error) {

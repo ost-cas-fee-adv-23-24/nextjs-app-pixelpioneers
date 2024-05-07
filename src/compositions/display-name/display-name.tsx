@@ -83,7 +83,7 @@ export default function DisplayName({
                         </Link>
                     )}
                     {variant === DisplayNameVariant.PROFILE && isActiveUser && (
-                        <button onClick={() => alert('settings') /* TODO: open settings */}>
+                        <button disabled>
                             <IconSettingsAnimated className="fill-primary-600" />
                         </button>
                     )}

@@ -41,6 +41,7 @@ export default function Navigation() {
                         size={ButtonSize.L}
                         label={'Settings'}
                         Icon={IconSettingsAnimated}
+                        disabled
                     />
                     <LoginButton isLoggedIn={status === 'authenticated'} navBar={true} />
                 </section>

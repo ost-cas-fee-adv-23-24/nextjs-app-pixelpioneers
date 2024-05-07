@@ -4,6 +4,7 @@ import { getProfile } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile/profile-header';
 import { notFound } from 'next/navigation';
 import LoginButton from '@/src/components/login/login-button';
+import React from 'react';
 
 export default async function UserPage({ params }: { params: { id: string } }) {
     const profileHeaderResponse = await getProfile(params.id);
