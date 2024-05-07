@@ -1,7 +1,7 @@
 import { test as setup, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '.env.test' });
+if (!process.env.CI) dotenv.config({ path: '.env.test' });
 
 const authFile = 'playwright/.auth/user.json';
 const urlRegex =
@@ -25,7 +25,7 @@ setup('authenticate', async ({ page }) => {
     await page.getByLabel('Password').fill(process.env.TEST_PASSWORD);
     await page.getByRole('button', { name: 'Next' }).click();
 
-    // TODO: Need to check again - what the cleanest way is
+    // TODO: Need to check again - what the cleanest way
     await page.goto('/');
 
     await page.waitForURL('/');
