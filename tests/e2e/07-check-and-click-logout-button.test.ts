@@ -20,7 +20,7 @@ test.describe('should open the browser with the start route and interactive with
         expect(welcomeText).toBe('#test');
     });
 
-    test.only('should have logged in and textarea exists ', async ({ page }) => {
+    test('should have logged in and textarea exists ', async ({ page }) => {
         await page.goto('/');
 
         const textArea = await page.getByText('Deine Meinung zählt!');
@@ -29,7 +29,7 @@ test.describe('should open the browser with the start route and interactive with
         expect(textArea).toBeVisible;
     });
 
-    test.only('should have logged out and textarea disappears ', async ({ page }) => {
+    test('should have logged out and textarea disappears ', async ({ page }) => {
         await page.goto('/');
 
         await page.click('button >> text=Log out');
