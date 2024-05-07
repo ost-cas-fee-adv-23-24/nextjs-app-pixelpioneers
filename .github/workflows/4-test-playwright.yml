@@ -31,6 +31,8 @@ jobs:
         env:
           ZITADEL_ISSUER: ${{ secrets.ZITADEL_ISSUER }}
           ZITADEL_AUTHORIZATION_ENDPOINT: ${{ secrets.ZITADEL_AUTHORIZATION_ENDPOINT }}
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
