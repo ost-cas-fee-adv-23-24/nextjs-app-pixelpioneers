@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 
 async function globalSetup() {
     try {
-        if (process.env.ENV) {
+        if (process.env.CI) {
             dotenv.config({
                 override: true,
             });
