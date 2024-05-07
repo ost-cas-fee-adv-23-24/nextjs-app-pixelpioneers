@@ -33,6 +33,7 @@ jobs:
           ZITADEL_AUTHORIZATION_ENDPOINT: ${{ secrets.ZITADEL_AUTHORIZATION_ENDPOINT }}
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
