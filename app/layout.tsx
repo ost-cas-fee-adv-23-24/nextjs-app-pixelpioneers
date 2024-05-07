@@ -3,11 +3,11 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import Navigation from '@/src/components/navigation/navigation';
 import MobileNavigation from '@/src/components/navigation/mobile-navigation';
-import MobileHeader from '@/src/components/header/mobile-header';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Poppins } from 'next/font/google';
 import clsx from 'clsx';
+import MobileHeader from '@/src/components/header/mobile-header';
 
 export const metadata: Metadata = {
     manifest: '/manifest.json',
@@ -35,7 +35,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 <SessionProvider session={session}>
                     <MobileHeader />
                     <Navigation />
-                    <main className="mb-[100px] flex flex-col items-center md:m-l">{children}</main>
+                    <main className="mb-[100px] mt-[50px] flex flex-col items-center md:mb-l md:mt-[112px]">
+                        {children}
+                    </main>
                     <MobileNavigation />
                 </SessionProvider>
             </body>
