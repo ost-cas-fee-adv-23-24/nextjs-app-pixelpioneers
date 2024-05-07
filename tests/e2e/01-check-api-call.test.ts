@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { urlApiTestApp } from '../utils';
 import { Post } from '@/src/models/message.model';
 
-test.describe('should use and check mock data using Playwright ', () => {
+test.describe('should use and check mock data from API for starting e23 Playwright Tests ', () => {
     test('should use the mocks server for API calls ', async ({ page }) => {
         // Listen for all network requests
         page.route(`${urlApiTestApp}/*`, (route) => {

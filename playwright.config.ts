@@ -1,9 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+/**
+ * Read environment variables from file.
+ * https://github.com/motdotla/dotenv
+ */
+// require('dotenv').config();
+dotenv.config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+    globalSetup: './tests/e2e/globalSetup.js',
     testDir: './tests/e2e',
     /* Run tests in files in parallel */
     fullyParallel: true,
@@ -34,9 +43,18 @@ export default defineConfig({
 
     /* Configure projects for major browsers */
     projects: [
+        { name: 'setup', testMatch: '**/*.setup.ts', fullyParallel: true },
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            testDir: './tests/e2e',
+            use: {
+                ...devices['Desktop Chrome'],
+                // Use prepared auth state.
+                storageState: 'playwright/.auth/user.json',
+                trace: 'on',
+                // testIdAttribute: "data-test",
+            },
+            dependencies: ['setup'],
         },
     ],
 
@@ -50,6 +68,8 @@ export default defineConfig({
             env: {
                 ...process.env,
                 NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || '',
+                TEST_USERNAME: process.env.TEST_USERNAME || '',
+                TEST_PASSWORD: process.env.TEST_PASSWORD || '',
             },
         },
     ],

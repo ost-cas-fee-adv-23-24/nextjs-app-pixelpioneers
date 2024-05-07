@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('should open the start of Mumble App ', () => {
+test.describe('should open the start of Mumble App and check wrong title ', () => {
     test('should not have the correct welcome title ', async ({ page }) => {
         await page.goto('/');
 
