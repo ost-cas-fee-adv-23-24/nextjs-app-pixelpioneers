@@ -67,7 +67,7 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
             <section className="flex flex-col gap-s">
                 {state.error ? (
                     <ErrorPage
-                        errorMessage={state.error.message}
+                        errorMessage={state.error}
                         errorTitle={`Posts konnten nicht geladen werden.`}
                         fullPage={false}
                     />

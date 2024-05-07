@@ -76,23 +76,24 @@ export default function Message({ message, displayVariant, children }: MessagePr
                 />
             </div>
 
-            <LinkWrapper
-                enabled={isVariant(MessageDisplayVariant.TIMELINE)}
-                route={getRoute(APP_ROUTES.POST, message.id)}
-            >
-                {message.text && (
-                    <Paragraph
-                        // TODO: set in design system
-                        className="break-words text-secondary-900"
-                        size={
-                            isVariant(MessageDisplayVariant.DETAIL_VIEW)
-                                ? ParagraphSize.L
-                                : ParagraphSize.M
-                        }
-                    >
-                        {message.text}
-                    </Paragraph>
-                )}
+            <div className="flex flex-col gap-s">
+                <LinkWrapper
+                    enabled={isVariant(MessageDisplayVariant.TIMELINE)}
+                    route={getRoute(APP_ROUTES.POST, message.id)}
+                >
+                    {message.text && (
+                        <Paragraph
+                            className="text-secondary-900"
+                            size={
+                                isVariant(MessageDisplayVariant.DETAIL_VIEW)
+                                    ? ParagraphSize.L
+                                    : ParagraphSize.M
+                            }
+                        >
+                            {message.text}
+                        </Paragraph>
+                    )}
+                </LinkWrapper>
                 {message.mediaUrl && (
                     <section className="relative h-auto w-full transition duration-500 md:h-[320px]">
                         <Image
@@ -114,15 +115,9 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         />
                     </section>
                 )}
-            </LinkWrapper>
+            </div>
 
-            {!isVariant(MessageDisplayVariant.INLINE) && (
-                //TODO: show in replies too
-                <MessageActions
-                    post={message}
-                    detailView={isVariant(MessageDisplayVariant.DETAIL_VIEW)}
-                />
-            )}
+            <MessageActions message={message} displayVariant={displayVariant} />
 
             {isVariant(MessageDisplayVariant.DETAIL_VIEW) && children}
         </div>

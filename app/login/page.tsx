@@ -13,10 +13,7 @@ export default function LoginPage() {
     const { status } = useSession();
     return (
         <section className="flex w-container flex-col items-center gap-s">
-            <Heading
-                variant={HeadingLevel.H3}
-                className="max-w-2xl text-center text-secondary-900 text-transparent"
-            >
+            <Heading variant={HeadingLevel.H3} className="max-w-2xl text-center text-secondary-900">
                 Verpasse nichts mehr...
             </Heading>
             <Paragraph className="text-secondary-600" size={ParagraphSize.M}>

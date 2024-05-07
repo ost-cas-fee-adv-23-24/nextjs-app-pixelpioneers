@@ -101,6 +101,7 @@ export default function DisplayName({
                             variant={Variant.SECONDARY}
                             Icon={IconTime}
                             // since timestamps will have time differences from server to client
+                            // TODO: does not work like this
                             suppressHydrationWarning
                         />
                     )}

@@ -1,8 +1,10 @@
+import { ErrorType } from '@/src/models/action.model';
+
 export type FollowState = {
     isLoading: boolean;
     isFollowing: boolean;
     isSubmittingFollow: boolean;
-    error?: Error;
+    error?: ErrorType;
 };
 
 export enum FollowActionType {
@@ -18,4 +20,4 @@ export type FollowAction =
           isFollowing: boolean;
       }
     | { type: FollowActionType.SUBMITTED_FOLLOW }
-    | { type: FollowActionType.ERROR; error: Error };
+    | { type: FollowActionType.ERROR; error: ErrorType };

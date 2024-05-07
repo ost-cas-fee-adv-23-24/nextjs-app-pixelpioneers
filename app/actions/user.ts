@@ -3,12 +3,12 @@
 import { User, UserState } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
+import { dataResponse, errorResponse, getTag, Tag } from '@/app/actions/utils';
 import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { revalidateTag } from 'next/cache';
-import { ActionResponse, RevalidationTime } from '@/src/models/action.model';
+import { ActionResponse, ErrorType, RevalidationTime } from '@/src/models/action.model';
 
 export async function getUser(userId: string): Promise<ActionResponse<User>> {
     const session = await auth();
@@ -24,7 +24,7 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
         )) as User;
         return dataResponse(user);
     } catch (error) {
-        return errorResponse('get user');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
@@ -49,7 +49,7 @@ export async function getUsers(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedUsers);
     } catch (error) {
-        return errorResponse('get users');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
@@ -76,7 +76,7 @@ export async function getFollowers(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowers);
     } catch (error) {
-        return errorResponse('get followers');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
@@ -102,7 +102,7 @@ export async function getFollowees(
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowees);
     } catch (error) {
-        return errorResponse('get followees');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
@@ -115,11 +115,15 @@ export async function followUser(formData: FormData): Promise<string> {
         typeof isFollowingString !== 'string' ||
         !['true', 'false'].includes(isFollowingString)
     ) {
-        return JSON.stringify('follow user');
+        return JSON.stringify(errorResponse(ErrorType.EXECUTION));
     }
     const isFollowing = new RegExp('true').test(isFollowingString);
 
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return JSON.stringify(errorResponse(ErrorType.AUTHORIZATION));
+    }
+
     const activeUserId = session.user?.profile.sub;
 
     try {
@@ -132,18 +136,21 @@ export async function followUser(formData: FormData): Promise<string> {
         revalidateTag(getTag(Tag.FOLLOWERS, userId));
         return JSON.stringify(dataResponse(undefined));
     } catch (error) {
-        return JSON.stringify(errorResponse(`${isFollowing ? 'un' : ''}follow user`));
+        return JSON.stringify(errorResponse(ErrorType.EXECUTION));
     }
 }
 
 // TODO: use
 export async function uploadAvatar(formData: FormData): Promise<ActionResponse<void>> {
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return errorResponse(ErrorType.AUTHORIZATION);
+    }
     const activeUserId = session.user?.profile.sub;
     try {
         validateAvatarData(formData);
     } catch (error) {
-        return errorResponse('validate avatar data', error);
+        return errorResponse(ErrorType.VALIDATION);
     }
 
     try {
@@ -158,13 +165,16 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
         activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse('upload avatar');
+        return errorResponse(ErrorType.EXECUTION);
     }
 }
 
 // TODO: use
 export async function removeAvatar(): Promise<ActionResponse<void>> {
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return errorResponse(ErrorType.AUTHORIZATION);
+    }
     const activeUserId = session.user?.profile.sub;
     try {
         await request(
@@ -177,7 +187,7 @@ export async function removeAvatar(): Promise<ActionResponse<void>> {
         activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse('remove avatar');
+        return errorResponse(ErrorType.EXECUTION);
     }
 }
 

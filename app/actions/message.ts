@@ -5,15 +5,19 @@ import { messageHydrator, messagesHydrator } from '@/src/services/message.servic
 import { request } from '@/src/services/request.service';
 import { API_ROUTES, getRoute } from '@/src/helpers/routes';
 import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
-import { dataResponse, errorResponse, getSession, getTag, Tag } from '@/app/actions/utils';
+import { dataResponse, errorResponse, getTag, Tag } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { validatePostData } from '@/src/helpers/validator';
-import { ActionResponse, RevalidationTime } from '@/src/models/action.model';
+import { ActionResponse, ErrorType, RevalidationTime } from '@/src/models/action.model';
 
-export async function likePost(postId: string, likeType: LikeType): Promise<ActionResponse<void>> {
-    const session = await getSession();
+export async function likePost(postId: string, likeType: LikeType): Promise<string> {
     const isLike = likeType === LikeType.LIKE;
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return JSON.stringify(errorResponse(ErrorType.AUTHORIZATION));
+    }
+
     try {
         await request(
             getRoute(API_ROUTES.POSTS_ID_LIKES, postId),
@@ -24,18 +28,22 @@ export async function likePost(postId: string, likeType: LikeType): Promise<Acti
         );
 
         revalidateTag(getTag(Tag.POSTS));
-        return dataResponse(undefined);
+        return JSON.stringify(dataResponse(undefined));
     } catch (error) {
-        return errorResponse(`${isLike ? '' : 'un'}like this post`);
+        return JSON.stringify(errorResponse(ErrorType.EXECUTION));
     }
 }
 
 export async function createPost(formData: FormData): Promise<ActionResponse<Post>> {
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return errorResponse(ErrorType.AUTHORIZATION);
+    }
+
     try {
         validatePostData(formData);
     } catch (error) {
-        return errorResponse('validate post data', error);
+        return errorResponse(ErrorType.VALIDATION);
     }
 
     try {
@@ -51,7 +59,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
         revalidateTag(getTag(Tag.POSTS));
         return dataResponse(post);
     } catch (error) {
-        return errorResponse('create post');
+        return errorResponse(ErrorType.EXECUTION);
     }
 }
 
@@ -70,12 +78,16 @@ export async function getPost(postId: string): Promise<ActionResponse<Post>> {
         );
         return dataResponse(post);
     } catch (error) {
-        return errorResponse('get post');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
 export async function deletePost(postId: string): Promise<ActionResponse<void>> {
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return errorResponse(ErrorType.AUTHORIZATION);
+    }
+
     try {
         await request(
             getRoute(API_ROUTES.POSTS_ID, postId),
@@ -88,7 +100,7 @@ export async function deletePost(postId: string): Promise<ActionResponse<void>> 
         revalidateTag(getTag(Tag.POSTS));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse('delete post');
+        return errorResponse(ErrorType.EXECUTION);
     }
 }
 
@@ -115,18 +127,18 @@ export async function getPosts(
         );
         return dataResponse(paginatedPosts);
     } catch (error) {
-        return errorResponse('get posts');
+        return errorResponse(ErrorType.FETCH);
     }
 }
 
 export async function loadPaginatedMessages(formData: FormData): Promise<string> {
     const nextData = formData.get('next');
     if (nextData === null) {
-        return JSON.stringify(errorResponse('load messages'));
+        return JSON.stringify(errorResponse(ErrorType.FETCH));
     }
     const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
     if (route === '' || !route.startsWith('/posts')) {
-        return JSON.stringify(errorResponse('load messages'));
+        return JSON.stringify(errorResponse(ErrorType.FETCH));
     }
 
     const session = await auth();
@@ -144,7 +156,7 @@ export async function loadPaginatedMessages(formData: FormData): Promise<string>
         );
         return JSON.stringify(dataResponse(paginatedMessages));
     } catch (error) {
-        return JSON.stringify(errorResponse('load messages'));
+        return JSON.stringify(errorResponse(ErrorType.FETCH));
     }
 }
 
@@ -152,11 +164,15 @@ export async function createReply(
     postId: string,
     formData: FormData,
 ): Promise<ActionResponse<Reply>> {
-    const session = await getSession();
+    const session = await auth();
+    if (session === null || session.accessToken === undefined) {
+        return errorResponse(ErrorType.AUTHORIZATION);
+    }
+
     try {
         validatePostData(formData);
     } catch (error) {
-        return errorResponse('validate reply data', error);
+        return errorResponse(ErrorType.VALIDATION);
     }
 
     try {
@@ -172,7 +188,7 @@ export async function createReply(
         revalidateTag(getTag(Tag.REPLIES, postId));
         return dataResponse(reply);
     } catch (error) {
-        return errorResponse('create reply');
+        return errorResponse(ErrorType.EXECUTION);
     }
 }
 
@@ -200,6 +216,6 @@ export async function getReplies(
         );
         return dataResponse(paginatedReplies);
     } catch (error) {
-        return errorResponse('get replies');
+        return errorResponse(ErrorType.FETCH);
     }
 }

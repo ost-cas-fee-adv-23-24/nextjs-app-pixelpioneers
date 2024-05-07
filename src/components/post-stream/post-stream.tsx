@@ -4,7 +4,7 @@ import { getPostEventSource, PostEvent } from '@/src/helpers/routes';
 import { ActionBubble } from '@/src/components/action-bubble/action-bubble';
 import { Post } from '@/src/models/message.model';
 import { reloadPathData } from '@/app/actions/caching';
-import { scrollToTop } from '@/src/helpers/scrollToTop';
+import { scrollToTop } from '@/src/helpers/scroll-to-top';
 import { useSession } from 'next-auth/react';
 
 type PostStreamProps = {

@@ -52,7 +52,7 @@ export default function Follow({ user }: FollowProps) {
 
     return state.error ? (
         <ErrorPage
-            errorMessage={state.error.message}
+            errorMessage={state.error}
             errorTitle={'Folgen-Status konnte nicht geladen werden.'}
             fullPage={false}
         />

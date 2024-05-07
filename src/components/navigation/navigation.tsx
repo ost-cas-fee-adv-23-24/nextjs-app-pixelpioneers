@@ -32,10 +32,15 @@ export default function Navigation() {
                 </section>
                 <section className="flex flex-row items-center gap-s">
                     <NaviUser
-                        onClick={() => userId && router.push(getRoute(APP_ROUTES.USER, userId))}
+                        onClick={() =>
+                            router.push(
+                                userId
+                                    ? getRoute(APP_ROUTES.USER, userId)
+                                    : getRoute(APP_ROUTES.LOGIN),
+                            )
+                        }
                         avatarSrc={session?.user?.image || ''}
                         avatarAlt={session?.user?.name || ''}
-                        disabled={!userId}
                     />
                     <NaviButton
                         size={ButtonSize.L}

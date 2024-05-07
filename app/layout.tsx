@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     const session = await auth();
     return (
         <html lang="en" dir="ltr">
-            <body className={clsx('min-h-screen bg-secondary-100', poppins.className)}>
+            <body className={clsx('bg-secondary-100', poppins.className)}>
                 <SessionProvider session={session}>
                     <MobileHeader />
                     <Navigation />

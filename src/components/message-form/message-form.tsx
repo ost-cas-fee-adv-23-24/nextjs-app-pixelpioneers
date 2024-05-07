@@ -32,9 +32,8 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
     const [image, setImage] = useState<string | null>(null);
     const imageRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const isPost = messageVariant === MessageVariant.POST;
-
-    // TODO: try with https://blog.openreplay.com/server-actions-in-nextjs/
 
     const formAction = async (formData: FormData) => {
         const createResponse = await onCreate(formData);
@@ -90,12 +89,13 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                 )}
 
                 <Textarea
+                    ref={textAreaRef}
                     className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
                     name="text"
-                    // TODO: remove text when something is posted
                     id="text"
                     placeholder={isPost ? 'Deine Meinung zählt!' : 'Und was meinst du dazu?'}
                     aria-label={`write text for ${isPost ? 'post' : 'reply'}`}
+                    autoFocus
                 />
                 <section className="flex flex-row justify-between gap-s">
                     <MessageFormActions
