@@ -29,8 +29,12 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:pw
         env:
+          ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
+          ZITADEL_CLIENT_SECRET: ${{ secrets.ZITADEL_CLIENT_SECRET }}
           ZITADEL_ISSUER: ${{ secrets.ZITADEL_ISSUER }}
-          ZITADEL_AUTHORIZATION_ENDPOINT: ${{ secrets.ZITADEL_AUTHORIZATION_ENDPOINT }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
       - uses: actions/upload-artifact@v3
