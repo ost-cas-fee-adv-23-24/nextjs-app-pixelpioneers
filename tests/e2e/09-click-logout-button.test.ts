@@ -20,7 +20,7 @@ test.describe('should start web app with the home route and interactive with log
     test('should not have textarea appeared by logged out ', async ({ page }) => {
         await page.goto('/');
 
-        await page.click('button >> text=Log out');
+        await page.click('[data-testid="testLoginButton"] >> text=Log out');
 
         const textArea = await page.getByText('Deine Meinung zählt!');
         console.info(textArea);

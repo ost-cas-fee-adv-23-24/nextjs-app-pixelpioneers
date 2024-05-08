@@ -1,4 +1,4 @@
-import { test as setup, expect } from '@playwright/test';
+import { expect, test as setup } from '@playwright/test';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.test' });
@@ -11,7 +11,7 @@ setup('authenticate', async ({ page }) => {
     setup.slow();
     await page.goto('/');
 
-    await page.click('button >> text=Log in');
+    await page.click('[data-testid="testLoginButton"]');
 
     if (!process.env.TEST_USERNAME || !process.env.TEST_PASSWORD) {
         throw new Error('Environment variables are missing for e2e!');
@@ -29,8 +29,8 @@ setup('authenticate', async ({ page }) => {
     await page.goto('/');
 
     await page.waitForURL('/');
-    await page.click('button >> text=Log in');
+    await page.click('[data-testid="testLoginButton"]');
 
-    await expect(page.getByText('Log out')).toBeVisible();
+    await expect(page.locator('[data-testid="testLoginButton"] >> text=Log out')).toBeVisible();
     await page.context().storageState({ path: authFile });
 });
