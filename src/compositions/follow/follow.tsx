@@ -59,7 +59,7 @@ export default function Follow({ user }: FollowProps) {
     ) : state.isLoading ? (
         <FollowSkeleton />
     ) : (
-        <div className="flex flex-row items-center gap-m">
+        <div className="flex flex-row items-center gap-s">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
                 {`Du folgst ${name} ${state.isFollowing ? '' : 'nicht'}`}
             </Label>

@@ -1,6 +1,4 @@
-'use client';
-
-import ImageHeader from '@/src/components/image-header/image-header';
+import ProfileBanner from '@/src/compositions/profile/profile-banner';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { User } from '@/src/models/user.model';
@@ -15,7 +13,7 @@ export default function ProfileHeader({ user, isActiveUser = false }: ProfileHea
     return (
         <>
             <section className="flex flex-col gap-m">
-                <ImageHeader user={user} isActiveUser={isActiveUser} />
+                <ProfileBanner user={user} isActiveUser={isActiveUser} />
                 <section className="mx-m flex flex-col gap-base md:mx-0 md:w-container">
                     <DisplayName
                         user={user}
@@ -23,7 +21,7 @@ export default function ProfileHeader({ user, isActiveUser = false }: ProfileHea
                         isActiveUser={isActiveUser}
                     />
                     <Paragraph
-                        className="w-fill text-slate-400"
+                        className="w-fill text-secondary-400"
                         size={ParagraphSize.M}
                         title={`Über ${user.username}`}
                     >
@@ -32,13 +30,6 @@ export default function ProfileHeader({ user, isActiveUser = false }: ProfileHea
                     </Paragraph>
                 </section>
             </section>
-            {/*<ModalImageUpload
-                onChange={() => console.log('e')}
-                inputRef={undefined}
-                isOpen={true}
-                onSubmit={() => console.log('e')}
-                onCancel={() => console.log('e')}
-            />*/}
         </>
     );
 }
