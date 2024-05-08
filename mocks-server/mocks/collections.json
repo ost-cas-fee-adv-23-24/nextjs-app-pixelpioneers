@@ -23,7 +23,12 @@
   {
     "id": "reply-1",
     "from": "base",
-    "routes": ["get-post_1:success", "get-reply_1:success"]
+    "routes": [
+      "get-post_1:success",
+      "get-reply_1:success",
+      "put-like-a-post_1:success",
+      "delete-like-a-post_1:success"
+    ]
   },
   {
     "id": "reply-2",

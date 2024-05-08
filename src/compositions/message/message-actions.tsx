@@ -56,6 +56,8 @@ export default function MessageActions({ message, displayVariant }: MessageActio
                 }}
                 isLiked={message.likedBySelf || false}
                 amount={message.likes}
+                data-testid="testLikeButton"
+                className="btnLike"
             />
             <ShareButton
                 label="Copy Link"

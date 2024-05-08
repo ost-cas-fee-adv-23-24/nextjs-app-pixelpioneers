@@ -68,4 +68,70 @@ module.exports = [
             },
         ],
     },
+    {
+        id: 'put-like-a-post_1',
+        url: '/api/posts/:id/likes',
+        method: 'PUT',
+        variants: [
+            {
+                id: 'success',
+                type: 'json',
+                options: {
+                    status: 204,
+                    body: {},
+                },
+            },
+            {
+                id: 'all',
+                type: 'json',
+                options: {
+                    status: 204,
+                    body: {},
+                },
+            },
+            {
+                id: 'error',
+                type: 'json',
+                options: {
+                    status: 400,
+                    body: {
+                        message: 'Error',
+                    },
+                },
+            },
+        ],
+    },
+    {
+        id: 'delete-like-a-post_1',
+        url: '/api/posts/:id/likes',
+        method: 'DELETE',
+        variants: [
+            {
+                id: 'success',
+                type: 'json',
+                options: {
+                    status: 204,
+                    body: {},
+                },
+            },
+            {
+                id: 'all',
+                type: 'json',
+                options: {
+                    status: 204,
+                    body: {},
+                },
+            },
+            {
+                id: 'error',
+                type: 'json',
+                options: {
+                    status: 400,
+                    body: {
+                        message: 'Error',
+                    },
+                },
+            },
+        ],
+    },
 ];

@@ -29,6 +29,7 @@ export default function MobileNavigation({ user }: MobileNavigationProps) {
                     </div>
                     <div className="flex w-7xl justify-end">
                         <NaviUser
+<<<<<<< HEAD
                             onClick={() =>
                                 router.push(
                                     user
@@ -38,6 +39,13 @@ export default function MobileNavigation({ user }: MobileNavigationProps) {
                             }
                             avatarSrc={user?.avatarUrl}
                             avatarAlt={`${user?.username} Profil öffnen`}
+=======
+                            onClick={() => userId && router.push(getRoute(APP_ROUTES.USER, userId))}
+                            avatarSrc={session?.user?.image || ''}
+                            avatarAlt={session?.user?.name || ''}
+                            disabled={!userId}
+                            data-testid="testNaviUserButtonMobile"
+>>>>>>> 0c4ba70 (feat(mocks-server-setup): add like test and check if profile page exists and clean up)
                         />
                     </div>
                 </section>
