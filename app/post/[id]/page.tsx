@@ -8,7 +8,7 @@ import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import StatedMessageContainer from '@/src/compositions/message/stated-message-container';
 import MessageForm from '@/src/components/message-form/message-form';
-import LoginToCreate from '@/src/components/login/login-to-create';
+import LoginToProceed from '@/src/components/login/login-to-proceed';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -30,7 +30,10 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                     user={user}
                 />
             ) : (
-                <LoginToCreate messageVariant={MessageVariant.REPLY} />
+                <LoginToProceed
+                    message="um einen Kommentar zu verfassen."
+                    displayVariant={MessageDisplayVariant.INLINE}
+                />
             )}
             {repliesResponse.isError ? (
                 <ErrorPage

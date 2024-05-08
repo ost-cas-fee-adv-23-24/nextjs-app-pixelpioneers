@@ -27,10 +27,15 @@ export default function MobileNavigation() {
                     </div>
                     <div className="flex w-7xl justify-end">
                         <NaviUser
-                            onClick={() => userId && router.push(getRoute(APP_ROUTES.USER, userId))}
+                            onClick={() =>
+                                router.push(
+                                    userId
+                                        ? getRoute(APP_ROUTES.USER, userId)
+                                        : getRoute(APP_ROUTES.LOGIN),
+                                )
+                            }
                             avatarSrc={session?.user?.image || ''}
                             avatarAlt={session?.user?.name || ''}
-                            disabled={!userId}
                         />
                     </div>
                 </section>
