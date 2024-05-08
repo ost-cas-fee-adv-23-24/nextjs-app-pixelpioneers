@@ -21,7 +21,6 @@ export async function request(
         headers,
         ...options,
         next: { tags, revalidate },
-        // TODO: do we need cache: 'force-cache', ?
     }).catch((error) => {
         console.error('Error during request', error);
     });

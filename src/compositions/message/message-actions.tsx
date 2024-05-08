@@ -21,8 +21,6 @@ export default function MessageActions({ post, detailView }: MessageActionsProps
                 disabled={detailView}
             />
             <LikeButton
-                // TODO: fix on side of design system
-                key={post.id}
                 onClick={async () => {
                     // TODO: set tags here already? also evaluate error
                     const response = await likePost(

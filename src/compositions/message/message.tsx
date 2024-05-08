@@ -12,6 +12,9 @@ import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
+import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import Link from 'next/link';
+import LinkWrapper from '@/src/components/link-wrapper/link-wrapper';
 
 type MessageProps = {
     message: Message;
@@ -33,8 +36,8 @@ export default function Message({ message, displayVariant, children }: MessagePr
         }
     };
     const detailMessageClasses = clsx(
-        'mx-0 w-screen px-m py-s', // mobile
-        'md:w-[680px] md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
+        'mx-0 w-full px-m py-s', // mobile
+        'md:w-container md:gap-m md:rounded-m md:px-xl md:py-l', // desktop
     );
     const messageClasses = clsx(
         'relative flex flex-col gap-s bg-white',
@@ -56,12 +59,14 @@ export default function Message({ message, displayVariant, children }: MessagePr
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
                 {!isVariant(MessageDisplayVariant.INLINE) && (
                     <div className={avatarClasses}>
-                        <Avatar
-                            // TODO: make size S on mobile
-                            size={AvatarSize.M}
-                            alt={`avatar from ${message.creator.username}`}
-                            src={message.creator.avatarUrl}
-                        />
+                        <Link href={getRoute(APP_ROUTES.USER, message.creator.id)}>
+                            <Avatar
+                                // TODO: make size S on mobile
+                                size={AvatarSize.M}
+                                alt={`avatar from ${message.creator.username}`}
+                                src={message.creator.avatarUrl}
+                            />
+                        </Link>
                     </div>
                 )}
                 <DisplayName
@@ -70,46 +75,55 @@ export default function Message({ message, displayVariant, children }: MessagePr
                     postTimestamp={message.created}
                 />
             </div>
-            {message.text && (
-                <Paragraph
-                    // TODO: set in design system
-                    className="break-words"
-                    size={
-                        isVariant(MessageDisplayVariant.DETAIL_VIEW)
-                            ? ParagraphSize.L
-                            : ParagraphSize.M
-                    }
-                >
-                    {message.text}
-                </Paragraph>
-            )}
-            {message.mediaUrl && (
-                <section className="relative h-auto w-full transition duration-500 hover:scale-105 md:h-[320px]">
-                    <Image
-                        className="rounded-s"
-                        alt={`Bild von ${message.creator.username}`}
-                        src={message.mediaUrl}
-                        datatype={message.mediaType}
-                        quality={75}
-                        priority
-                        height={320}
-                        width={584}
-                        aria-label={`Bild von ${message.creator.username}`}
-                        sizes="(max-width: 584px) 100vw"
-                        style={{
-                            objectFit: 'cover',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    />
-                </section>
-            )}
+
+            <LinkWrapper
+                enabled={isVariant(MessageDisplayVariant.TIMELINE)}
+                route={getRoute(APP_ROUTES.POST, message.id)}
+            >
+                {message.text && (
+                    <Paragraph
+                        // TODO: set in design system
+                        className="break-words text-secondary-900"
+                        size={
+                            isVariant(MessageDisplayVariant.DETAIL_VIEW)
+                                ? ParagraphSize.L
+                                : ParagraphSize.M
+                        }
+                    >
+                        {message.text}
+                    </Paragraph>
+                )}
+                {message.mediaUrl && (
+                    <section className="relative h-auto w-full transition duration-500 md:h-[320px]">
+                        <Image
+                            className="rounded-s"
+                            alt={`Bild von ${message.creator.username}`}
+                            src={message.mediaUrl}
+                            datatype={message.mediaType}
+                            quality={75}
+                            priority
+                            height={320}
+                            width={584}
+                            aria-label={`Bild von ${message.creator.username}`}
+                            sizes="(max-width: 584px) 100vw"
+                            style={{
+                                objectFit: 'cover',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        />
+                    </section>
+                )}
+            </LinkWrapper>
+
             {!isVariant(MessageDisplayVariant.INLINE) && (
+                //TODO: show in replies too
                 <MessageActions
                     post={message}
                     detailView={isVariant(MessageDisplayVariant.DETAIL_VIEW)}
                 />
             )}
+
             {isVariant(MessageDisplayVariant.DETAIL_VIEW) && children}
         </div>
     );

@@ -3,7 +3,7 @@ import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixe
 
 export default async function HomePage() {
     return (
-        <header className="px-m md:px-0">
+        <header className="flex flex-col gap-xs px-m md:px-0">
             <Heading variant={HeadingLevel.H2} className="text-primary-600">
                 Willkommen auf Mumble
             </Heading>

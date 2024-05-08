@@ -16,7 +16,7 @@ export default function MessageFormLogin({ user, messageVariant, onCreate }: Mes
         <MessageForm user={user} messageVariant={messageVariant} onCreate={onCreate} />
     ) : (
         <div className="mx-m flex flex-row items-center gap-xs md:mx-0">
-            <LoginButton session={null} loginLabel="Logge dich jetzt ein" />
+            <LoginButton isLoggedIn={false} loginLabel="Logge dich jetzt ein" />
             <Paragraph size={ParagraphSize.M}>{`um einen ${
                 messageVariant === MessageVariant.POST ? 'Post' : 'Kommentar'
             } zu verfassen.`}</Paragraph>

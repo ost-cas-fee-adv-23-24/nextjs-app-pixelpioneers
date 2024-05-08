@@ -8,28 +8,26 @@ import {
     NaviButton,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { Session } from 'next-auth';
 
 type LoginButtonProps = {
-    session: Session | null;
+    isLoggedIn: boolean;
     navBar?: boolean;
     loginLabel?: string;
     logoutLabel?: string;
 };
 
 export default function LoginButton({
-    session,
+    isLoggedIn = false,
     navBar = false,
     loginLabel = 'Log in',
     logoutLabel = 'Log out',
 }: LoginButtonProps) {
-    // TODO: session really needed, or just loggedIn flag ?
-    const label = session ? logoutLabel : loginLabel;
-    const onClick = () => (session ? signOut() : signIn('zitadel'));
+    const label = isLoggedIn ? logoutLabel : loginLabel;
+    const onClick = () => (isLoggedIn ? signOut() : signIn('zitadel'));
     if (navBar) {
         return (
-            // static width for login and logout button container
-            <div className="flex w-[68px] flex-col items-center">
+            // static min-width for login and logout button container to prevent layout shift in nav bar
+            <div className="flex min-w-[68px] flex-col items-center">
                 <NaviButton
                     size={ButtonSize.L}
                     label={label}

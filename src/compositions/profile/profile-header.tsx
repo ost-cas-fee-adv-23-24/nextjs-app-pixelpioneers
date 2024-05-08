@@ -13,7 +13,7 @@ export default function ProfileHeader({ user, isActiveUser = false }: ProfileHea
     return (
         <section className="flex flex-col gap-m">
             <ImageHeader user={user} isActiveUser={isActiveUser} />
-            <section className="mx-m flex flex-col gap-base md:mx-0 md:w-[680px]">
+            <section className="mx-m flex flex-col gap-base md:mx-0 md:w-container">
                 <DisplayName
                     user={user}
                     variant={DisplayNameVariant.PROFILE}
@@ -22,12 +22,10 @@ export default function ProfileHeader({ user, isActiveUser = false }: ProfileHea
                 <Paragraph
                     className="w-fill text-slate-400"
                     size={ParagraphSize.M}
-                    title={'Über mich'}
+                    title={`Über ${user.username}`}
                 >
-                    {/* TODO: set different text */}
-                    Ostschweizer mit Leidenschaft für Fussball, designaffin, nie ohne Bart,
-                    Weinliebhaber, leichte Tendenz zu Football Manager-Sucht, kocht gerne indisch,
-                    baut seit neustem Duplotürme und Brio-Bahnanlagen.
+                    Willkommen auf {user.username}s Seite! Hätte er oder sie eine Bio verfasst,
+                    könntest du diese hier lesen.
                 </Paragraph>
             </section>
         </section>

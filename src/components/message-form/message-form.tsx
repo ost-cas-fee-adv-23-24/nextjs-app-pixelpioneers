@@ -3,8 +3,12 @@
 import {
     Avatar,
     AvatarSize,
+    Heading,
+    HeadingLevel,
     Label,
     LabelSize,
+    Paragraph,
+    ParagraphSize,
     Textarea,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { MessageVariant } from '@/src/compositions/message/types';
@@ -19,7 +23,7 @@ import { Message } from '@/src/models/message.model';
 import { ActionResponse } from '@/src/models/action.model';
 
 type MessageFormProps = {
-    user: User;
+    user?: User;
     messageVariant: MessageVariant;
     onCreate: (formData: FormData) => Promise<ActionResponse<Message>>;
 };
@@ -45,34 +49,53 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
         <section
             className={clsx(
                 isPost
-                    ? 'relative flex flex-col gap-y-s bg-white px-m py-s md:min-h-[326px] md:w-[680px] md:rounded-m md:px-xl md:py-l'
+                    ? 'relative flex flex-col gap-y-s bg-white px-m py-s md:min-h-[326px] md:w-container md:rounded-m md:px-xl md:py-l'
                     : 'mt-s md:mt-l',
             )}
         >
             <form ref={formRef} action={formAction} className="flex flex-col gap-y-s">
-                {isPost ? (
-                    <div className="flex flex-row gap-s">
-                        <div className="md:z-5 md:absolute md:left-[-32px] md:top-[20px]">
-                            <Avatar
-                                // TODO: make size S on mobile
-                                size={AvatarSize.M}
-                                src={user.avatarUrl || ''}
-                                alt={user.username}
-                            />
-                        </div>
-                        <Label className="self-center" size={LabelSize.XL} htmlFor="text">
-                            {`Hey, was gibt's Neues?`}
-                        </Label>
-                    </div>
+                {user ? (
+                    <>
+                        {isPost ? (
+                            <div className="flex flex-row gap-s">
+                                <div className="md:z-5 md:absolute md:left-[-32px] md:top-[20px]">
+                                    <Avatar
+                                        // TODO: make size S on mobile
+                                        size={AvatarSize.M}
+                                        src={user.avatarUrl || ''}
+                                        alt={user.username}
+                                    />
+                                </div>
+                                <Label
+                                    className="self-center text-secondary-900"
+                                    size={LabelSize.XL}
+                                    htmlFor="text"
+                                >
+                                    {`Hey, was gibt's Neues?`}
+                                </Label>
+                            </div>
+                        ) : (
+                            <DisplayName variant={DisplayNameVariant.REPLY} user={user} />
+                        )}
+                    </>
                 ) : (
-                    <DisplayName variant={DisplayNameVariant.REPLY} user={user} />
+                    <div>
+                        <Heading className="text-secondary-600" variant={HeadingLevel.H3}>
+                            Voll leer hier! 😲
+                        </Heading>
+                        <Paragraph className="text-secondary-600" size={ParagraphSize.M}>
+                            Verfasse deinen ersten Mumble oder folge anderen Usern!
+                        </Paragraph>
+                    </div>
                 )}
+
                 <Textarea
                     className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
                     name="text"
                     // TODO: remove text when something is posted
                     id="text"
                     placeholder={isPost ? 'Deine Meinung zählt!' : 'Und was meinst du dazu?'}
+                    aria-label={`write text for ${isPost ? 'post' : 'reply'}`}
                 />
                 <section className="flex flex-row justify-between gap-s">
                     <MessageFormActions

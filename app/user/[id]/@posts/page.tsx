@@ -3,6 +3,8 @@ import { getProfilePosts } from '@/app/actions/profile';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import ProfilePosts from '@/src/compositions/profile/profile-posts';
+import ProfileRecommendations from '@/src/compositions/profile/profile-recommendations';
+import { UserState } from '@/src/models/user.model';
 
 export default async function UserPostsPage({ params }: { params: { id: string } }) {
     const userId = params.id;
@@ -20,5 +22,9 @@ export default async function UserPostsPage({ params }: { params: { id: string }
         );
     }
     const { paginatedPosts, userState } = profilePostResponse.data;
-    return <ProfilePosts userState={userState} paginatedPosts={paginatedPosts} userId={userId} />;
+    return paginatedPosts.data.length === 0 && userState === UserState.IS_ACTIVE_USER ? (
+        <ProfileRecommendations userId={userId} />
+    ) : (
+        <ProfilePosts userState={userState} paginatedPosts={paginatedPosts} userId={userId} />
+    );
 }

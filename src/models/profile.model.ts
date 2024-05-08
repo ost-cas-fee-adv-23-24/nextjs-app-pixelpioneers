@@ -20,3 +20,8 @@ export type ProfilePosts = {
     userState: UserState;
     paginatedPosts: PaginatedResult<Post>;
 };
+
+export type ProfileRecommendations = {
+    users: User[];
+    paginatedPosts: PaginatedResult<Post>;
+};

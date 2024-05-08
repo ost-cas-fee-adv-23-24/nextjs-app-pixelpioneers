@@ -13,7 +13,10 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                poppins: ['Poppins', 'sans-serif'],
+                poppins: ['var(--font-poppins)'],
+            },
+            spacing: {
+                container: '680px',
             },
         },
     },

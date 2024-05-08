@@ -10,8 +10,8 @@ export default function HomeLayout({
     posts: React.ReactNode;
 }) {
     return (
-        <div className="flex flex-col gap-s">
-            <section className="flex flex-col gap-l self-center md:w-[680px]">
+        <div className="mt-m flex flex-col gap-s md:mt-0">
+            <section className="flex flex-col gap-l self-center md:w-container">
                 {children}
                 {createPost}
             </section>

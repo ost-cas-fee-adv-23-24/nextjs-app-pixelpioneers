@@ -26,7 +26,7 @@ export async function likePost(postId: string, likeType: LikeType): Promise<Acti
         revalidateTag(getTag(Tag.POSTS));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse(error, `${isLike ? '' : 'un'}like this post`);
+        return errorResponse(`${isLike ? '' : 'un'}like this post`);
     }
 }
 
@@ -35,7 +35,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
     try {
         validatePostData(formData);
     } catch (error) {
-        return errorResponse(error, 'validate post data');
+        return errorResponse('validate post data', error);
     }
 
     try {
@@ -51,7 +51,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
         revalidateTag(getTag(Tag.POSTS));
         return dataResponse(post);
     } catch (error) {
-        return errorResponse(error, 'create post');
+        return errorResponse('create post');
     }
 }
 
@@ -70,7 +70,7 @@ export async function getPost(postId: string): Promise<ActionResponse<Post>> {
         );
         return dataResponse(post);
     } catch (error) {
-        return errorResponse(error, 'get post');
+        return errorResponse('get post');
     }
 }
 
@@ -88,7 +88,7 @@ export async function deletePost(postId: string): Promise<ActionResponse<void>> 
         revalidateTag(getTag(Tag.POSTS));
         return dataResponse(undefined);
     } catch (error) {
-        return errorResponse(error, 'delete post');
+        return errorResponse('delete post');
     }
 }
 
@@ -115,19 +115,18 @@ export async function getPosts(
         );
         return dataResponse(paginatedPosts);
     } catch (error) {
-        return errorResponse(error, 'get posts');
+        return errorResponse('get posts');
     }
 }
 
 export async function loadPaginatedMessages(formData: FormData): Promise<string> {
     const nextData = formData.get('next');
     if (nextData === null) {
-        // TODO: stringify or Next Response?
-        return JSON.stringify(errorResponse(new Error('pagination url missing'), 'get messages'));
+        return JSON.stringify(errorResponse('load messages'));
     }
     const route = nextData.toString().split(process.env.NEXT_PUBLIC_API_BASE_URL || '')[1];
     if (route === '' || !route.startsWith('/posts')) {
-        return JSON.stringify(errorResponse(new Error('invalid url'), 'get messages'));
+        return JSON.stringify(errorResponse('load messages'));
     }
 
     const session = await auth();
@@ -139,13 +138,13 @@ export async function loadPaginatedMessages(formData: FormData): Promise<string>
                     method: 'GET',
                 },
                 session?.accessToken,
-                undefined, // TODO: tags:[getTag(Tag.POSTS)],
-                undefined, // TODO: revalidate 15,
+                undefined,
+                RevalidationTime.INSTANT,
             )) as PaginatedResult<Message>,
         );
         return JSON.stringify(dataResponse(paginatedMessages));
     } catch (error) {
-        return JSON.stringify(errorResponse(error, 'get messages'));
+        return JSON.stringify(errorResponse('load messages'));
     }
 }
 
@@ -157,7 +156,7 @@ export async function createReply(
     try {
         validatePostData(formData);
     } catch (error) {
-        return errorResponse(error, 'validate reply data');
+        return errorResponse('validate reply data', error);
     }
 
     try {
@@ -173,7 +172,7 @@ export async function createReply(
         revalidateTag(getTag(Tag.REPLIES, postId));
         return dataResponse(reply);
     } catch (error) {
-        return errorResponse(error, 'create reply');
+        return errorResponse('create reply');
     }
 }
 
@@ -201,6 +200,6 @@ export async function getReplies(
         );
         return dataResponse(paginatedReplies);
     } catch (error) {
-        return errorResponse(error, 'get replies');
+        return errorResponse('get replies');
     }
 }

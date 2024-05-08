@@ -1,31 +1,16 @@
-import clsx from 'clsx';
 import React from 'react';
 
-export default function ProfileHeaderSkeleton({ className }: { className: string }) {
-    const skeletonButton = 'h-[28px] w-full rounded-m bg-slate-300 ';
-    const skeletonText = 'rounded-m bg-slate-300';
-
+export default function ProfileHeaderSkeleton() {
     return (
-        <section className={clsx(className, 'flex justify-around md:content-center')}>
-            <div className="flex h-full w-full animate-pulse flex-col items-start space-x-m rounded-m border-slate-300 p-m">
-                <div className="flex w-full flex-col space-y-m">
-                    <div className={clsx(skeletonText, 'h-[44px] w-full')}></div>
-                    <div className={clsx(skeletonText, 'h-[44px] w-full')}></div>
-
-                    <div className="flex w-full flex-row">
-                        <div className="flex w-full flex-col space-y-m pr-m">
-                            <div className={skeletonButton} />
-                            <div className={skeletonButton} />
-                            <div className={skeletonButton} />
-                        </div>
-                        <div className="h-[140px] w-[140px] flex-none rounded-full bg-slate-300"></div>
-                    </div>
-                    <div className="flex w-1/3 flex-row space-x-xs ">
-                        <div className={skeletonButton} />
-                    </div>
-                    <div className={clsx(skeletonText, 'mx-0 h-[64px] w-1/2')}></div>
+        <section className="flex min-h-[460px] w-full animate-pulse flex-col gap-m border-slate-300 md:w-container">
+            <div className="relative w-full">
+                <div className="h-[200px] w-full bg-slate-300 md:h-[320px] md:rounded-m"></div>
+                <div className="absolute bottom-[-25px] right-[24px] md:bottom-[-70px] md:right-[30px]">
+                    <div className="h-[96px] w-[96px] flex-none rounded-full bg-slate-300 outline outline-[6px] outline-secondary-100 md:h-[160px] md:w-[160px]"></div>
                 </div>
             </div>
+            <div className="mx-m h-[40px] w-1/3 rounded-m bg-slate-300 md:mx-0" />
+            <div className="mx-0 h-[84px] w-1/2 w-full rounded-m bg-slate-300" />
         </section>
     );
 }
