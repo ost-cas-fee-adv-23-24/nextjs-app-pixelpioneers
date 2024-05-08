@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('should have a post liked ', () => {
-    test('should have a post liked (3) ', async ({ page }) => {
+    test('should have a post liked (3 likes) ', async ({ page }) => {
         test.slow();
         await page.goto('/');
 
@@ -22,7 +22,9 @@ test.describe('should have a post liked ', () => {
         expect(content).toBe('3 Likes');
     });
 
-    test('should have a post with a like plus and back to not liked (2) ', async ({ page }) => {
+    test('should have a post with a like plus and back to not liked (2 likes) ', async ({
+        page,
+    }) => {
         test.slow();
         await page.goto('/');
 
