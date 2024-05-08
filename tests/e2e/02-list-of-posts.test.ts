@@ -1,10 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-// TODO: Need to check why this is not working on GitHub pipeline
-test.describe('should open the browser with body data from Server Mocks API ', () => {
-    test.skip('should have the existed text in body content of the home route ', async ({
-        page,
-    }) => {
+test.describe('should received mock data from API of Server Mocks and filled them in web app ', () => {
+    test('should have the text existed in web app content of the home route ', async ({ page }) => {
         await page.goto('/');
         await page.waitForTimeout(5000);
 

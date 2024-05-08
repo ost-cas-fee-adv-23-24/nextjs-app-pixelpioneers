@@ -2,9 +2,8 @@ import { expect, test } from '@playwright/test';
 import { urlApiTestApp } from '../utils';
 import { Post } from '@/src/models/message.model';
 
-test.describe('should use and check mock data from API for starting e23 Playwright Tests ', () => {
-    test('should use the mocks server for API calls ', async ({ page }) => {
-        // Listen for all network requests
+test.describe('should have mock data ready from API for starting e2e tests ', () => {
+    test('should listen all network requests ', async ({ page }) => {
         page.route(`${urlApiTestApp}/*`, (route) => {
             console.info('Request URL:', route.request().url());
             route.continue();
@@ -20,14 +19,14 @@ test.describe('should use and check mock data from API for starting e23 Playwrig
         expect(issues.ok()).toBeTruthy();
     });
 
-    test('should have an API called of all posts filled in body ', async ({ page }) => {
+    test('should have posts from API called and filled them in body ', async ({ page }) => {
         await page.goto(`${urlApiTestApp}/posts`);
 
         expect(await page.textContent('body')).toContain('claudio');
         expect(await page.textContent('body')).toContain('hello from API 2');
     });
 
-    test('should have an API called of an specific reply with its parentId ', async ({ page }) => {
+    test('should have a reply from API called wiih its parentId ', async ({ page }) => {
         await page.goto(`${urlApiTestApp}/posts/01HVTHCF8B2KHT0FBG04QAGTHR/replies`);
 
         // check the parentId
@@ -38,7 +37,7 @@ test.describe('should use and check mock data from API for starting e23 Playwrig
         expect(await page.textContent('body')).toContain('claudio');
     });
 
-    test('should check if API is ready and web app has mock data filled ', async ({ page }) => {
+    test('should have posts from API called and filled them in the web app ', async ({ page }) => {
         let response: Post;
         await page.route(`${urlApiTestApp}/posts`, (route) =>
             route.fulfill({

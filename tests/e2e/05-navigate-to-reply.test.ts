@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('should have the list of posts and jump to reply detail of any specific post ', () => {
-    test('should jump to the detail reply page and back to home page ', async ({ page }) => {
+test.describe('should get the list of posts and navigate to the reply ', () => {
+    test('should navigate to the detail reply page and finally back to home route ', async ({
+        page,
+    }) => {
         test.slow();
         await page.goto('/');
 

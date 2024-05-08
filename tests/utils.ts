@@ -1,1 +1,1 @@
-export const urlApiTestApp = 'http://localhost:3100/api';
+export const urlApiTestApp = process.env.NEXT_PUBLIC_API_BASE_URL;

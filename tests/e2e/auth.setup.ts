@@ -32,6 +32,5 @@ setup('authenticate', async ({ page }) => {
     await page.click('button >> text=Log in');
 
     await expect(page.getByText('Log out')).toBeVisible();
-
     await page.context().storageState({ path: authFile });
 });
