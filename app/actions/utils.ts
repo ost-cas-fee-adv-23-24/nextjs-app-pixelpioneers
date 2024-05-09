@@ -16,20 +16,6 @@ export async function getLoggedInUser(): Promise<User | undefined> {
     return user;
 }
 
-export enum Tag {
-    USER = 'user-[id]',
-    USERS = 'users',
-    FOLLOWERS = 'followers-[id]',
-    FOLLOWEES = 'followees-[id]',
-    POST = 'post-[id]',
-    POSTS = 'posts',
-    REPLIES = 'replies-[id]',
-}
-
-export function getTag(tag: Tag, id = ''): string {
-    return tag.replace('[id]', id);
-}
-
 export function errorResponse(errorType: ErrorType): ErrorResponse {
     return {
         error: errorType,

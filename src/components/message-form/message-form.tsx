@@ -1,10 +1,10 @@
 'use client';
 
 import {
-    Avatar,
     AvatarSize,
     Heading,
     HeadingLevel,
+    IconCheckmark,
     Label,
     LabelSize,
     Paragraph,
@@ -21,6 +21,7 @@ import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Message } from '@/src/models/message.model';
 import { ActionResponse } from '@/src/models/action.model';
+import Avatar from '../avatar/avatar';
 
 type MessageFormProps = {
     user?: User;
@@ -30,7 +31,7 @@ type MessageFormProps = {
 export default function MessageForm({ user, messageVariant, onCreate }: MessageFormProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
-    const imageRef = useRef<HTMLInputElement | null>(null);
+    const imageInputRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const isPost = messageVariant === MessageVariant.POST;
@@ -59,10 +60,10 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                             <div className="flex flex-row gap-s">
                                 <div className="md:z-5 md:absolute md:left-[-32px] md:top-[20px]">
                                     <Avatar
-                                        // TODO: make size S on mobile
-                                        size={AvatarSize.M}
-                                        src={user.avatarUrl || ''}
-                                        alt={user.username}
+                                        desktopSize={AvatarSize.M}
+                                        mobileSize={AvatarSize.S}
+                                        avatarUrl={user.avatarUrl}
+                                        username={user.username}
                                     />
                                 </div>
                                 <Label
@@ -104,17 +105,25 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                         }}
                     />
                 </section>
+                {image && (
+                    <div className="flex flex-row items-center gap-xs">
+                        <IconCheckmark className="fill-primary-600" />
+                        <Label size={LabelSize.S} className="text-primary-600">
+                            Bild hochgeladen
+                        </Label>
+                    </div>
+                )}
                 <input
                     type="file"
                     name="media"
                     id="media"
-                    ref={imageRef}
+                    ref={imageInputRef}
                     disabled={!image}
                     hidden
                 />
                 <ModalImageUpload
                     onChange={setImage}
-                    inputRef={imageRef}
+                    inputRef={imageInputRef}
                     isOpen={isOpen}
                     onSubmit={() => setIsOpen(false)}
                     onCancel={() => setIsOpen(false)}

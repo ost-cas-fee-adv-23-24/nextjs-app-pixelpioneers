@@ -25,7 +25,7 @@ export enum UserState {
 }
 
 export const UpdateAvatarSchema = z.object({
-    media: z.string(),
+    media: z.instanceof(File),
 });
 
 export type AvatarValidationResult = { text?: string[]; media?: string[] };

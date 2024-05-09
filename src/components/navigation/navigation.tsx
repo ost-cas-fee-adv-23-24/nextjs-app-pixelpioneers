@@ -8,14 +8,16 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import LoginButton from '@/src/components/login/login-button';
 import { useRouter } from 'next/navigation';
+import { User } from '@/src/models/user.model';
 
-export default function Navigation() {
-    const { data: session, status } = useSession();
+type NavigationProps = {
+    user?: User;
+};
+
+export default function Navigation({ user }: NavigationProps) {
     const router = useRouter();
-    const userId = session?.user?.profile.sub;
     return (
         <nav className="fixed top-0 z-30 hidden h-[80px] w-full items-center justify-around bg-primary-600 md:flex">
             <div className="mx-0 flex w-container flex-row justify-between">
@@ -34,13 +36,13 @@ export default function Navigation() {
                     <NaviUser
                         onClick={() =>
                             router.push(
-                                userId
-                                    ? getRoute(APP_ROUTES.USER, userId)
+                                user
+                                    ? getRoute(APP_ROUTES.USER, user.id)
                                     : getRoute(APP_ROUTES.LOGIN),
                             )
                         }
-                        avatarSrc={session?.user?.image || ''}
-                        avatarAlt={session?.user?.name || ''}
+                        avatarSrc={user?.avatarUrl}
+                        avatarAlt={`${user?.username} Profil öffnen`}
                     />
                     <NaviButton
                         size={ButtonSize.L}
@@ -48,7 +50,7 @@ export default function Navigation() {
                         Icon={IconSettingsAnimated}
                         disabled
                     />
-                    <LoginButton isLoggedIn={status === 'authenticated'} navBar={true} />
+                    <LoginButton isLoggedIn={!!user} navBar={true} />
                 </section>
             </div>
         </nav>

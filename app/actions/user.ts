@@ -2,9 +2,9 @@
 
 import { User, UserState } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
-import { API_ROUTES, getRoute } from '@/src/helpers/routes';
-import { dataResponse, errorResponse, getTag, Tag } from '@/app/actions/utils';
-import { FilterOptions, PaginatedResult } from '@/src/models/paginate.model';
+import { API_ROUTES, getRoute, getTag, Tag } from '@/src/helpers/routes';
+import { dataResponse, errorResponse } from '@/app/actions/utils';
+import { PaginatedResult, PAGINATION_LIMIT, PaginationOptions } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { revalidateTag } from 'next/cache';
@@ -32,9 +32,8 @@ export async function getUser(userId: string): Promise<ActionResponse<User>> {
  * get all Users, pagination possible by options param
  * @param options
  */
-// TODO: use
 export async function getUsers(
-    options?: FilterOptions,
+    options?: PaginationOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -44,7 +43,7 @@ export async function getUsers(
                 method: 'GET',
             },
             session?.accessToken,
-            [getTag(Tag.USERS)],
+            [getTag(Tag.USERS, undefined, options)],
             RevalidationTime.LONG,
         )) as PaginatedResult<User>;
         return dataResponse(paginatedUsers);
@@ -58,10 +57,9 @@ export async function getUsers(
  * @param userId
  * @param options
  */
-// TODO: use or remove
 export async function getFollowers(
     userId: string,
-    options?: FilterOptions,
+    options?: PaginationOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -71,7 +69,7 @@ export async function getFollowers(
                 method: 'GET',
             },
             session?.accessToken,
-            [getTag(Tag.FOLLOWERS, userId)],
+            [getTag(Tag.FOLLOWERS, userId, options)],
             RevalidationTime.LONG,
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowers);
@@ -87,7 +85,7 @@ export async function getFollowers(
  */
 export async function getFollowees(
     userId: string,
-    options?: FilterOptions,
+    options?: PaginationOptions,
 ): Promise<ActionResponse<PaginatedResult<User>>> {
     const session = await auth();
     try {
@@ -97,7 +95,7 @@ export async function getFollowees(
                 method: 'GET',
             },
             session?.accessToken,
-            [getTag(Tag.FOLLOWEES, userId)],
+            [getTag(Tag.FOLLOWEES, userId, options)],
             RevalidationTime.LONG,
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowees);
@@ -140,7 +138,6 @@ export async function followUser(formData: FormData): Promise<string> {
     }
 }
 
-// TODO: use
 export async function uploadAvatar(formData: FormData): Promise<ActionResponse<void>> {
     const session = await auth();
     if (session === null || session.accessToken === undefined) {
@@ -161,8 +158,24 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
                 body: formData,
             },
             session.accessToken,
+            undefined,
+            undefined,
+            true,
         );
-        activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
+        if (activeUserId) {
+            revalidateTag(getTag(Tag.USER, activeUserId));
+            revalidateTag(
+                getTag(Tag.POSTS, undefined, {
+                    creators: [activeUserId],
+                    limit: PAGINATION_LIMIT,
+                }),
+            );
+            revalidateTag(
+                getTag(Tag.POSTS, undefined, {
+                    limit: PAGINATION_LIMIT,
+                }),
+            );
+        }
         return dataResponse(undefined);
     } catch (error) {
         return errorResponse(ErrorType.EXECUTION);

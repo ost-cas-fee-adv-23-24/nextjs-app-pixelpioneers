@@ -4,19 +4,21 @@ import { IconMumble, NaviUser } from '@ost-cas-fee-adv-23-24/design-system-pixel
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import Link from 'next/link';
 import LoginButton from '@/src/components/login/login-button';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { User } from '@/src/models/user.model';
 
-export default function MobileNavigation() {
-    const { data: session, status } = useSession();
+type MobileNavigationProps = {
+    user?: User;
+};
+
+export default function MobileNavigation({ user }: MobileNavigationProps) {
     const router = useRouter();
-    const userId = session?.user?.profile.sub;
     return (
         <div className="fixed bottom-0 z-30 w-full md:hidden">
             <nav className="flex bg-primary-600">
                 <section className="mx-m flex h-[70px] w-full flex-row items-center justify-between">
                     <div className="flex w-7xl justify-start">
-                        <LoginButton isLoggedIn={status === 'authenticated'} navBar={true} />
+                        <LoginButton isLoggedIn={!!user} navBar={true} />
                     </div>
                     <div className="self-end rounded-full border-8 border-primary-600">
                         <Link href={APP_ROUTES.HOME}>
@@ -29,13 +31,13 @@ export default function MobileNavigation() {
                         <NaviUser
                             onClick={() =>
                                 router.push(
-                                    userId
-                                        ? getRoute(APP_ROUTES.USER, userId)
+                                    user
+                                        ? getRoute(APP_ROUTES.USER, user.id)
                                         : getRoute(APP_ROUTES.LOGIN),
                                 )
                             }
-                            avatarSrc={session?.user?.image || ''}
-                            avatarAlt={session?.user?.name || ''}
+                            avatarSrc={user?.avatarUrl}
+                            avatarAlt={`${user?.username} Profil öffnen`}
                         />
                     </div>
                 </section>

@@ -14,8 +14,9 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 type ModalImageUploadProps = {
-    onChange: (image: string) => void;
-    inputRef: React.RefObject<HTMLInputElement>;
+    onChange?: (image: string) => void;
+    onUpload?: (image: File) => void;
+    inputRef?: React.RefObject<HTMLInputElement>;
     isOpen: boolean;
     onSubmit: () => void;
     onCancel: () => void;
@@ -23,6 +24,7 @@ type ModalImageUploadProps = {
 
 export default function ModalImageUpload({
     onChange,
+    onUpload,
     inputRef,
     isOpen,
     onSubmit,
@@ -33,13 +35,15 @@ export default function ModalImageUpload({
     return (
         <Modal
             onSubmit={() => {
-                onSubmit();
-                if (currentImageEvent && inputRef.current && currentImageEvent) {
+                if (currentImageEvent) {
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(currentImageEvent);
-                    inputRef.current.files = dataTransfer.files;
                     onChange?.(URL.createObjectURL(dataTransfer.files[0]));
+                    if (inputRef && inputRef.current) {
+                        inputRef.current.files = dataTransfer.files;
+                    }
                 }
+                onSubmit();
             }}
             onCancel={onCancel}
             isOpen={isOpen}
@@ -53,13 +57,16 @@ export default function ModalImageUpload({
                 Icon={IconUpload}
                 label="Datei hierhin ziehen..."
                 labelButton="... oder Datei auswählen"
-                onLoadFile={(file) => setCurrentImageEvent(file)}
+                onLoadFile={(file) => {
+                    setCurrentImageEvent(file);
+                    onUpload?.(file);
+                }}
             />
-            <div className="flex flex-row self-center">
+            <div className="flex flex-row gap-xs self-center">
                 {currentImageEvent ? (
-                    <IconCheckmark className="mr-xs fill-primary-600" />
+                    <IconCheckmark className="fill-primary-600" />
                 ) : (
-                    <IconCancel className="mr-xs fill-slate-400" />
+                    <IconCancel className="fill-slate-400" />
                 )}
                 <Label
                     size={LabelSize.S}
@@ -68,7 +75,7 @@ export default function ModalImageUpload({
                         currentImageEvent ? 'text-primary-600' : 'text-slate-400',
                     )}
                 >
-                    {!currentImageEvent && 'Kein '}Bild gewählt
+                    {!currentImageEvent && 'Kein '}Bild hochgeladen
                 </Label>
             </div>
         </Modal>

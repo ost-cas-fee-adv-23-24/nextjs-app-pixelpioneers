@@ -1,9 +1,6 @@
 export enum APP_ROUTES {
     POST = '/post/[id]',
     USER = '/user/[id]',
-    // TODO: Followers, login & settings ?
-    USER_FOLLOWERS = '/user/[id]/followers',
-    SETTINGS = '/settings',
     LOGIN = '/login',
     HOME = '/',
 }
@@ -20,15 +17,7 @@ export enum API_ROUTES {
     USERS_ID_FOLLOWEES = '/users/[id]/followees',
     USERS = '/users',
     USERS_ID = '/users/[id]',
-    USERS_AVATAR = '/posts/avatar',
-}
-
-export enum PostEvent {
-    CREATED = 'postCreated',
-    UPDATED = 'postUpdated',
-    DELETED = 'postDeleted',
-    LIKED = 'postLiked',
-    UNLIKED = 'postUnliked',
+    USERS_AVATAR = '/users/avatar',
 }
 
 export const getRoute = (
@@ -36,6 +25,24 @@ export const getRoute = (
     id = '',
     options?: Record<string, string[] | string | number>,
 ): string => `${route.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
+
+export enum Tag {
+    USER = 'user-[id]',
+    USERS = 'users',
+    FOLLOWERS = 'followers-[id]',
+    FOLLOWEES = 'followees-[id]',
+    POST = 'post-[id]',
+    POSTS = 'posts',
+    REPLIES = 'replies-[id]',
+}
+
+export function getTag(
+    tag: Tag,
+    id = '',
+    options?: Record<string, string[] | string | number>,
+): string {
+    return `${tag.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
+}
 
 const getRouteOptions = (options: Record<string, string[] | string | number>): string => {
     let optionString = '?';
@@ -58,6 +65,10 @@ const getRouteOptions = (options: Record<string, string[] | string | number>): s
     });
     return optionString;
 };
+
+export enum PostEvent {
+    CREATED = 'postCreated',
+}
 
 export function getPostEventSource() {
     return new EventSource(
