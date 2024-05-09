@@ -3,9 +3,8 @@
     "id": "base",
     "routes": [
       "add-headers:enabled",
-      "get-posts:success",
-      "get-user_andre:success",
       "get-users:success",
+      "get-user_andre:success",
       "get-followees_andre:success",
       "get-followers_andre:success"
     ]
@@ -16,14 +15,22 @@
     "routes": ["add-headers:disabled"]
   },
   {
-    "id": "all-posts",
-    "from": "base",
-    "routes": ["get-posts:success"]
-  },
-  {
     "id": "reply-1",
     "from": "base",
     "routes": [
+      "get-posts:success",
+      "get-post_1:success",
+      "get-reply_1:success",
+      "put-like-a-post_1:success",
+      "delete-like-a-post_1:success",
+      "create-a-post:success"
+    ]
+  },
+  {
+    "id": "updated-posts",
+    "from": "base",
+    "routes": [
+      "get-posts:updated",
       "get-post_1:success",
       "get-reply_1:success",
       "put-like-a-post_1:success",

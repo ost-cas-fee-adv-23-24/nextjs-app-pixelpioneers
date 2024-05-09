@@ -118,6 +118,12 @@ For the directory: `/mocks-server/`
 
 `docker build --no-cache -t mock:test .`
 
+## Switch the collection
+
+`curl -X PATCH -d '{"mock":{"collections":{"selected":"reply-1"}}}' -H 'Content-Type: application/json' http://localhost:3110/api/config`
+
+Check also the existed collections from there: `http://localhost:3110/docs/`
+
 ## e2e Test files
 
 All e2e Test files are located in `tests/` folder.

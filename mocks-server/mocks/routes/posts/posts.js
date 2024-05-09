@@ -1,4 +1,5 @@
 const posts = require('../../posts');
+const postsUpdated = require('../../posts_updated');
 
 module.exports = [
     {
@@ -15,11 +16,11 @@ module.exports = [
                 },
             },
             {
-                id: 'all',
+                id: 'updated',
                 type: 'json',
                 options: {
                     status: 200,
-                    body: posts,
+                    body: postsUpdated,
                 },
             },
             {

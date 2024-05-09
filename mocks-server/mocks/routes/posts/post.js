@@ -134,4 +134,29 @@ module.exports = [
             },
         ],
     },
+    {
+        id: 'create-a-post',
+        url: '/api/posts',
+        method: 'POST',
+        variants: [
+            {
+                id: 'success',
+                type: 'json',
+                options: {
+                    status: 200,
+                    body: {},
+                },
+            },
+            {
+                id: 'error',
+                type: 'json',
+                options: {
+                    status: 400,
+                    body: {
+                        message: 'Error by creating a post',
+                    },
+                },
+            },
+        ],
+    },
 ];
