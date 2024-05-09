@@ -81,7 +81,7 @@ export async function getPost(postId: string): Promise<ActionResponse<Post>> {
                 },
                 session?.accessToken,
                 [getTag(Tag.POST, postId)],
-                RevalidationTime.LONG,
+                RevalidationTime.MEDIUM,
             )) as Post,
         );
         return dataResponse(post);

@@ -55,7 +55,7 @@ export default function DisplayName({
     return (
         <section className="relative flex flex-row">
             {variant === DisplayNameVariant.REPLY && (
-                <div className="relative pr-xs">
+                <div className="relative self-center pr-xs">
                     <Link href={getRoute(APP_ROUTES.USER, user.id)}>
                         <Avatar
                             desktopSize={AvatarSize.S}
@@ -100,9 +100,6 @@ export default function DisplayName({
                             label={timeFromNow(postTimestamp)}
                             variant={Variant.SECONDARY}
                             Icon={IconTime}
-                            // since timestamps will have time differences from server to client
-                            // TODO: does not work like this
-                            suppressHydrationWarning
                         />
                     )}
                     {location && (

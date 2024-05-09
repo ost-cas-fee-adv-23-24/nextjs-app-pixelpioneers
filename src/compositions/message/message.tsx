@@ -7,7 +7,6 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
 import MessageActions from '@/src/compositions/message/message-actions';
-import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
@@ -15,6 +14,7 @@ import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import Link from 'next/link';
 import LinkWrapper from '@/src/components/link-wrapper/link-wrapper';
 import Avatar from '@/src/components/avatar/avatar';
+import MessageImage from '@/src/compositions/message/message-image';
 
 type MessageProps = {
     message: Message;
@@ -96,24 +96,11 @@ export default function Message({ message, displayVariant, children }: MessagePr
                     </LinkWrapper>
                 )}
                 {message.mediaUrl && (
-                    <section className="relative h-auto w-full transition duration-500 md:h-[320px]">
-                        <Image
-                            className="rounded-s"
-                            alt={`Bild von ${message.creator.username}`}
-                            src={message.mediaUrl}
-                            datatype={message.mediaType}
-                            quality={75}
-                            priority
-                            height={320}
-                            width={584}
-                            aria-label={`Bild von ${message.creator.username}`}
-                            style={{
-                                objectFit: 'cover',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        />
-                    </section>
+                    <MessageImage
+                        username={user.username}
+                        imageUrl={message.mediaUrl}
+                        imageType={message.mediaType}
+                    />
                 )}
             </div>
 
