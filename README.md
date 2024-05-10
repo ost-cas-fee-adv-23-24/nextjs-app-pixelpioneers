@@ -13,7 +13,7 @@
     <img src="https://raw.githubusercontent.com/ost-cas-fee-adv-23-24/design-system-component-library-pixelpioneers/main/src/docs/assets/mumble-logo.png" alt="PixelPioneers">
   </a>
 
-[Next.js App](http://localhost:3000/) 🚀
+[Next.js App](https://rococo-churros-9a687a.netlify.app/) 🚀
 
 </section>
 
@@ -49,6 +49,7 @@ This is a Mumble project which we attend the CAS Frontend Engineering Advanced c
 - [**src/models**](src/models): Models
 - [**src/services**](src/services): Services
 
+- [**app/actions**](src/actions): Home, Create Post and Posts
 - [**app/actions**](src/actions): Actions
 - [**app/api/auth**](src/api): API and Auth
 - [**src/login**](src/login): Login
@@ -74,12 +75,6 @@ Open your browser to see the result.
 `npm run build` creates you a `build` directory.
 
 `npm run start` starts the Next.js web application.
-
-`npm run test` launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
-information.
-
-`npm run test:jest` runs Jest tests.
 
 `npm run test:pw` runs Playwright tests.
 
@@ -150,9 +145,10 @@ git clone https://github.com/ost-cas-fee-adv-23-24/nextjs-app-pixelpioneers
 npm install
 ```
 
-3. Adjust environment variables: `.env.local`
+3. Adjust environment variables: `.env.local` and `.env.test`
 
-[.env.local](.env.local)
+- [.env.local](.env.local)
+- [.env.test](.env.test)
 
 4. Run the app in dev mode
 
