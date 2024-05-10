@@ -22,7 +22,7 @@ export default function ModalImageBox({
             onCancel={onClose}
             isOpen={isOpen}
             title={`Bild von ${username}`}
-            size={ModalWidth.M} // TODO: Size L
+            size={ModalWidth.L}
             hideActions
         >
             {isOpen ? (
@@ -44,7 +44,7 @@ export default function ModalImageBox({
                     loading="lazy"
                 />
             ) : (
-                <div className="h-[200px] w-full animate-pulse bg-gradient-to-r from-tertiary-500 to-primary-500 md:h-[320px] md:rounded-m" />
+                <div className="h-[200px] w-full animate-pulse bg-slate-300 md:h-[650px] md:rounded-m" />
             )}
         </Modal>
     );

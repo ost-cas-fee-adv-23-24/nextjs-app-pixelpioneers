@@ -31,6 +31,8 @@ export default function MessageImage({ imageUrl, imageType, username }: MessageI
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
+                        maxWidth: '584px',
+                        maxHeight: '320px',
                     }}
                 />
             </button>
