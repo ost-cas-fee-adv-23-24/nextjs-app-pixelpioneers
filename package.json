@@ -33,9 +33,7 @@
     "prettier": "prettier --log-level warn --write \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
     "prettier:check": "prettier --log-level warn --check \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
     "start": "next start",
-    "test": "npm run test:jest && npm run test:pw",
-    "test:jest": "jest",
-    "test:pw": "npm run dev:testmock & npx playwright test -",
+    "test:pw": "npm run dev:testmock & npx playwright test",
     "test:pw:debug": "npm run test:pw -- --debug",
     "test:pw:headed": "npm run test:pw -- --headed"
   },

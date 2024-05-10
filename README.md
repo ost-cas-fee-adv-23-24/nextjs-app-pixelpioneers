@@ -249,7 +249,7 @@ Don't forget to give the project a star! ⭐️ Thanks! 🙏
 
 ## Test Mocking
 
-See the setup of Mocks Server in /docs/mocks-server-setup.md and getting started quite there: mocks-server-getting-started.md.
+See the setup and usage of Mocks Server in `/docs/mocks-server-getting-started.md`.
 
 ## Licence
 
