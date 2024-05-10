@@ -4,9 +4,9 @@
     "routes": [
       "add-headers:enabled",
       "get-users:success",
-      "get-user_andre:success",
-      "get-followees_andre:success",
-      "get-followers_andre:success"
+      "get-user_a:success",
+      "get-followees_a:success",
+      "get-followers_a:success"
     ]
   },
   {
@@ -27,14 +27,18 @@
     ]
   },
   {
-    "id": "updated-posts",
+    "id": "add-reply-in-post",
+    "from": "base",
+    "routes": ["get-posts:updated", "get-post_1:newAddedPost", "get-reply_1:addNewReply"]
+  },
+  {
+    "id": "added-reply-in-post",
     "from": "base",
     "routes": [
-      "get-posts:updated",
-      "get-post_1:success",
-      "get-reply_1:success",
-      "put-like-a-post_1:success",
-      "delete-like-a-post_1:success"
+      "get-posts:lastUpdated",
+      "get-post_1:updateAddedPost",
+      "post-reply_1:success",
+      "get-reply_1:addedNewReply"
     ]
   },
   {

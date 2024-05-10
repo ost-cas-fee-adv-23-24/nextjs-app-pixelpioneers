@@ -1,3 +1,5 @@
+const addNewReplyInPost = require('../../addNewReplyInPost');
+const updateAddedPost = require('../../updateAddedPost');
 const post_1 = require('../../post_1');
 const post_2 = require('../../post_2');
 
@@ -13,6 +15,22 @@ module.exports = [
                 options: {
                     status: 200,
                     body: post_1,
+                },
+            },
+            {
+                id: 'newAddedPost',
+                type: 'json',
+                options: {
+                    status: 200,
+                    body: addNewReplyInPost,
+                },
+            },
+            {
+                id: 'updateAddedPost',
+                type: 'json',
+                options: {
+                    status: 200,
+                    body: updateAddedPost,
                 },
             },
             {

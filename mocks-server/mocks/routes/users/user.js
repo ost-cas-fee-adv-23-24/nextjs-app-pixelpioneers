@@ -1,8 +1,8 @@
-const user_andre = require('../../user_andre');
+const user_a = require('../../user_a');
 
 module.exports = [
     {
-        id: 'get-user_andre',
+        id: 'get-user_a',
         url: '/api/users/:id',
         method: 'GET',
         variants: [
@@ -11,7 +11,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: user_andre,
+                    body: user_a,
                 },
             },
             {
@@ -19,7 +19,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: user_andre,
+                    body: user_a,
                 },
             },
             {

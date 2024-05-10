@@ -2,7 +2,7 @@ module.exports = {
     count: 15,
     data: [
         {
-            replies: 1,
+            replies: 2,
             id: '01HXC25TE4SQNMQHHZZ5VP8BPR',
             creator: {
                 id: '245809311459051537',

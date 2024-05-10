@@ -1,8 +1,8 @@
-const user_followees_andre = require('../../users_followees_andre');
+const user_followees_a = require('../../users_followees_a');
 
 module.exports = [
     {
-        id: 'get-followees_andre',
+        id: 'get-followees_a',
         url: '/api/users/:id/followees',
         method: 'GET',
         variants: [
@@ -11,7 +11,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: user_followees_andre,
+                    body: user_followees_a,
                 },
             },
             {
@@ -19,7 +19,7 @@ module.exports = [
                 type: 'json',
                 options: {
                     status: 200,
-                    body: user_followees_andre,
+                    body: user_followees_a,
                 },
             },
             {

@@ -38,7 +38,7 @@ module.exports = {
                 id: '245808067160180753',
                 username: 'nico',
                 avatarUrl:
-                    'https://storage.googleapis.com/mumble-api-data/3dd7812f-1161-4ba2-915d-e38ae9a3e251',
+                    'https://storage.googleapis.com/mumble-api-data/bac42bab-5629-456a-8da7-2e64e1e3d9e6',
             },
             text: 'hello from API 2',
             mediaUrl: null,
@@ -53,7 +53,7 @@ module.exports = {
                 id: '245808067160180753',
                 username: 'nico',
                 avatarUrl:
-                    'https://storage.googleapis.com/mumble-api-data/3dd7812f-1161-4ba2-915d-e38ae9a3e251',
+                    'https://storage.googleapis.com/mumble-api-data/bac42bab-5629-456a-8da7-2e64e1e3d9e6',
             },
             text: 'hello from API',
             mediaUrl: null,
@@ -83,7 +83,7 @@ module.exports = {
                 id: '245808067160180753',
                 username: 'nico',
                 avatarUrl:
-                    'https://storage.googleapis.com/mumble-api-data/3dd7812f-1161-4ba2-915d-e38ae9a3e251',
+                    'https://storage.googleapis.com/mumble-api-data/bac42bab-5629-456a-8da7-2e64e1e3d9e6',
             },
             text: 'hello',
             mediaUrl: null,
@@ -160,7 +160,7 @@ module.exports = {
                 id: '245808067160180753',
                 username: 'nico',
                 avatarUrl:
-                    'https://storage.googleapis.com/mumble-api-data/3dd7812f-1161-4ba2-915d-e38ae9a3e251',
+                    'https://storage.googleapis.com/mumble-api-data/bac42bab-5629-456a-8da7-2e64e1e3d9e6',
             },
             text: 'newww',
             mediaUrl: null,
@@ -207,7 +207,7 @@ module.exports = {
                 id: '245808067160180753',
                 username: 'nico',
                 avatarUrl:
-                    'https://storage.googleapis.com/mumble-api-data/3dd7812f-1161-4ba2-915d-e38ae9a3e251',
+                    'https://storage.googleapis.com/mumble-api-data/bac42bab-5629-456a-8da7-2e64e1e3d9e6',
             },
             text: 'i',
             mediaUrl: null,

@@ -18,7 +18,7 @@ This document will guide you through the setup of Mocks Server (Mocking). Mocks 
 5. For test: Go to: `./mocks-server` directory
 6. Via Terminal: `docker run -ti -p 3100:3100 -p 3110:3110 mocksserver/main`
 
-When we did build a self contained image, so we can skep these steps until to 12.
+When we did build a self contained image, so we can skep these steps to 14.
 
 7. Pulling from `mocksserver/main` (it needs for the local machine)
 8. Message will appears: Configuration file was not found. A scaffold was created. We can continue.
@@ -61,6 +61,8 @@ More info see there: [mocks-server: Organizing files](https://www.mocks-server.o
 `docker build -t mock:test .`
 
 14. Run mock test
+
+Go to the directory: `/mocks-server/`
 
 `docker run -ti -p 3100:3100 -p 3110:3110 mock:test`
 
@@ -108,15 +110,15 @@ The Web App should be started with the mock data.
 
 ## Additional information
 
-Sometimes this command can be useful for cleaning the cache (remove .next folder and rebuild again):
-
-For the directory: `/nextjs-app-pixelmator/`
-
-`"dev:testmock": "rm -rf .next && NODE_ENV=test next dev`
+Sometimes this command can be useful for cleaning the cache (if neccessary, remove the .next folder and rebuild the app again):
 
 For the directory: `/mocks-server/`
 
 `docker build --no-cache -t mock:test .`
+
+For the directory: `/nextjs-app-pixelmator/`
+
+`"dev:testmock": "rm -rf .next && NODE_ENV=test next dev`
 
 ## Switch the collection
 
