@@ -64,6 +64,8 @@ export default function EditAvatar({
                     }
                 }}
                 onCancel={() => setIsOpen(false)}
+                maxFileUploadSizeBytes={524288}
+                fileSizeLabel="JPEG oder PNG, maximal 0.5 MB"
             />
         </>
     );

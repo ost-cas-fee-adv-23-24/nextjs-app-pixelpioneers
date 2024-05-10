@@ -131,6 +131,8 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                     isOpen={isOpen}
                     onSubmit={() => setIsOpen(false)}
                     onCancel={() => setIsOpen(false)}
+                    maxFileUploadSizeBytes={2097152}
+                    fileSizeLabel="JPEG oder PNG, maximal 2 MB"
                 />
             </form>
         </section>
