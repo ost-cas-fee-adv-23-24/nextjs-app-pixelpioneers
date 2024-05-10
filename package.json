@@ -26,6 +26,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:testmock": "NODE_ENV=test next dev",
     "lint": "next lint",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
@@ -34,9 +35,9 @@
     "start": "next start",
     "test": "npm run test:jest && npm run test:pw",
     "test:jest": "jest",
-    "test:pw": "npx playwright test",
-    "test:pw:debug": "npm run test:playwright -- --debug",
-    "test:pw:headed": "npm run test:playwright -- --headed"
+    "test:pw": "npm run dev:testmock & npx playwright test -",
+    "test:pw:debug": "npm run test:pw -- --debug",
+    "test:pw:headed": "npm run test:pw -- --headed"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -70,6 +71,7 @@
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.6",
     "@types/node": "^20.8.3",
+    "dotenv": "^16.4.5",
     "eslint": "^8.52.0",
     "eslint-config-next": "^13.5.6",
     "eslint-plugin-import": "^2.29.0",

@@ -14,6 +14,7 @@ type LoginButtonProps = {
     navBar?: boolean;
     loginLabel?: string;
     logoutLabel?: string;
+    testId?: string;
 };
 
 export default function LoginButton({
@@ -21,6 +22,7 @@ export default function LoginButton({
     navBar = false,
     loginLabel = 'Log in',
     logoutLabel = 'Log out',
+    testId,
 }: LoginButtonProps) {
     const label = isLoggedIn ? logoutLabel : loginLabel;
     const onClick = () => (isLoggedIn ? signOut() : signIn('zitadel'));
@@ -33,6 +35,7 @@ export default function LoginButton({
                     label={label}
                     Icon={IconLogoutAnimated}
                     onClick={onClick}
+                    data-testid={testId}
                 />
             </div>
         );
@@ -44,6 +47,7 @@ export default function LoginButton({
             label={label}
             Icon={IconLogoutAnimated}
             onClick={onClick}
+            data-testid={testId}
         />
     );
 }

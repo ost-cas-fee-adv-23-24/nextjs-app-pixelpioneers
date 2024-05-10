@@ -22,7 +22,7 @@ export default function Navigation({ user }: NavigationProps) {
         <nav className="fixed top-0 z-30 hidden h-[80px] w-full items-center justify-around bg-primary-600 md:flex">
             <div className="mx-0 flex w-container flex-row justify-between">
                 <section className="flex items-center">
-                    <Link href={APP_ROUTES.HOME}>
+                    <Link href={APP_ROUTES.HOME} data-testid="testHomeLink">
                         <LogoMumbleHorizontal
                             titleClasses="fill-white"
                             iconClasses="fill-white"
@@ -43,6 +43,7 @@ export default function Navigation({ user }: NavigationProps) {
                         }
                         avatarSrc={user?.avatarUrl}
                         avatarAlt={`${user?.username} Profil öffnen`}
+                        data-testid="testNaviUserButton"
                     />
                     <NaviButton
                         size={ButtonSize.L}
@@ -50,7 +51,7 @@ export default function Navigation({ user }: NavigationProps) {
                         Icon={IconSettingsAnimated}
                         disabled
                     />
-                    <LoginButton isLoggedIn={!!user} navBar={true} />
+                    <LoginButton isLoggedIn={!!user} navBar={true} testId="testLoginButton"/>
                 </section>
             </div>
         </nav>

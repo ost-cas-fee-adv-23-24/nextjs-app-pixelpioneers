@@ -1,4 +1,4 @@
-import { Message } from '@/src/models/message.model';
+import type { Message } from '@/src/models/message.model';
 import React, { ReactNode } from 'react';
 import {
     AvatarSize,
@@ -56,7 +56,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
     return (
-        <div className={messageClasses}>
+        <div className={messageClasses} data-testid="testPostMessage">
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
                 {!isVariant(MessageDisplayVariant.INLINE) && (
                     <div className={avatarClasses}>
@@ -90,6 +90,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                                     ? ParagraphSize.L
                                     : ParagraphSize.M
                             }
+                            data-testid="testPostData"
                         >
                             {message.text}
                         </Paragraph>

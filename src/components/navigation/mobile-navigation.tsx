@@ -18,7 +18,8 @@ export default function MobileNavigation({ user }: MobileNavigationProps) {
             <nav className="flex bg-primary-600">
                 <section className="mx-m flex h-[70px] w-full flex-row items-center justify-between">
                     <div className="flex w-7xl justify-start">
-                        <LoginButton isLoggedIn={!!user} navBar={true} />
+                        <LoginButton isLoggedIn={!!user} navBar={true} testId="testLoginButtonMobile" />
+
                     </div>
                     <div className="self-end rounded-full border-8 border-primary-600">
                         <Link href={APP_ROUTES.HOME}>
@@ -38,6 +39,7 @@ export default function MobileNavigation({ user }: MobileNavigationProps) {
                             }
                             avatarSrc={user?.avatarUrl}
                             avatarAlt={`${user?.username} Profil öffnen`}
+                            data-testid="testNaviUserButtonMobile"
                         />
                     </div>
                 </section>

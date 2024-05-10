@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.setup.js",
-    "jest.config.js"
+    "jest.config.js",
+    "tests/e2e/globalSetup.js"
   ],
   "exclude": ["node_modules"]
 }
