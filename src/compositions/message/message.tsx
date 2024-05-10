@@ -84,7 +84,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         route={getRoute(APP_ROUTES.POST, message.id)}
                     >
                         <Paragraph
-                            className="text-secondary-900"
+                            className="break-all text-secondary-900"
                             size={
                                 isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                     ? ParagraphSize.L

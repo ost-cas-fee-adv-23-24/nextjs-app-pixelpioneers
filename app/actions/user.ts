@@ -182,7 +182,6 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
     }
 }
 
-// TODO: use
 export async function removeAvatar(): Promise<ActionResponse<void>> {
     const session = await auth();
     if (session === null || session.accessToken === undefined) {

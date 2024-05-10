@@ -2,9 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 
 export default function UserSkeleton() {
-    // TODO: use
     const skeletonText = 'w-full rounded-m bg-slate-300';
-
     return (
         <section className="flex h-[220px] w-[216px] items-center justify-around rounded-m border-slate-300 md:content-center">
             <div className="flex h-full w-full animate-pulse flex-col items-center justify-center space-y-m p-m">

@@ -3,7 +3,6 @@ import { APP_ROUTES } from '@/src/helpers/routes';
 import Link from 'next/link';
 
 export default async function MobileHeader() {
-    // TODO: settings button
     return (
         <div className="fixed top-0 z-30 h-[50px] w-full bg-primary-600 md:hidden">
             <div className="relative flex">

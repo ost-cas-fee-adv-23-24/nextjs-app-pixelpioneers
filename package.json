@@ -48,7 +48,7 @@
     ]
   },
   "dependencies": {
-    "@ost-cas-fee-adv-23-24/design-system-pixelpioneers": "^5.7.1",
+    "@ost-cas-fee-adv-23-24/design-system-pixelpioneers": "^5.7.2",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",

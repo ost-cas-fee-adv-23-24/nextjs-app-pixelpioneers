@@ -43,7 +43,6 @@ export default function MessageActions({ message, displayVariant }: MessageActio
                         router.push(getRoute(APP_ROUTES.LOGIN));
                     }
 
-                    // TODO: set tags here already? also evaluate error
                     const response = JSON.parse(
                         await likePost(
                             message.id,
