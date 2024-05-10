@@ -11,8 +11,6 @@ test.describe('should have a post liked ', () => {
 
         if (likeButton.length >= 2) {
             await likeButton[14].click();
-        } else {
-            console.info('Less than 2 Like Button found!');
         }
         await page.waitForTimeout(3000);
 
@@ -34,8 +32,6 @@ test.describe('should have a post liked ', () => {
 
         if (likeButton.length >= 2) {
             await likeButton[14].click();
-        } else {
-            console.info('Less than 2 Like Button found!');
         }
         await page.waitForTimeout(3000);
         await likeButton[14].click();

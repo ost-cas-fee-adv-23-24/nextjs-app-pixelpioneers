@@ -25,7 +25,6 @@ setup('authenticate', async ({ page }) => {
     await page.getByLabel('Password').fill(process.env.TEST_PASSWORD);
     await page.getByRole('button', { name: 'Next' }).click();
 
-    // TODO: Need to check again - what the cleanest way
     await page.goto('/');
 
     await page.waitForURL('/');

@@ -13,8 +13,6 @@ test.describe('should get the list of posts and navigate to the reply ', () => {
 
         if (commentButton.length >= 2) {
             await commentButton[14].click();
-        } else {
-            console.info('Less than 2 Comment Button found!');
         }
 
         await page.waitForTimeout(4000);

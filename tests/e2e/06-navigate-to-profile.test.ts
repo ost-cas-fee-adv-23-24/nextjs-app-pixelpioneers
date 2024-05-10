@@ -10,8 +10,6 @@ test.describe('should have a profile route navigated ', () => {
         const naviUserButton = await page.$$('[data-testid="testNaviUserButton"]');
         if (naviUserButton.length === 1) {
             await naviUserButton[0].click();
-        } else {
-            console.info('No NaviUser button exists!');
         }
 
         await page.waitForTimeout(4000);

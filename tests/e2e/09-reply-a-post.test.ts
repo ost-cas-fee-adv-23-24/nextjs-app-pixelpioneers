@@ -12,8 +12,6 @@ test.describe('should have created a reply in a post ', () => {
 
         if (commentButton.length >= 2) {
             await commentButton[0].click();
-        } else {
-            console.info('Less than 2 Comment Button found!');
         }
 
         await page.waitForTimeout(4000);
@@ -31,8 +29,6 @@ test.describe('should have created a reply in a post ', () => {
         const newCommentButton = await page.$$('[data-testid="testCommentButton"]');
         if (newCommentButton.length >= 2) {
             await newCommentButton[0].click();
-        } else {
-            console.info('Less than 2 Comment Button found!');
         }
         await page.waitForTimeout(4000);
 
