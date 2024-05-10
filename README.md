@@ -53,7 +53,7 @@ This is a Mumble project which we attend the CAS Frontend Engineering Advanced c
 - [**app/api/auth**](src/api): API and Auth
 - [**src/login**](src/login): Login
 - [**src/post**](src/post): Post
-- [**src/post**](src/user): User
+- [**src/user**](src/user): User, Posts
 
 ## Run scripts
 
