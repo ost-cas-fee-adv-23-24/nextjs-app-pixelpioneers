@@ -49,11 +49,7 @@ This is a Mumble project which we attend the CAS Frontend Engineering Advanced c
 - [**src/models**](src/models): Models
 - [**src/services**](src/services): Services
 
-- [**app/actions**](src/actions): Actions, Home, Create Post and Posts
-- [**app/api/auth**](src/api): API and Auth
-- [**src/login**](src/login): Login
-- [**src/post**](src/post): Post
-- [**src/user**](src/user): User, Posts
+- [**app/**](app/): Actions, Auth, Home, Create Post, User and Posts
 
 ## Run scripts
 
