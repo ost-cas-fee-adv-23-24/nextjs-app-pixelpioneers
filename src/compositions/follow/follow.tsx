@@ -52,14 +52,14 @@ export default function Follow({ user }: FollowProps) {
 
     return state.error ? (
         <ErrorPage
-            errorMessage={state.error.message}
+            errorMessage={state.error}
             errorTitle={'Folgen-Status konnte nicht geladen werden.'}
             fullPage={false}
         />
     ) : state.isLoading ? (
         <FollowSkeleton />
     ) : (
-        <div className="flex flex-row items-center gap-m">
+        <div className="flex flex-row items-center gap-s">
             <Label type={LabelType.SPAN} size={LabelSize.M} className="text-secondary-400">
                 {`Du folgst ${name} ${state.isFollowing ? '' : 'nicht'}`}
             </Label>

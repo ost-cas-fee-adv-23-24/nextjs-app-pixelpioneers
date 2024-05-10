@@ -1,6 +1,6 @@
 import { User } from './user.model';
 import { z } from 'zod';
-import { FilterOptions } from '@/src/models/paginate.model';
+import { PaginationOptions } from '@/src/models/paginate.model';
 
 export const CreatePostSchema = z.union([
     z.object({
@@ -35,7 +35,7 @@ export type Post = {
  * - offset; pagination
  * - limit; pagination
  */
-export type PostFilterOptions = FilterOptions &
+export type FilterOptions = PaginationOptions &
     Partial<{
         newerThan: string;
         olderThan: string;

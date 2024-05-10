@@ -8,6 +8,7 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Poppins } from 'next/font/google';
 import clsx from 'clsx';
 import MobileHeader from '@/src/components/header/mobile-header';
+import { getLoggedInUser } from '@/app/actions/utils';
 
 export const metadata: Metadata = {
     manifest: '/manifest.json',
@@ -29,16 +30,18 @@ const poppins = Poppins({
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
     const session = await auth();
+    const user = await getLoggedInUser();
+
     return (
         <html lang="en" dir="ltr">
-            <body className={clsx('min-h-screen bg-secondary-100', poppins.className)}>
+            <body className={clsx('bg-secondary-100', poppins.className)}>
                 <SessionProvider session={session}>
                     <MobileHeader />
-                    <Navigation />
+                    <Navigation user={user} />
                     <main className="mb-[100px] mt-[50px] flex flex-col items-center md:mb-l md:mt-[112px]">
                         {children}
                     </main>
-                    <MobileNavigation />
+                    <MobileNavigation user={user} />
                 </SessionProvider>
             </body>
         </html>

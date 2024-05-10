@@ -1,11 +1,12 @@
 import { ProfilePostType } from '@/src/models/profile.model';
 import { Message } from '@/src/models/message.model';
+import { ErrorType } from '@/src/models/action.model';
 
 export type ProfileState = {
     activeType: ProfilePostType;
     posts: Message[];
     nextUrl?: string;
-    error?: Error;
+    error?: ErrorType;
 };
 
 export enum ProfileActionType {
@@ -22,4 +23,4 @@ export type ProfileAction =
           posts: Message[];
           nextUrl?: string;
       }
-    | { type: ProfileActionType.POSTS_ERROR; error: Error };
+    | { type: ProfileActionType.POSTS_ERROR; error: ErrorType };

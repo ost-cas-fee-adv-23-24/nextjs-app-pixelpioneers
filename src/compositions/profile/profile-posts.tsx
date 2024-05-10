@@ -26,6 +26,18 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
         error: undefined,
     });
 
+    // check on revalidated posts from server if activeType CREATED_BY
+    useEffect(() => {
+        if (state.activeType === ProfilePostType.CREATED_BY) {
+            dispatch({
+                type: ProfileActionType.POSTS_LOADED,
+                posts: paginatedPosts.data,
+                nextUrl: paginatedPosts.next,
+            });
+        }
+    }, [paginatedPosts, state.activeType]);
+
+    // load posts on tab switch or load more button
     useEffect(() => {
         const loadProfilePosts = async () => {
             const postsResponse = await getPosts({
@@ -67,7 +79,7 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
             <section className="flex flex-col gap-s">
                 {state.error ? (
                     <ErrorPage
-                        errorMessage={state.error.message}
+                        errorMessage={state.error}
                         errorTitle={`Posts konnten nicht geladen werden.`}
                         fullPage={false}
                     />

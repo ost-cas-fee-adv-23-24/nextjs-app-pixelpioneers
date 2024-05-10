@@ -5,7 +5,7 @@ export type PaginatedResult<T> = {
     previous?: string;
 };
 
-export type FilterOptions = Partial<{
+export type PaginationOptions = Partial<{
     limit: number;
     offset: number;
 }>;

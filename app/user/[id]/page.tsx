@@ -3,8 +3,9 @@ import { UserState } from '@/src/models/user.model';
 import { getProfile } from '@/app/actions/profile';
 import ProfileHeader from '@/src/compositions/profile/profile-header';
 import { notFound } from 'next/navigation';
-import LoginButton from '@/src/components/login/login-button';
 import React from 'react';
+import LoginToProceed from '@/src/components/login/login-to-proceed';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
 
 export default async function UserPage({ params }: { params: { id: string } }) {
     const profileHeaderResponse = await getProfile(params.id);
@@ -22,10 +23,10 @@ export default async function UserPage({ params }: { params: { id: string } }) {
                 </section>
             )}
             {userState === UserState.LOGGED_OUT && (
-                <div className="flex flex-row items-center gap-xs">
-                    <LoginButton isLoggedIn={false} loginLabel="Logge dich jetzt ein" />
-                    <span>um {user.username} zu folgen.</span>
-                </div>
+                <LoginToProceed
+                    message={`um ${user.username} zu folgen.`}
+                    displayVariant={MessageDisplayVariant.TIMELINE}
+                />
             )}
         </>
     );

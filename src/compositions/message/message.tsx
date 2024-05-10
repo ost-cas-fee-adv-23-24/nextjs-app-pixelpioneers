@@ -1,20 +1,20 @@
 import { Message } from '@/src/models/message.model';
 import React, { ReactNode } from 'react';
 import {
-    Avatar,
     AvatarSize,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
 import MessageActions from '@/src/compositions/message/message-actions';
-import Image from 'next/image';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import Link from 'next/link';
 import LinkWrapper from '@/src/components/link-wrapper/link-wrapper';
+import Avatar from '@/src/components/avatar/avatar';
+import MessageImage from '@/src/compositions/message/message-image';
 
 type MessageProps = {
     message: Message;
@@ -23,6 +23,7 @@ type MessageProps = {
 };
 
 export default function Message({ message, displayVariant, children }: MessageProps) {
+    const user = message.creator;
     const isVariant = (variantToCheck: MessageDisplayVariant): boolean =>
         displayVariant === variantToCheck;
     const displayNameVariant = (): DisplayNameVariant => {
@@ -59,70 +60,51 @@ export default function Message({ message, displayVariant, children }: MessagePr
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
                 {!isVariant(MessageDisplayVariant.INLINE) && (
                     <div className={avatarClasses}>
-                        <Link href={getRoute(APP_ROUTES.USER, message.creator.id)}>
+                        <Link href={getRoute(APP_ROUTES.USER, user.id)}>
                             <Avatar
-                                // TODO: make size S on mobile
-                                size={AvatarSize.M}
-                                alt={`avatar from ${message.creator.username}`}
-                                src={message.creator.avatarUrl}
+                                desktopSize={AvatarSize.M}
+                                mobileSize={AvatarSize.S}
+                                avatarUrl={user.avatarUrl}
+                                username={user.username}
                             />
                         </Link>
                     </div>
                 )}
                 <DisplayName
-                    user={message.creator}
+                    user={user}
                     variant={displayNameVariant()}
                     postTimestamp={message.created}
                 />
             </div>
 
-            <LinkWrapper
-                enabled={isVariant(MessageDisplayVariant.TIMELINE)}
-                route={getRoute(APP_ROUTES.POST, message.id)}
-            >
+            <div className="flex flex-col gap-s">
                 {message.text && (
-                    <Paragraph
-                        // TODO: set in design system
-                        className="break-words text-secondary-900"
-                        size={
-                            isVariant(MessageDisplayVariant.DETAIL_VIEW)
-                                ? ParagraphSize.L
-                                : ParagraphSize.M
-                        }
+                    <LinkWrapper
+                        enabled={isVariant(MessageDisplayVariant.TIMELINE)}
+                        route={getRoute(APP_ROUTES.POST, message.id)}
                     >
-                        {message.text}
-                    </Paragraph>
+                        <Paragraph
+                            className="text-secondary-900"
+                            size={
+                                isVariant(MessageDisplayVariant.DETAIL_VIEW)
+                                    ? ParagraphSize.L
+                                    : ParagraphSize.M
+                            }
+                        >
+                            {message.text}
+                        </Paragraph>
+                    </LinkWrapper>
                 )}
                 {message.mediaUrl && (
-                    <section className="relative h-auto w-full transition duration-500 md:h-[320px]">
-                        <Image
-                            className="rounded-s"
-                            alt={`Bild von ${message.creator.username}`}
-                            src={message.mediaUrl}
-                            datatype={message.mediaType}
-                            quality={75}
-                            priority
-                            height={320}
-                            width={584}
-                            aria-label={`Bild von ${message.creator.username}`}
-                            sizes="(max-width: 584px) 100vw"
-                            style={{
-                                objectFit: 'cover',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        />
-                    </section>
+                    <MessageImage
+                        username={user.username}
+                        imageUrl={message.mediaUrl}
+                        imageType={message.mediaType}
+                    />
                 )}
-            </LinkWrapper>
+            </div>
 
-            {!isVariant(MessageDisplayVariant.INLINE) && (
-                //TODO: show in replies too
-                <MessageActions
-                    post={message}
-                    detailView={isVariant(MessageDisplayVariant.DETAIL_VIEW)}
-                />
-            )}
+            <MessageActions message={message} displayVariant={displayVariant} />
 
             {isVariant(MessageDisplayVariant.DETAIL_VIEW) && children}
         </div>

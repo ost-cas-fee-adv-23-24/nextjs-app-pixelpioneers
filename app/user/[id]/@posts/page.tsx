@@ -15,7 +15,7 @@ export default async function UserPostsPage({ params }: { params: { id: string }
     if (profilePostResponse.isError) {
         return (
             <ErrorPage
-                errorMessage={profilePostResponse.error.message}
+                errorMessage={profilePostResponse.error}
                 errorTitle="Posts konnten nicht geladen werden."
                 fullPage={false}
             />

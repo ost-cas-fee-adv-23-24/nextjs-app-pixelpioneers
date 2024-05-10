@@ -11,7 +11,7 @@ import {
 import { User } from '@/src/models/user.model';
 import { ActionResponse } from '@/src/models/action.model';
 import { dataResponse } from '@/app/actions/utils';
-import { PostFilterOptions } from '@/src/models/message.model';
+import { FilterOptions } from '@/src/models/message.model';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
 export async function getProfile(userId: string): Promise<ActionResponse<Profile>> {
@@ -63,7 +63,7 @@ export async function getProfileFollowingStatus(
 
 export async function getProfilePosts(
     userId: string,
-    postFilterOptions: PostFilterOptions,
+    postFilterOptions: FilterOptions,
 ): Promise<ActionResponse<ProfilePosts>> {
     const postsResponse = await getPosts(postFilterOptions);
     if (postsResponse.isError) {

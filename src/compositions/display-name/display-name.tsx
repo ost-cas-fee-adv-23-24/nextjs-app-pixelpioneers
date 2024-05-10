@@ -1,6 +1,5 @@
 'use client';
 import {
-    Avatar,
     AvatarSize,
     Heading,
     HeadingLevel,
@@ -21,6 +20,7 @@ import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
 import { useRouter } from 'next/navigation';
 import { timeFromNow } from '@/src/services/time.service';
 import Link from 'next/link';
+import Avatar from '@/src/components/avatar/avatar';
 
 type DisplayNameProps = {
     user: User;
@@ -55,12 +55,12 @@ export default function DisplayName({
     return (
         <section className="relative flex flex-row">
             {variant === DisplayNameVariant.REPLY && (
-                <div className="relative pr-xs">
+                <div className="relative self-center pr-xs">
                     <Link href={getRoute(APP_ROUTES.USER, user.id)}>
                         <Avatar
-                            size={AvatarSize.S}
-                            alt={`avatar from ${user.username}`}
-                            src={user.avatarUrl}
+                            desktopSize={AvatarSize.S}
+                            avatarUrl={user.avatarUrl}
+                            username={user.username}
                         />
                     </Link>
                 </div>
@@ -100,8 +100,6 @@ export default function DisplayName({
                             label={timeFromNow(postTimestamp)}
                             variant={Variant.SECONDARY}
                             Icon={IconTime}
-                            // since timestamps will have time differences from server to client
-                            suppressHydrationWarning
                         />
                     )}
                     {location && (

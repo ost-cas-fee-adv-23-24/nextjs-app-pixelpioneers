@@ -6,6 +6,10 @@ export async function request(
     jwtToken?: string,
     tags?: string[],
     revalidate?: number,
+    /**
+     * avatarUpload crashes on response.json() since only url without brackets is given, returnVoid will return nothing when response is successful
+     */
+    returnVoid = false,
 ): Promise<object | undefined> {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
     const headers: { [key: string]: string } = {
@@ -37,5 +41,5 @@ export async function request(
         // if no content is given with the succeeded request, return undefined
         return undefined;
     }
-    return await response.json();
+    return returnVoid ? undefined : await response.json();
 }

@@ -1,19 +1,7 @@
-import { Session } from 'next-auth';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { redirect } from 'next/navigation';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
-import { DataResponse, ErrorResponse } from '@/src/models/action.model';
+import { DataResponse, ErrorResponse, ErrorType } from '@/src/models/action.model';
 import { User } from '@/src/models/user.model';
 import { getUser } from '@/app/actions/user';
-
-export async function getSession(): Promise<Session> {
-    const session = await auth();
-    if (session === null || session.accessToken === undefined) {
-        // TODO: set up login
-        redirect(getRoute(APP_ROUTES.LOGIN));
-    }
-    return session;
-}
 
 export async function getLoggedInUser(): Promise<User | undefined> {
     const session = await auth();
@@ -28,24 +16,9 @@ export async function getLoggedInUser(): Promise<User | undefined> {
     return user;
 }
 
-export enum Tag {
-    USER = 'user-[id]',
-    USERS = 'users',
-    FOLLOWERS = 'followers-[id]',
-    FOLLOWEES = 'followees-[id]',
-    POST = 'post-[id]',
-    POSTS = 'posts',
-    REPLIES = 'replies-[id]',
-}
-
-export function getTag(tag: Tag, id = ''): string {
-    return tag.replace('[id]', id);
-}
-
-// TODO: simplify
-export function errorResponse(task: string, error?: Error | unknown): ErrorResponse {
+export function errorResponse(errorType: ErrorType): ErrorResponse {
     return {
-        error: error instanceof Error ? error : new Error(`an error occurred during ${task}`),
+        error: errorType,
         isError: true,
     };
 }

@@ -6,12 +6,18 @@ export type DataResponse<T> = {
 };
 
 export type ErrorResponse = {
-    error: Error;
+    error: ErrorType;
     isError: true;
 };
 
+export enum ErrorType {
+    AUTHORIZATION = 'authorization error',
+    FETCH = 'fetching error',
+    VALIDATION = 'validation error',
+    EXECUTION = 'execution error',
+}
+
 export enum RevalidationTime {
-    INSTANT = 0,
     SHORT = 15,
     MEDIUM = 60,
     LONG = 3600,

@@ -5,40 +5,62 @@ import {
     LikeButton,
     ShareButton,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { likePost } from '@/app/actions/message';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
+import { ActionResponse } from '@/src/models/action.model';
+import { useSession } from 'next-auth/react';
 
-type MessageActionsProps = { post: Message; detailView?: boolean };
-export default function MessageActions({ post, detailView }: MessageActionsProps) {
+type MessageActionsProps = { message: Message; displayVariant: MessageDisplayVariant };
+export default function MessageActions({ message, displayVariant }: MessageActionsProps) {
     const router = useRouter();
+    const { status } = useSession();
+    const [fullUrl, setFullUrl] = useState<string>('');
+    useEffect(() => {
+        setFullUrl(
+            `${window.location.host}${getRoute(
+                APP_ROUTES.POST,
+                displayVariant === MessageDisplayVariant.INLINE ? message.parentId : message.id,
+            )}`,
+        );
+    }, [displayVariant, message]);
+
     return (
         <section className="ml-[-12px] flex flex-row justify-between md:justify-start md:gap-x-l">
             <CommentButton
-                amount={post.replies}
-                onClick={() => router.push(getRoute(APP_ROUTES.POST, post.id))}
-                disabled={detailView}
+                amount={message.replies}
+                onClick={() =>
+                    displayVariant !== MessageDisplayVariant.INLINE &&
+                    router.push(getRoute(APP_ROUTES.POST, message.id))
+                }
             />
             <LikeButton
                 onClick={async () => {
+                    if (status !== 'authenticated') {
+                        router.push(getRoute(APP_ROUTES.LOGIN));
+                    }
+
                     // TODO: set tags here already? also evaluate error
-                    const response = await likePost(
-                        post.id,
-                        post.likedBySelf ? LikeType.UNLIKE : LikeType.LIKE,
-                    );
+                    const response = JSON.parse(
+                        await likePost(
+                            message.id,
+                            message.likedBySelf ? LikeType.UNLIKE : LikeType.LIKE,
+                        ),
+                    ) as ActionResponse<void>;
                     if (response.isError) {
-                        console.error(response.error.message);
+                        // TODO: open error bubble
                     }
                 }}
-                isLiked={post.likedBySelf || false}
-                amount={post.likes}
+                isLiked={message.likedBySelf || false}
+                amount={message.likes}
             />
-            {/* TODO: get full URL */}
             <ShareButton
                 label="Copy Link"
                 labelShared="Link copied"
-                link={getRoute(APP_ROUTES.POST, post.id)}
+                link={fullUrl}
+                disabled={fullUrl === ''}
             />
         </section>
     );

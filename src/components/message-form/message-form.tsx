@@ -1,10 +1,10 @@
 'use client';
 
 import {
-    Avatar,
     AvatarSize,
     Heading,
     HeadingLevel,
+    IconCheckmark,
     Label,
     LabelSize,
     Paragraph,
@@ -21,6 +21,9 @@ import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Message } from '@/src/models/message.model';
 import { ActionResponse } from '@/src/models/action.model';
+import Avatar from '../avatar/avatar';
+import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import Link from 'next/link';
 
 type MessageFormProps = {
     user?: User;
@@ -30,11 +33,10 @@ type MessageFormProps = {
 export default function MessageForm({ user, messageVariant, onCreate }: MessageFormProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
-    const imageRef = useRef<HTMLInputElement | null>(null);
+    const imageInputRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const isPost = messageVariant === MessageVariant.POST;
-
-    // TODO: try with https://blog.openreplay.com/server-actions-in-nextjs/
 
     const formAction = async (formData: FormData) => {
         const createResponse = await onCreate(formData);
@@ -59,12 +61,14 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                         {isPost ? (
                             <div className="flex flex-row gap-s">
                                 <div className="md:z-5 md:absolute md:left-[-32px] md:top-[20px]">
-                                    <Avatar
-                                        // TODO: make size S on mobile
-                                        size={AvatarSize.M}
-                                        src={user.avatarUrl || ''}
-                                        alt={user.username}
-                                    />
+                                    <Link href={getRoute(APP_ROUTES.USER, user.id)}>
+                                        <Avatar
+                                            desktopSize={AvatarSize.M}
+                                            mobileSize={AvatarSize.S}
+                                            avatarUrl={user.avatarUrl}
+                                            username={user.username}
+                                        />
+                                    </Link>
                                 </div>
                                 <Label
                                     className="self-center text-secondary-900"
@@ -90,12 +94,13 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                 )}
 
                 <Textarea
+                    ref={textAreaRef}
                     className="h-15xl resize-none rounded-m border-2 border-secondary-200 bg-secondary-50 p-m"
                     name="text"
-                    // TODO: remove text when something is posted
                     id="text"
                     placeholder={isPost ? 'Deine Meinung zählt!' : 'Und was meinst du dazu?'}
                     aria-label={`write text for ${isPost ? 'post' : 'reply'}`}
+                    autoFocus
                 />
                 <section className="flex flex-row justify-between gap-s">
                     <MessageFormActions
@@ -104,17 +109,25 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                         }}
                     />
                 </section>
+                {image && (
+                    <div className="flex flex-row items-center gap-xs">
+                        <IconCheckmark className="fill-primary-600" />
+                        <Label size={LabelSize.S} className="text-primary-600">
+                            Bild hochgeladen
+                        </Label>
+                    </div>
+                )}
                 <input
                     type="file"
                     name="media"
                     id="media"
-                    ref={imageRef}
+                    ref={imageInputRef}
                     disabled={!image}
                     hidden
                 />
                 <ModalImageUpload
                     onChange={setImage}
-                    inputRef={imageRef}
+                    inputRef={imageInputRef}
                     isOpen={isOpen}
                     onSubmit={() => setIsOpen(false)}
                     onCancel={() => setIsOpen(false)}
