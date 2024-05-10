@@ -20,6 +20,8 @@ type ModalImageUploadProps = {
     isOpen: boolean;
     onSubmit: () => void;
     onCancel: () => void;
+    maxFileUploadSizeBytes: number;
+    fileSizeLabel: string;
 };
 
 export default function ModalImageUpload({
@@ -29,6 +31,8 @@ export default function ModalImageUpload({
     isOpen,
     onSubmit,
     onCancel,
+    maxFileUploadSizeBytes,
+    fileSizeLabel,
 }: ModalImageUploadProps) {
     const [currentImageEvent, setCurrentImageEvent] = useState<File | null>(null);
 
@@ -53,9 +57,10 @@ export default function ModalImageUpload({
             labelSubmit="Speichern"
         >
             <FileUpload
-                maxFileSizeUpload={52428800}
+                maxFileSizeUpload={maxFileUploadSizeBytes}
                 Icon={IconUpload}
                 label="Datei hierhin ziehen..."
+                labelFileSize={fileSizeLabel}
                 labelButton="... oder Datei auswählen"
                 onLoadFile={(file) => {
                     setCurrentImageEvent(file);
