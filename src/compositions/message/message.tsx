@@ -55,6 +55,11 @@ export default function Message({ message, displayVariant, children }: MessagePr
         'z-5 relative row-span-3', // mobile
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
+    const lineClamp = clsx(
+        'break-all text-secondary-900',
+        isVariant(MessageDisplayVariant.DETAIL_VIEW) ? '' : 'line-clamp-4 md:line-clamp-none',
+    );
+
     return (
         <div className={messageClasses} data-testid="testPostMessage">
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
@@ -84,7 +89,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         route={getRoute(APP_ROUTES.POST, message.id)}
                     >
                         <Paragraph
-                            className="line-clamp-4 break-all text-secondary-900 md:line-clamp-none"
+                            className={clsx('break-all text-secondary-900', lineClamp)}
                             size={
                                 isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                     ? ParagraphSize.L
