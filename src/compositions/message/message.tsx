@@ -55,9 +55,11 @@ export default function Message({ message, displayVariant, children }: MessagePr
         'z-5 relative row-span-3', // mobile
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
-    const lineClamp = clsx(
+    const shortTextOfPost = clsx(
         'break-all text-secondary-900',
-        isVariant(MessageDisplayVariant.DETAIL_VIEW) ? '' : 'line-clamp-4 md:line-clamp-none',
+        isVariant(MessageDisplayVariant.DETAIL_VIEW) || isVariant(MessageDisplayVariant.INLINE)
+            ? ''
+            : 'line-clamp-5 md:line-clamp-none',
     );
 
     return (
@@ -89,7 +91,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         route={getRoute(APP_ROUTES.POST, message.id)}
                     >
                         <Paragraph
-                            className={clsx('break-all text-secondary-900', lineClamp)}
+                            className={clsx('break-all text-secondary-900', shortTextOfPost)}
                             size={
                                 isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                     ? ParagraphSize.L
