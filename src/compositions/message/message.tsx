@@ -57,9 +57,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
     );
     const shortTextOfPost = clsx(
         'break-all text-secondary-900',
-        isVariant(MessageDisplayVariant.DETAIL_VIEW) || isVariant(MessageDisplayVariant.INLINE)
-            ? ''
-            : 'line-clamp-5 md:line-clamp-none',
+        isVariant(MessageDisplayVariant.TIMELINE) ? 'line-clamp-5 md:line-clamp-none' : '',
     );
 
     return (
@@ -91,7 +89,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         route={getRoute(APP_ROUTES.POST, message.id)}
                     >
                         <Paragraph
-                            className={clsx('break-all text-secondary-900', shortTextOfPost)}
+                            className={shortTextOfPost}
                             size={
                                 isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                     ? ParagraphSize.L
