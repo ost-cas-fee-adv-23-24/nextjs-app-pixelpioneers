@@ -19,10 +19,16 @@ import MessageImage from '@/src/compositions/message/message-image';
 type MessageProps = {
     message: Message;
     displayVariant: MessageDisplayVariant;
+    priorityImageLoad?: boolean;
     children?: ReactNode;
 };
 
-export default function Message({ message, displayVariant, children }: MessageProps) {
+export default function Message({
+    message,
+    displayVariant,
+    priorityImageLoad,
+    children,
+}: MessageProps) {
     const user = message.creator;
     const isVariant = (variantToCheck: MessageDisplayVariant): boolean =>
         displayVariant === variantToCheck;
@@ -101,6 +107,7 @@ export default function Message({ message, displayVariant, children }: MessagePr
                         username={user.username}
                         imageUrl={message.mediaUrl}
                         imageType={message.mediaType}
+                        priority={priorityImageLoad}
                     />
                 )}
             </div>

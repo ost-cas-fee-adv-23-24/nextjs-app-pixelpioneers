@@ -7,9 +7,15 @@ type MessageImageProps = {
     imageUrl: string;
     imageType?: string;
     username: string;
+    priority?: boolean;
 };
 
-export default function MessageImage({ imageUrl, imageType, username }: MessageImageProps) {
+export default function MessageImage({
+    imageUrl,
+    imageType,
+    username,
+    priority = false,
+}: MessageImageProps) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
@@ -23,8 +29,8 @@ export default function MessageImage({ imageUrl, imageType, username }: MessageI
                     alt={`Bild von ${username}`}
                     src={imageUrl}
                     datatype={imageType}
-                    quality={75}
-                    priority
+                    quality={35}
+                    priority={priority}
                     height={320}
                     width={584}
                     style={{

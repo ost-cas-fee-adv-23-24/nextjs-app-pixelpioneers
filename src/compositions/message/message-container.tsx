@@ -48,7 +48,8 @@ export default function MessageContainer({
                             )}
                             <MessageComponent
                                 message={message}
-                                displayVariant={MessageDisplayVariant.INLINE}
+                                displayVariant={displayVariant}
+                                priorityImageLoad={index < 5}
                             />
                         </div>
                     );
@@ -58,6 +59,7 @@ export default function MessageContainer({
                         key={message.id}
                         message={message}
                         displayVariant={displayVariant}
+                        priorityImageLoad={index < 5}
                     />
                 );
             })}
