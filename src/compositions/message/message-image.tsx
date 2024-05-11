@@ -29,7 +29,7 @@ export default function MessageImage({
                     alt={`Bild von ${username}`}
                     src={imageUrl}
                     datatype={imageType}
-                    quality={30}
+                    quality={35}
                     priority={priority}
                     height={320}
                     width={584}
