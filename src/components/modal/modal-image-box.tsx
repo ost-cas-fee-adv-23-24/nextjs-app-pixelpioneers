@@ -31,7 +31,6 @@ export default function ModalImageBox({
                     alt={`Bild von ${username}`}
                     src={imageUrl}
                     datatype={imageType}
-                    quality={90}
                     height={1000}
                     width={650}
                     style={{

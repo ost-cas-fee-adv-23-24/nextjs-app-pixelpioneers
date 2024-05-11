@@ -21,7 +21,11 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
     const repliesResponse = await getReplies(post.id, { limit: PAGINATION_LIMIT });
     return (
-        <Message message={post} displayVariant={MessageDisplayVariant.DETAIL_VIEW}>
+        <Message
+            message={post}
+            displayVariant={MessageDisplayVariant.DETAIL_VIEW}
+            priorityImageLoad
+        >
             {user ? (
                 <MessageForm
                     messageVariant={MessageVariant.REPLY}
