@@ -26,6 +26,7 @@ const poppins = Poppins({
     weight: ['500', '600', '700'],
     fallback: ['arial', 'sans-serif'],
     adjustFontFallback: false,
+    display: 'swap',
 });
 
 export default async function RootLayout({ children }: { children: ReactNode }) {

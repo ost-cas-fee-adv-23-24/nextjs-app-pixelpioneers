@@ -61,6 +61,11 @@ export default function Message({
         'z-5 relative row-span-3', // mobile
         'md:absolute md:left-[-32px] md:top-[20px]', // desktop
     );
+    const shortTextOfPost = clsx(
+        'break-all text-secondary-900',
+        isVariant(MessageDisplayVariant.TIMELINE) ? 'line-clamp-5 md:line-clamp-none' : '',
+    );
+
     return (
         <div className={messageClasses} data-testid="testPostMessage">
             <div className="flex flex-row items-center gap-s md:flex-col md:items-start">
@@ -90,7 +95,7 @@ export default function Message({
                         route={getRoute(APP_ROUTES.POST, message.id)}
                     >
                         <Paragraph
-                            className="line-clamp-4 break-all text-secondary-900 md:line-clamp-none"
+                            className={shortTextOfPost}
                             size={
                                 isVariant(MessageDisplayVariant.DETAIL_VIEW)
                                     ? ParagraphSize.L
