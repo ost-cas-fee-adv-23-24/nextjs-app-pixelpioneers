@@ -95,7 +95,7 @@ export async function getFollowees(
                 method: 'GET',
             },
             session?.accessToken,
-            [getTag(Tag.FOLLOWEES, userId, options)],
+            [getTag(Tag.FOLLOWEES, userId)],
             RevalidationTime.LONG,
         )) as PaginatedResult<User>;
         return dataResponse(paginatedFollowees);
@@ -131,7 +131,6 @@ export async function followUser(formData: FormData): Promise<string> {
             session.accessToken,
         );
         activeUserId && revalidateTag(getTag(Tag.FOLLOWEES, activeUserId));
-        revalidateTag(getTag(Tag.FOLLOWERS, userId));
         return JSON.stringify(dataResponse(undefined));
     } catch (error) {
         return JSON.stringify(errorResponse(ErrorType.EXECUTION));
