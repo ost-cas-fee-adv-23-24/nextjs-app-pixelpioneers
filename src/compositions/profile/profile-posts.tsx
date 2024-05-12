@@ -3,14 +3,15 @@ import React, { useEffect, useReducer } from 'react';
 import ProfileTabs from '@/src/components/profile-tabs/profile-tabs';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { PaginatedResult, PAGINATION_LIMIT } from '@/src/models/paginate.model';
-import { Post } from '@/src/models/message.model';
+import { Message, Post } from '@/src/models/message.model';
 import { ProfilePostType } from '@/src/models/profile.model';
 import { UserState } from '@/src/models/user.model';
-import { getPosts } from '@/app/actions/message';
+import { getPosts, loadPaginatedMessages } from '@/app/actions/message';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { profileReducer } from '@/src/compositions/profile/profile-reducer';
 import { ProfileActionType } from '@/src/compositions/profile/types';
+import { ActionResponse } from '@/src/models/action.model';
 
 type ProfilePostsProps = {
     userState: UserState;
@@ -86,12 +87,24 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
                 ) : (
                     <MessageContainer
                         messages={state.posts}
-                        onLoad={(paginatedMessages) => {
-                            dispatch({
-                                type: ProfileActionType.POSTS_RELOADED,
-                                posts: paginatedMessages.data,
-                                nextUrl: paginatedMessages.next,
-                            });
+                        onLoad={async (formData) => {
+                            const messageResponse = JSON.parse(
+                                await loadPaginatedMessages(formData),
+                            ) as ActionResponse<PaginatedResult<Message>>;
+
+                            if (messageResponse.isError) {
+                                dispatch({
+                                    type: ProfileActionType.POSTS_ERROR,
+                                    error: messageResponse.error,
+                                });
+                            } else {
+                                const paginatedMessages = messageResponse.data;
+                                dispatch({
+                                    type: ProfileActionType.POSTS_RELOADED,
+                                    posts: paginatedMessages.data,
+                                    nextUrl: paginatedMessages.next,
+                                });
+                            }
                         }}
                         displayVariant={MessageDisplayVariant.TIMELINE}
                         nextUrl={state.nextUrl}

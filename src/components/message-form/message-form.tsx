@@ -33,6 +33,7 @@ type MessageFormProps = {
 export default function MessageForm({ user, messageVariant, onCreate }: MessageFormProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
+
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
