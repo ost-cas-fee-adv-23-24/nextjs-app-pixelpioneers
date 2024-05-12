@@ -8,9 +8,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import { likePost } from '@/app/actions/message';
 import { useRouter } from 'next/navigation';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, ErrorType, getErrorMessage } from '@/src/models/action.model';
 import { useSession } from 'next-auth/react';
 import { ErrorBubble } from '@/src/components/bubble/error-bubble';
 
@@ -19,7 +19,7 @@ export default function MessageActions({ message, displayVariant }: MessageActio
     const router = useRouter();
     const { status } = useSession();
     const [fullUrl, setFullUrl] = useState<string>('');
-    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState<ErrorType>();
 
     useEffect(() => {
         setFullUrl(
@@ -54,7 +54,7 @@ export default function MessageActions({ message, displayVariant }: MessageActio
                             ),
                         ) as ActionResponse<void>;
                         if (response.isError) {
-                            setIsError(true);
+                            setError(response.error);
                         }
                     }}
                     isLiked={message.likedBySelf || false}
@@ -69,12 +69,12 @@ export default function MessageActions({ message, displayVariant }: MessageActio
                     disabled={fullUrl === ''}
                 />
             </section>
-            {isError && (
+            {error && (
                 <ErrorBubble
-                    message="Ein Fehler ist aufgetreten, Klicke um neu zu laden."
+                    message={getErrorMessage(error, true)}
                     onClick={() => {
                         router.push(window.location.pathname);
-                        setIsError(false);
+                        setError(undefined);
                     }}
                 />
             )}

@@ -10,7 +10,7 @@ import MessageActions from '@/src/compositions/message/message-actions';
 import DisplayName from '@/src/compositions/display-name/display-name';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import Link from 'next/link';
 import LinkWrapper from '@/src/components/link-wrapper/link-wrapper';
 import Avatar from '@/src/components/avatar/avatar';

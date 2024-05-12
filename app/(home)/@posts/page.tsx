@@ -4,15 +4,16 @@ import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import { PostStream } from '@/src/components/post-stream/post-stream';
-import { APP_ROUTES, getRoute, PostEvent } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute, PostEvent } from '@/src/services/route.service';
 import StatedMessageContainer from '@/src/compositions/message/stated-message-container';
+import { getErrorMessage } from '@/src/models/action.model';
 
 export default async function HomePostsPage() {
     const postsResponse = await getPosts({ limit: PAGINATION_LIMIT });
     if (postsResponse.isError) {
         return (
             <ErrorPage
-                errorMessage={postsResponse.error}
+                errorMessage={getErrorMessage(postsResponse.error)}
                 errorTitle="Posts konnten nicht geladen werden."
                 fullPage={false}
             />

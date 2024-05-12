@@ -9,6 +9,7 @@ import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import StatedMessageContainer from '@/src/compositions/message/stated-message-container';
 import MessageForm from '@/src/components/message-form/message-form';
 import LoginToProceed from '@/src/components/login/login-to-proceed';
+import { getErrorMessage } from '@/src/models/action.model';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
     const user = await getLoggedInUser();
@@ -40,7 +41,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             )}
             {repliesResponse.isError ? (
                 <ErrorPage
-                    errorMessage={repliesResponse.error}
+                    errorMessage={getErrorMessage(repliesResponse.error)}
                     errorTitle={`Kommentare konnten nicht geladen werden.`}
                     fullPage={false}
                 />

@@ -12,7 +12,7 @@ import {
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { User as UserModel } from '@/src/models/user.model';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Avatar from '@/src/components/avatar/avatar';

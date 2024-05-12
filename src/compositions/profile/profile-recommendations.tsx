@@ -5,6 +5,9 @@ import { Heading, HeadingLevel } from '@ost-cas-fee-adv-23-24/design-system-pixe
 import { getProfileRecommendations } from '@/app/actions/profile';
 import StatedMessageContainer from '@/src/compositions/message/stated-message-container';
 import User from '@/src/compositions/user/user';
+import { getErrorMessage } from '@/src/models/action.model';
+import ErrorPage from '@/src/compositions/error-page/error-page';
+import React from 'react';
 
 type ProfileRecommendationsProps = {
     userId: string;
@@ -16,6 +19,11 @@ export default async function ProfileRecommendations({ userId }: ProfileRecommen
         return (
             <section className="flex flex-col gap-s">
                 <MessageForm messageVariant={MessageVariant.POST} onCreate={createPost} />
+                <ErrorPage
+                    errorMessage={getErrorMessage(recommendationsResponse.error)}
+                    errorTitle="Vorschläge konnten nicht geladen werden."
+                    fullPage={false}
+                />
             </section>
         );
     }

@@ -1,7 +1,7 @@
 'use client';
 
 import { IconMumble, NaviUser } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import Link from 'next/link';
 import LoginButton from '@/src/components/login/login-button';
 import { useRouter } from 'next/navigation';
@@ -18,8 +18,11 @@ export default function MobileNavigation({ user }: MobileNavigationProps) {
             <nav className="flex bg-primary-600">
                 <section className="mx-m flex h-[70px] w-full flex-row items-center justify-between">
                     <div className="flex w-7xl justify-start">
-                        <LoginButton isLoggedIn={!!user} navBar={true} testId="testLoginButtonMobile" />
-
+                        <LoginButton
+                            isLoggedIn={!!user}
+                            navBar={true}
+                            testId="testLoginButtonMobile"
+                        />
                     </div>
                     <div className="self-end rounded-full border-8 border-primary-600">
                         <Link href={APP_ROUTES.HOME}>

@@ -7,7 +7,7 @@ import { PaginatedResult } from '@/src/models/paginate.model';
 import MessageContainer from '@/src/compositions/message/message-container';
 import { messageReducer } from '@/src/compositions/message/message-reducer';
 import { loadPaginatedMessages } from '@/app/actions/message';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, getErrorMessage } from '@/src/models/action.model';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 
 type StatedMessageContainerProps = {
@@ -35,7 +35,7 @@ export default function StatedMessageContainer({
 
     return state.error ? (
         <ErrorPage
-            errorMessage={state.error}
+            errorMessage={getErrorMessage(state.error)}
             errorTitle={`${isPost ? 'Posts' : 'Kommentare'} konnten nicht geladen werden.`}
             fullPage={false}
         />

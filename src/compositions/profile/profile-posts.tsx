@@ -11,7 +11,7 @@ import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { profileReducer } from '@/src/compositions/profile/profile-reducer';
 import { ProfileActionType } from '@/src/compositions/profile/types';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, getErrorMessage } from '@/src/models/action.model';
 
 type ProfilePostsProps = {
     userState: UserState;
@@ -80,7 +80,7 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
             <section className="flex flex-col gap-s">
                 {state.error ? (
                     <ErrorPage
-                        errorMessage={state.error}
+                        errorMessage={getErrorMessage(state.error)}
                         errorTitle={`Posts konnten nicht geladen werden.`}
                         fullPage={false}
                     />

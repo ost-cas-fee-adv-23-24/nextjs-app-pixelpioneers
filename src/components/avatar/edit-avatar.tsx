@@ -4,8 +4,11 @@ import {
     EditAvatar as EditAvatarElement,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import ModalImageUpload from '@/src/components/modal/modal-image-upload';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { uploadAvatar } from '@/app/actions/user';
+import { ErrorType, getErrorMessage } from '@/src/models/action.model';
+import { ErrorBubble } from '@/src/components/bubble/error-bubble';
+import { useRouter } from 'next/navigation';
 
 type AvatarWrapperProps = {
     desktopSize: AvatarSize;
@@ -23,7 +26,9 @@ export default function EditAvatar({
     const alt = `Avatar von ${username || 'user'}`;
     const [isOpen, setIsOpen] = useState(false);
     const [image, setImage] = useState<File | null>(null);
+    const [error, setError] = useState<ErrorType>();
     const imageInputRef = useRef<HTMLInputElement | null>(null);
+    const router = useRouter();
 
     const onEdit = () => setIsOpen(true);
     return (
@@ -57,7 +62,7 @@ export default function EditAvatar({
                         formData.append('media', image);
                         const uploadResponse = await uploadAvatar(formData);
                         if (uploadResponse.isError) {
-                            // TODO: error handling
+                            setError(uploadResponse.error);
                         }
                         setImage(null);
                         setIsOpen(false);
@@ -67,6 +72,15 @@ export default function EditAvatar({
                 maxFileUploadSizeBytes={524288}
                 fileSizeLabel="JPEG oder PNG, maximal 0.5 MB"
             />
+            {error && (
+                <ErrorBubble
+                    message={getErrorMessage(error, true)}
+                    onClick={() => {
+                        router.push(window.location.pathname);
+                        setError(undefined);
+                    }}
+                />
+            )}
         </>
     );
 }

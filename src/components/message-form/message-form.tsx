@@ -20,9 +20,9 @@ import ModalImageUpload from '@/src/components/modal/modal-image-upload';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Message } from '@/src/models/message.model';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, ErrorType, getErrorMessage } from '@/src/models/action.model';
 import Avatar from '../avatar/avatar';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import Link from 'next/link';
 
 type MessageFormProps = {
@@ -33,16 +33,17 @@ type MessageFormProps = {
 export default function MessageForm({ user, messageVariant, onCreate }: MessageFormProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
+    const [error, setError] = useState<ErrorType>();
 
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const formRef = useRef<HTMLFormElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const isPost = messageVariant === MessageVariant.POST;
 
-    const formAction = async (formData: FormData) => {
+    const onSend = async (formData: FormData) => {
         const createResponse = await onCreate(formData);
         if (createResponse.isError) {
-            // TODO: show errors
+            setError(createResponse.error);
         }
         formRef.current?.reset();
         setImage(null);
@@ -56,7 +57,7 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                     : 'mt-s md:mt-l',
             )}
         >
-            <form ref={formRef} action={formAction} className="flex flex-col gap-y-s">
+            <form ref={formRef} action={onSend} className="flex flex-col gap-y-s">
                 {user ? (
                     <>
                         {isPost ? (
@@ -103,6 +104,11 @@ export default function MessageForm({ user, messageVariant, onCreate }: MessageF
                     aria-label={`write text for ${isPost ? 'post' : 'reply'}`}
                     autoFocus
                 />
+                {error && (
+                    <Label size={LabelSize.S} className="text-error">
+                        {getErrorMessage(error)}
+                    </Label>
+                )}
                 <section className="flex flex-row justify-between gap-s">
                     <MessageFormActions
                         onUpload={() => {

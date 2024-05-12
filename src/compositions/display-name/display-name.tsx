@@ -16,7 +16,7 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import { User } from '@/src/models/user.model';
 import { DisplayNameVariant } from '@/src/compositions/display-name/types';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import { useRouter } from 'next/navigation';
 import { timeFromNow } from '@/src/services/time.service';
 import Link from 'next/link';

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getPostEventSource, PostEvent } from '@/src/helpers/routes';
+import { getPostEventSource, PostEvent } from '@/src/services/route.service';
 import { ActionBubble } from '@/src/components/bubble/action-bubble';
 import { Post } from '@/src/models/message.model';
 import { reloadPathData } from '@/app/actions/caching';

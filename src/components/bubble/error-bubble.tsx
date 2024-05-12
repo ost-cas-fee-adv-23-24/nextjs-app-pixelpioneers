@@ -1,5 +1,5 @@
 import {
-    IconSend,
+    IconCancel,
     Paragraph,
     ParagraphSize,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
@@ -16,7 +16,7 @@ export function ErrorBubble({ message, onClick }: ErrorBubbleProps) {
                 onClick={onClick}
                 className="shadow-xls flex flex-row gap-xs rounded-[20px] bg-error px-m py-xs text-secondary-100 opacity-95"
             >
-                <IconSend className="self-center fill-white" />
+                <IconCancel className="self-center fill-white" />
                 <Paragraph size={ParagraphSize.M}>{message}</Paragraph>
             </button>
         </div>

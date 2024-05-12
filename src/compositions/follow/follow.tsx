@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useReducer } from 'react';
 import { getProfileFollowingStatus } from '@/app/actions/profile';
 import { followUser } from '@/app/actions/user';
-import { ActionResponse } from '@/src/models/action.model';
+import { ActionResponse, getErrorMessage } from '@/src/models/action.model';
 import FollowSkeleton from '@/src/compositions/follow/follow-skeleton';
 import { followReducer } from '@/src/compositions/follow/follow-reducer';
 import { FollowActionType } from '@/src/compositions/follow/types';
@@ -52,7 +52,7 @@ export default function Follow({ user }: FollowProps) {
 
     return state.error ? (
         <ErrorPage
-            errorMessage={state.error}
+            errorMessage={getErrorMessage(state.error)}
             errorTitle={'Folgen-Status konnte nicht geladen werden.'}
             fullPage={false}
         />

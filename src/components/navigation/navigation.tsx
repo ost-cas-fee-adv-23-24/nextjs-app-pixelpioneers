@@ -6,7 +6,7 @@ import {
     NaviButton,
     NaviUser,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { APP_ROUTES, getRoute } from '@/src/helpers/routes';
+import { APP_ROUTES, getRoute } from '@/src/services/route.service';
 import Link from 'next/link';
 import LoginButton from '@/src/components/login/login-button';
 import { useRouter } from 'next/navigation';
@@ -51,7 +51,7 @@ export default function Navigation({ user }: NavigationProps) {
                         Icon={IconSettingsAnimated}
                         disabled
                     />
-                    <LoginButton isLoggedIn={!!user} navBar={true} testId="testLoginButton"/>
+                    <LoginButton isLoggedIn={!!user} navBar={true} testId="testLoginButton" />
                 </section>
             </div>
         </nav>
