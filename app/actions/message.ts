@@ -31,12 +31,6 @@ export async function likePost(postId: string, likeType: LikeType): Promise<stri
         if (session.user?.profile.sub) {
             revalidateTag(
                 getTag(Tag.POSTS, undefined, {
-                    creators: [session.user.profile.sub],
-                    limit: PAGINATION_LIMIT,
-                }),
-            );
-            revalidateTag(
-                getTag(Tag.POSTS, undefined, {
                     likedBy: [session.user.profile.sub],
                     limit: PAGINATION_LIMIT,
                 }),
