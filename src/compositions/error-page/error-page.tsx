@@ -52,7 +52,7 @@ export default function ErrorPage({
                     {errorMessage}
                 </Paragraph>
             </div>
-            {fullPage && (
+            {fullPage && onButtonClick && (
                 <div className="mt-2xl">
                     <Button
                         Icon={buttonIcon || IconMumble}
