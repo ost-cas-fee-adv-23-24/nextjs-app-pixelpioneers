@@ -161,20 +161,8 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResponse<v
             undefined,
             true,
         );
-        if (activeUserId) {
-            revalidateTag(getTag(Tag.USER, activeUserId));
-            revalidateTag(
-                getTag(Tag.POSTS, undefined, {
-                    creators: [activeUserId],
-                    limit: PAGINATION_LIMIT,
-                }),
-            );
-            revalidateTag(
-                getTag(Tag.POSTS, undefined, {
-                    limit: PAGINATION_LIMIT,
-                }),
-            );
-        }
+
+        activeUserId && revalidateUserTags(activeUserId);
         return dataResponse(undefined);
     } catch (error) {
         return errorResponse(ErrorType.EXECUTION);
@@ -195,11 +183,27 @@ export async function removeAvatar(): Promise<ActionResponse<void>> {
             },
             session.accessToken,
         );
-        activeUserId && revalidateTag(getTag(Tag.USER, activeUserId));
+
+        activeUserId && revalidateUserTags(activeUserId);
         return dataResponse(undefined);
     } catch (error) {
         return errorResponse(ErrorType.EXECUTION);
     }
+}
+
+function revalidateUserTags(activeUserId: string) {
+    revalidateTag(getTag(Tag.USER, activeUserId));
+    revalidateTag(
+        getTag(Tag.POSTS, undefined, {
+            creators: [activeUserId],
+            limit: PAGINATION_LIMIT,
+        }),
+    );
+    revalidateTag(
+        getTag(Tag.POSTS, undefined, {
+            limit: PAGINATION_LIMIT,
+        }),
+    );
 }
 
 export async function checkIsActiveUser(userId: string): Promise<UserState> {
