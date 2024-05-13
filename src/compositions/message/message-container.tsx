@@ -11,21 +11,18 @@ import {
     ParagraphSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import MessageMultiSkeleton from '@/src/compositions/message/message-multi-skeleton';
 
 type MessageContainerProps = {
     messages: Message[];
     displayVariant: MessageDisplayVariant;
     onLoad: (formData: FormData) => void;
     nextUrl?: string;
-    isLoading?: boolean;
 };
 export default function MessageContainer({
     messages,
     displayVariant,
     onLoad,
     nextUrl,
-    isLoading,
 }: MessageContainerProps) {
     const isPost = displayVariant !== MessageDisplayVariant.INLINE;
 
@@ -37,9 +34,7 @@ export default function MessageContainer({
         );
     }
 
-    return isLoading ? (
-        <MessageMultiSkeleton displayVariant={displayVariant} />
-    ) : (
+    return (
         <>
             {messages.map((message, index) => {
                 if (displayVariant === MessageDisplayVariant.INLINE) {
