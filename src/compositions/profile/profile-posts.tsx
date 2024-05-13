@@ -3,14 +3,15 @@ import React, { useEffect, useReducer } from 'react';
 import ProfileTabs from '@/src/components/profile-tabs/profile-tabs';
 import { MessageDisplayVariant } from '@/src/compositions/message/types';
 import { PaginatedResult, PAGINATION_LIMIT } from '@/src/models/paginate.model';
-import { Post } from '@/src/models/message.model';
+import { Message, Post } from '@/src/models/message.model';
 import { ProfilePostType } from '@/src/models/profile.model';
 import { UserState } from '@/src/models/user.model';
-import { getPosts } from '@/app/actions/message';
+import { getPosts, loadPaginatedMessages } from '@/app/actions/message';
 import MessageContainer from '@/src/compositions/message/message-container';
 import ErrorPage from '@/src/compositions/error-page/error-page';
 import { profileReducer } from '@/src/compositions/profile/profile-reducer';
 import { ProfileActionType } from '@/src/compositions/profile/types';
+import { ActionResponse, getErrorMessage } from '@/src/models/action.model';
 
 type ProfilePostsProps = {
     userState: UserState;
@@ -35,9 +36,13 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
                 nextUrl: paginatedPosts.next,
             });
         }
-    }, [paginatedPosts, state.activeType]);
+        /**
+         * in this case we want to listen to paginatedPosts only. state.activeType changes will be handled in next useEffect
+         */
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paginatedPosts]);
 
-    // load posts on tab switch or load more button
+    // load posts on tab switch
     useEffect(() => {
         const loadProfilePosts = async () => {
             const postsResponse = await getPosts({
@@ -79,14 +84,27 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
             <section className="flex flex-col gap-s">
                 {state.error ? (
                     <ErrorPage
-                        errorMessage={state.error}
+                        errorMessage={getErrorMessage(state.error)}
                         errorTitle={`Posts konnten nicht geladen werden.`}
                         fullPage={false}
                     />
                 ) : (
                     <MessageContainer
                         messages={state.posts}
-                        onLoad={(paginatedMessages) => {
+                        onLoad={async (formData) => {
+                            const messageResponse = JSON.parse(
+                                await loadPaginatedMessages(formData),
+                            ) as ActionResponse<PaginatedResult<Message>>;
+
+                            if (messageResponse.isError) {
+                                dispatch({
+                                    type: ProfileActionType.POSTS_ERROR,
+                                    error: messageResponse.error,
+                                });
+                                return;
+                            }
+
+                            const paginatedMessages = messageResponse.data;
                             dispatch({
                                 type: ProfileActionType.POSTS_RELOADED,
                                 posts: paginatedMessages.data,

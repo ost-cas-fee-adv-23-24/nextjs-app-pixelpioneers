@@ -37,7 +37,8 @@
 
 ## Getting Started
 
-This is a Mumble project which we attend the CAS Frontend Engineering Advanced course at the OST, University of Applied Study in Rapperswil SG.
+This is a Mumble project which we attend the CAS Frontend Engineering Advanced course at the OST, University of Applied
+Study in Rapperswil SG.
 
 ## Folder Overview
 
@@ -190,10 +191,6 @@ there [lint-staged - github](https://github.com/okonet/lint-staged).
 ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, see
 also [ESLint - npm](https://www.npmjs.com/package/eslint).
 
-📎 [Link](https://www.npmjs.com/package/eslint-plugin-jest) and [Link](https://github.com/jest-community/jest-runner-eslint).
-<br/>
-ESLint Plugin for Jest. The files are checking test-related.
-
 📎 [Link](https://commitlint.js.org/#/) commitlint
 <br/>
 commitlint checks if your commit messages meet
@@ -270,8 +267,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [TypeScript-url]: https://www.typescriptlang.org/
 [Nextjs]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Nextjs-url]: https://nextjs.org/
-[Jest]: https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white
-[Jest-url]: https://jestjs.io/
 [Playwright]: https://img.shields.io/static/v1?style=for-the-badge&message=Playwright&color=2EAD33&logo=Playwright&logoColor=FFFFFF&label=
 [Playwright-url]: https://playwright.dev/
 [Testing-Library]: https://img.shields.io/badge/-TestingLibrary-%23E33332?style=for-the-badge&logo=testing-library&logoColor=white

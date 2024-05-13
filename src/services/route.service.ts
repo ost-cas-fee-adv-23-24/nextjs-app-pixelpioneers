@@ -1,3 +1,5 @@
+import { FilterOptions } from '@/src/models/message.model';
+
 export enum APP_ROUTES {
     POST = '/post/[id]',
     USER = '/user/[id]',
@@ -21,7 +23,7 @@ export enum API_ROUTES {
 export const getRoute = (
     route: APP_ROUTES | API_ROUTES,
     id = '',
-    options?: Record<string, string[] | string | number>,
+    options?: FilterOptions,
 ): string => `${route.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
 
 export enum Tag {
@@ -34,11 +36,7 @@ export enum Tag {
     REPLIES = 'replies-[id]',
 }
 
-export function getTag(
-    tag: Tag,
-    id = '',
-    options?: Record<string, string[] | string | number>,
-): string {
+export function getTag(tag: Tag, id = '', options?: FilterOptions): string {
     return `${tag.replace('[id]', id)}${options ? getRouteOptions(options) : ''}`;
 }
 

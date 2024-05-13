@@ -5,6 +5,7 @@ import { PAGINATION_LIMIT } from '@/src/models/paginate.model';
 import ProfilePosts from '@/src/compositions/profile/profile-posts';
 import ProfileRecommendations from '@/src/compositions/profile/profile-recommendations';
 import { UserState } from '@/src/models/user.model';
+import { getErrorMessage } from '@/src/models/action.model';
 
 export default async function UserPostsPage({ params }: { params: { id: string } }) {
     const userId = params.id;
@@ -15,7 +16,7 @@ export default async function UserPostsPage({ params }: { params: { id: string }
     if (profilePostResponse.isError) {
         return (
             <ErrorPage
-                errorMessage={profilePostResponse.error}
+                errorMessage={getErrorMessage(profilePostResponse.error)}
                 errorTitle="Posts konnten nicht geladen werden."
                 fullPage={false}
             />

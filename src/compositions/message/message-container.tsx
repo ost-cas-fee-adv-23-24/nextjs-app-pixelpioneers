@@ -11,14 +11,11 @@ import {
     ParagraphSize,
     Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { loadPaginatedMessages } from '@/app/actions/message';
-import { ActionResponse } from '@/src/models/action.model';
-import { PaginatedResult } from '@/src/models/paginate.model';
 
 type MessageContainerProps = {
     messages: Message[];
     displayVariant: MessageDisplayVariant;
-    onLoad: (paginatedMessages: PaginatedResult<Message>) => void;
+    onLoad: (formData: FormData) => void;
     nextUrl?: string;
 };
 export default function MessageContainer({
@@ -64,20 +61,7 @@ export default function MessageContainer({
                 );
             })}
             {nextUrl && (
-                <form
-                    className="flex flex-row justify-center"
-                    action={async (formData) => {
-                        const messageResponse = JSON.parse(
-                            await loadPaginatedMessages(formData),
-                        ) as ActionResponse<PaginatedResult<Message>>;
-                        if (!messageResponse.isError) {
-                            onLoad(messageResponse.data);
-                        } else {
-                            // TODO: show error state
-                            console.error(messageResponse.error);
-                        }
-                    }}
-                >
+                <form className="flex flex-row justify-center" action={onLoad}>
                     <input name="next" value={nextUrl} hidden readOnly />
                     <Button
                         className="mt-s"

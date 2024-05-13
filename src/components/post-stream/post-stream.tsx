@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getPostEventSource, PostEvent } from '@/src/helpers/routes';
-import { ActionBubble } from '@/src/components/action-bubble/action-bubble';
+import { getPostEventSource, PostEvent } from '@/src/services/route.service';
+import { ActionBubble } from '@/src/components/bubble/action-bubble';
 import { Post } from '@/src/models/message.model';
 import { reloadPathData } from '@/app/actions/caching';
 import { scrollToTop } from '@/src/helpers/scroll-to-top';
@@ -20,6 +20,7 @@ export function PostStream({ eventType, path }: PostStreamProps) {
     const userId = session?.user?.profile.sub;
 
     useEffect(() => {
+        // start listening to Post Events
         const events = getPostEventSource();
         events.addEventListener(eventType, (event) => {
             const post = JSON.parse(event.data) as Post;

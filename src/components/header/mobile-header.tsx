@@ -1,5 +1,5 @@
 import { LogoMumbleHorizontal } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
-import { APP_ROUTES } from '@/src/helpers/routes';
+import { APP_ROUTES } from '@/src/services/route.service';
 import Link from 'next/link';
 
 export default async function MobileHeader() {

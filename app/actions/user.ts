@@ -2,7 +2,7 @@
 
 import { User, UserState } from '@/src/models/user.model';
 import { request } from '@/src/services/request.service';
-import { API_ROUTES, getRoute, getTag, Tag } from '@/src/helpers/routes';
+import { API_ROUTES, getRoute, getTag, Tag } from '@/src/services/route.service';
 import { dataResponse, errorResponse } from '@/app/actions/utils';
 import { PaginatedResult, PAGINATION_LIMIT, PaginationOptions } from '@/src/models/paginate.model';
 import { validateAvatarData } from '@/src/helpers/validator';

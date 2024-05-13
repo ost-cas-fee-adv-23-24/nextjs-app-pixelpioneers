@@ -3,7 +3,7 @@
 import { FilterOptions, LikeType, Message, Post, Reply } from '@/src/models/message.model';
 import { messageHydrator, messagesHydrator } from '@/src/services/message.service';
 import { request } from '@/src/services/request.service';
-import { API_ROUTES, getRoute, getTag, Tag } from '@/src/helpers/routes';
+import { API_ROUTES, getRoute, getTag, Tag } from '@/src/services/route.service';
 import { PaginatedResult, PAGINATION_LIMIT, PaginationOptions } from '@/src/models/paginate.model';
 import { dataResponse, errorResponse } from '@/app/actions/utils';
 import { revalidateTag } from 'next/cache';
@@ -28,6 +28,15 @@ export async function likePost(postId: string, likeType: LikeType): Promise<stri
         );
 
         revalidateTag(getTag(Tag.POSTS));
+        if (session.user?.profile.sub) {
+            revalidateTag(
+                getTag(Tag.POSTS, undefined, {
+                    likedBy: [session.user.profile.sub],
+                    limit: PAGINATION_LIMIT,
+                }),
+            );
+        }
+
         return JSON.stringify(dataResponse(undefined));
     } catch (error) {
         return JSON.stringify(errorResponse(ErrorType.EXECUTION));
@@ -60,7 +69,7 @@ export async function createPost(formData: FormData): Promise<ActionResponse<Pos
         session.user?.profile.sub &&
             revalidateTag(
                 getTag(Tag.POSTS, undefined, {
-                    creator: [session.user.profile.sub],
+                    creators: [session.user.profile.sub],
                     limit: PAGINATION_LIMIT,
                 }),
             );
