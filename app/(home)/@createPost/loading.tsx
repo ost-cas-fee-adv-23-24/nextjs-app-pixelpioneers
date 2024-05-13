@@ -1,6 +1,7 @@
 import React from 'react';
-import MessageSingleSkeleton from '@/src/compositions/message/message-single-skeleton';
+import MessageSkeleton from '@/src/compositions/message/message-skeleton';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
 
 export default function LoadingForm() {
-    return <MessageSingleSkeleton className="h-[400px] w-full md:ml-[-40px] md:w-[720px]" />;
+    return <MessageSkeleton displayVariant={MessageDisplayVariant.TIMELINE} />;
 }

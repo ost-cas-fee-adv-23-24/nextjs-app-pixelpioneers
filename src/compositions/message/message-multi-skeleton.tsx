@@ -1,12 +1,17 @@
 import React from 'react';
-import MessageSingleSkeleton from './message-single-skeleton';
+import MessageSkeleton from '@/src/compositions/message/message-skeleton';
+import { MessageDisplayVariant } from '@/src/compositions/message/types';
 
-export default function MessageMultiSkeleton({ classNames }: { classNames: string }) {
+export default function MessageMultiSkeleton({
+    displayVariant,
+}: {
+    displayVariant: MessageDisplayVariant;
+}) {
     return (
-        <>
-            <MessageSingleSkeleton className={classNames} />
-            <MessageSingleSkeleton className={classNames} />
-            <MessageSingleSkeleton className={classNames} />
-        </>
+        <div className="flex flex-col gap-s">
+            <MessageSkeleton displayVariant={displayVariant} />
+            <MessageSkeleton displayVariant={displayVariant} />
+            <MessageSkeleton displayVariant={displayVariant} />
+        </div>
     );
 }
