@@ -54,14 +54,15 @@ export default function StatedMessageContainer({
                         type: MessageActionType.MESSAGES_ERROR,
                         error: messageResponse.error,
                     });
-                } else {
-                    const paginatedMessages = messageResponse.data;
-                    dispatch({
-                        type: MessageActionType.MESSAGES_RELOADED,
-                        messages: paginatedMessages.data,
-                        nextUrl: paginatedMessages.next,
-                    });
+                    return;
                 }
+
+                const paginatedMessages = messageResponse.data;
+                dispatch({
+                    type: MessageActionType.MESSAGES_RELOADED,
+                    messages: paginatedMessages.data,
+                    nextUrl: paginatedMessages.next,
+                });
             }}
         />
     );

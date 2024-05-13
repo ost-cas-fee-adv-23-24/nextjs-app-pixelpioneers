@@ -38,7 +38,7 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
         }
     }, [paginatedPosts, state.activeType]);
 
-    // load posts on tab switch or load more button
+    // load posts on tab switch
     useEffect(() => {
         const loadProfilePosts = async () => {
             const postsResponse = await getPosts({
@@ -97,14 +97,15 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
                                     type: ProfileActionType.POSTS_ERROR,
                                     error: messageResponse.error,
                                 });
-                            } else {
-                                const paginatedMessages = messageResponse.data;
-                                dispatch({
-                                    type: ProfileActionType.POSTS_RELOADED,
-                                    posts: paginatedMessages.data,
-                                    nextUrl: paginatedMessages.next,
-                                });
+                                return;
                             }
+
+                            const paginatedMessages = messageResponse.data;
+                            dispatch({
+                                type: ProfileActionType.POSTS_RELOADED,
+                                posts: paginatedMessages.data,
+                                nextUrl: paginatedMessages.next,
+                            });
                         }}
                         displayVariant={MessageDisplayVariant.TIMELINE}
                         nextUrl={state.nextUrl}
