@@ -36,7 +36,11 @@ export default function ProfilePosts({ userState, paginatedPosts, userId }: Prof
                 nextUrl: paginatedPosts.next,
             });
         }
-    }, [paginatedPosts, state.activeType]);
+        /**
+         * in this case we want to listen to paginatedPosts only. state.activeType changes will be handled in next useEffect
+         */
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paginatedPosts]);
 
     // load posts on tab switch
     useEffect(() => {
