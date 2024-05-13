@@ -5,7 +5,7 @@ import {
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import ModalImageUpload from '@/src/components/modal/modal-image-upload';
 import React, { useRef, useState } from 'react';
-import { uploadAvatar } from '@/app/actions/user';
+import { removeAvatar, uploadAvatar } from '@/app/actions/user';
 import { ErrorType, getErrorMessage } from '@/src/models/action.model';
 import { ErrorBubble } from '@/src/components/bubble/error-bubble';
 import { useRouter } from 'next/navigation';
@@ -71,6 +71,17 @@ export default function EditAvatar({
                 onCancel={() => setIsOpen(false)}
                 maxFileUploadSizeBytes={524288}
                 fileSizeLabel="JPEG oder PNG, maximal 0.5 MB"
+                onDelete={
+                    avatarUrl
+                        ? async () => {
+                              const deleteResponse = await removeAvatar();
+                              if (deleteResponse.isError) {
+                                  setError(deleteResponse.error);
+                              }
+                              setIsOpen(false);
+                          }
+                        : undefined
+                }
             />
             {error && (
                 <ErrorBubble

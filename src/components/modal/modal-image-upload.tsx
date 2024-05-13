@@ -1,6 +1,8 @@
 'use client';
 
 import {
+    Button,
+    ButtonSize,
     FileUpload,
     IconCancel,
     IconCheckmark,
@@ -9,6 +11,7 @@ import {
     LabelSize,
     Modal,
     ModalWidth,
+    Variant,
 } from '@ost-cas-fee-adv-23-24/design-system-pixelpioneers';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -22,6 +25,7 @@ type ModalImageUploadProps = {
     onCancel: () => void;
     maxFileUploadSizeBytes: number;
     fileSizeLabel: string;
+    onDelete?: () => void;
 };
 
 export default function ModalImageUpload({
@@ -33,6 +37,7 @@ export default function ModalImageUpload({
     onCancel,
     maxFileUploadSizeBytes,
     fileSizeLabel,
+    onDelete,
 }: ModalImageUploadProps) {
     const [currentImageEvent, setCurrentImageEvent] = useState<File | null>(null);
 
@@ -56,32 +61,46 @@ export default function ModalImageUpload({
             labelCancel="Abbrechen"
             labelSubmit="Speichern"
         >
-            <FileUpload
-                maxFileSizeUpload={maxFileUploadSizeBytes}
-                Icon={IconUpload}
-                label="Datei hierhin ziehen..."
-                labelFileSize={fileSizeLabel}
-                labelButton="... oder Datei auswählen"
-                onLoadFile={(file) => {
-                    setCurrentImageEvent(file);
-                    onUpload?.(file);
-                }}
-            />
-            <div className="flex flex-row gap-xs self-center">
-                {currentImageEvent ? (
-                    <IconCheckmark className="fill-primary-600" />
-                ) : (
-                    <IconCancel className="fill-slate-400" />
+            <div className="flex flex-col gap-s">
+                {onDelete && (
+                    <Button
+                        Icon={IconCancel}
+                        size={ButtonSize.M}
+                        label="Bestehendes Bild löschen"
+                        variant={Variant.SECONDARY}
+                        onClick={onDelete}
+                        fill
+                    />
                 )}
-                <Label
-                    size={LabelSize.S}
-                    className={clsx(
-                        'self-center',
-                        currentImageEvent ? 'text-primary-600' : 'text-slate-400',
-                    )}
-                >
-                    {!currentImageEvent && 'Kein '}Bild hochgeladen
-                </Label>
+                <section>
+                    <FileUpload
+                        maxFileSizeUpload={maxFileUploadSizeBytes}
+                        Icon={IconUpload}
+                        label="Datei hierhin ziehen..."
+                        labelFileSize={fileSizeLabel}
+                        labelButton="... oder Datei auswählen"
+                        onLoadFile={(file) => {
+                            setCurrentImageEvent(file);
+                            onUpload?.(file);
+                        }}
+                    />
+                    <div className="flex flex-row gap-xs self-center">
+                        {currentImageEvent ? (
+                            <IconCheckmark className="fill-primary-600" />
+                        ) : (
+                            <IconCancel className="fill-slate-400" />
+                        )}
+                        <Label
+                            size={LabelSize.S}
+                            className={clsx(
+                                'self-center',
+                                currentImageEvent ? 'text-primary-600' : 'text-slate-400',
+                            )}
+                        >
+                            {!currentImageEvent && 'Kein '}Bild hochgeladen
+                        </Label>
+                    </div>
+                </section>
             </div>
         </Modal>
     );
