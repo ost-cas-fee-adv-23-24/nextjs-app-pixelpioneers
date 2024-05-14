@@ -12,13 +12,13 @@ export default function MessageSkeleton({ displayVariant, children }: MessageSke
         displayVariant === variantToCheck;
 
     const detailMessageClasses = clsx(
-        'mx-0 w-full bg-secondary-300 px-m py-s', // mobile
+        'mx-0 w-full animate-pulse bg-secondary-300 px-m py-s ', // mobile
         'md:w-container md:gap-m md:rounded-m md:px-xl md:pb-l', // desktop
     );
     const messageClasses = clsx(
-        'relative flex animate-pulse flex-col gap-s',
+        'relative flex flex-col gap-s',
         {
-            inline: 'bg-secondary-100',
+            inline: 'bg-secondary-100 md:rounded-s',
             timeline: detailMessageClasses,
             detailView: detailMessageClasses,
         }[displayVariant],
@@ -41,7 +41,16 @@ export default function MessageSkeleton({ displayVariant, children }: MessageSke
                 <div className="flex h-[24px] w-1/2 self-center rounded-s bg-secondary-100 md:self-start" />
             </div>
 
-            <div className="flex h-[150px] rounded-s bg-secondary-100" />
+            <div
+                className={clsx(
+                    'flex rounded-s bg-secondary-100',
+                    isVariant(MessageDisplayVariant.DETAIL_VIEW)
+                        ? 'h-[300px]'
+                        : isVariant(MessageDisplayVariant.TIMELINE)
+                        ? 'h-[150px]'
+                        : 'h-[30px]',
+                )}
+            />
 
             {isVariant(MessageDisplayVariant.DETAIL_VIEW) && children}
         </div>

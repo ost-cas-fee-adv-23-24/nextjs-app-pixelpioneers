@@ -21,6 +21,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     const hydratedCreateReply = createReply.bind(null, post.id);
 
     const repliesResponse = await getReplies(post.id, { limit: PAGINATION_LIMIT });
+
     return (
         <Message
             message={post}
