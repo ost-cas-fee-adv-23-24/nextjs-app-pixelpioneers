@@ -32,8 +32,8 @@ export default function ErrorPage({
     fullPage = true,
 }: ErrorPageProps) {
     return (
-        <section className="flex flex-col items-center gap-s">
-            <IconCancel size={IconSize.L} className="fill-tertiary-600" />
+        <section className="mt-m flex flex-col items-center gap-s md:mt-0">
+            <IconCancel size={IconSize.L} className="fill-error" />
             {fullPage && (
                 <Heading
                     variant={HeadingLevel.H1}
