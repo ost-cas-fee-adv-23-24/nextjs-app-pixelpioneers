@@ -1,0 +1,85 @@
+{
+  "name": "app",
+  "version": "0.0.0-development",
+  "description": "Next.js App PixelPioneers",
+  "keywords": [
+    "Frontend Engineering Advanced 2023 / 2024",
+    "Next.js",
+    "PixelPioneers",
+    "Frontend",
+    "TypeScript"
+  ],
+  "license": "MIT",
+  "author": "Fachhochschule OST - CAS Frontend Advanced - Team: PixelPioneers",
+  "contributors": [
+    {
+      "name": "André Ceres",
+      "email": "andre.ceres@ost.ch",
+      "url": "https://github.com/aceres"
+    },
+    {
+      "name": "Nico Lutz",
+      "email": "nico.lutz@ost.ch",
+      "url": "https://github.com/Nigothazine"
+    }
+  ],
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "dev:testmock": "NODE_ENV=test next dev",
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
+    "prettier": "prettier --log-level warn --write \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "prettier:check": "prettier --log-level warn --check \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "start": "next start",
+    "test:pw": "npm run dev:testmock & npx playwright test",
+    "test:pw:debug": "npm run test:pw -- --debug",
+    "test:pw:headed": "npm run test:pw -- --headed"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --config ./.eslintrc.json --max-warnings=0 --ext js --ext ts --ext jsx --ext tsx"
+    ],
+    "*.{css,md,json,js,ts,jsx,tsx}": [
+      "prettier --write --config ./.prettierrc.json"
+    ]
+  },
+  "dependencies": {
+    "@ost-cas-fee-adv-23-24/design-system-pixelpioneers": "^5.7.3",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "clsx": "^2.1.0",
+    "dayjs": "^1.11.10",
+    "http-status-codes": "^2.3.0",
+    "next": "^14.2.2",
+    "next-auth": "^5.0.0-beta.4",
+    "postcss": "8.4.31",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "ulid": "^2.3.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@playwright/test": "^1.38.1",
+    "@testing-library/react": "^14.0.0",
+    "@types/node": "^20.8.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.52.0",
+    "eslint-config-next": "^13.5.6",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-react": "^7.33.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "3.0.3",
+    "prettier-plugin-packagejson": "^2.4.6",
+    "prettier-plugin-tailwindcss": "^0.5.5",
+    "react-test-renderer": "^18.2.0",
+    "tailwindcss": "3.3.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

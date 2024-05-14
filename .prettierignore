@@ -1,0 +1,10 @@
+# ignore artifacts
+build
+coverage
+
+# yaml config
+**/*.yaml
+
+# ignore build
+node_modules/
+lib/

@@ -1,0 +1,26 @@
+{
+  "name": "Mumble - Pixel Pioneers Edition",
+  "short_name": "Mumble",
+  "icons": [
+    {
+      "src": "images/mumble-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mumble-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mumble-icon-160x160.png",
+      "sizes": "160x160",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#7C3AED",
+  "background_color": "#7C3AED"
+}
